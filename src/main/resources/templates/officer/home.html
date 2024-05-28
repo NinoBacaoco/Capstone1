@@ -16,15 +16,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/officer/officer.css}" />
     <link rel="stylesheet" th:href="@{/css/output.css}" />
-    <!-- for live server[no springboot running] -->
-    <link
-      rel="stylesheet"
-      href="/Capstone1/Capstone-1/src/main/resources/static/css/output.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/Capstone1/Capstone-1/src/main/resources/static/css/officer/officer.css"
-    />
     <style>
       .dt-input {
         margin-right: 10px;
@@ -37,31 +28,47 @@
         height: 92vh;
       }
       .rejected-modal-dialog {
-        max-width: 50%;
+        max-width: 30%;
         max-height: 50px;
       }
       .rejected-modal-content {
-        height: 50vh;
+        height: 40%;
       }
       .accepted-modal-dialog {
-        max-width: 50%;
-        max-height: 50px;
+        max-width: 30%;
       }
       .accepted-modal-content {
-        height: 22vh;
+        height: 40%;
       }
     </style>
   </head>
   <body th:object="${officerWebDto}">
-    <div class="h-screen bg-tanglow p-2">
-      <div class="flex place-items-end flex-col ml-60 pr-10 pt-3">
-        <div class="font-primary text-5xl">
-          Welcome, <span th:text="${session.fullname}"></span>!
-        </div>
-        <div>ID: <span th:text="${session.id}"></span></div>
-      </div>
+    <img
+      th:src="@{/images/blocks.png}"
+      class="w-3/5 h-4/5 bottom-0 absolute right-0 md:fixed pointer-events-none z-0"
+    />
+    <div class="h-screen px-12 pt-4 bg-[#F9F9F9]">
       <div
-        class="rounded-lg mt-8 bg-white border-2 sm:overflow-x-auto overflow-hidden sm:w-auto p-2 ml-2 sm:ml-0"
+        class="h-20 flex flex-row justify-between bg-customyellow rounded-tr-3xl rounded-tl-3xl"
+      >
+        <div
+          class="flex text-center items-center p-4 text-3xl font-secondary font-semibold"
+        >
+          OPERATIONS OFFICER DASHBOARD
+        </div>
+        <div class="p-2 mr-4">
+          <div class="font-primary text-3xl">
+            Welcome, <span th:text="${session.fullname}"></span>!
+          </div>
+          <div class="flex justify-end">
+            ID: <span th:text="${session.id}"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- form -->
+      <div
+        class="rounded-lg mt-8 bg-white border-2 sm:overflow-x-auto overflow-hidden sm:w-auto p-2 sm:ml-0"
       >
         <table id="applicants-table" class="w-screen h-4/5">
           <!-- class="border-collapse table-auto border-4 border-violet-600 h-full border-spacing-0 w-fit" -->
@@ -69,63 +76,43 @@
           <thead class="font-secondary text-sm bg-customyellow">
             <tr>
               <th class="text-center rounded-top-left">Email</th>
-              <!-- <th class="text-left hidden sm:table-cell">Consent</th> -->
               <th class="text-center w-3/12">Project Title</th>
-              <th class="text-center w-1/5 hidden sm:table-cell">
+              <!--<th class="text-center w-1/5 hidden sm:table-cell">
                 Description
-              </th>
+              </th>-->
               <th class="text-center w-1/5 hidden sm:table-cell">University</th>
               <th class="text-center rounded-top-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-red-500 bodyrowhover">
+          <tbody class="divide-y divide-grey-500 bodyrowhover">
             <tr
               th:each="app : *{listOfApplicants}"
-              class="row-btn overflow-hidden text-sm"
+              class="row-btn"
               th:data-id="${app.applicantIdPk}"
             >
               <td
                 th:text="${app.email}"
                 class="whitespace-nowrap max-w-0 truncate"
-              >
-                test@gmail.com
-              </td>
-              <!-- <td
-                th:text="${app.consent ? 'Yes' : 'No'}"
-                class="whitespace-nowrap hidden sm:table-cell"
-              >
-                oms
-              </td> -->
+              ></td>
               <td
                 th:text="${app.projectTitle}"
                 class="whitespace-nowrap max-w-0 truncate"
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi quaerat officia exercitationem. Voluptatum velit
-                asperiores reiciendis saepe soluta hic in!
-              </td>
-              <td
+              ></td>
+            <!--  <td
                 th:text="${app.description}"
-                class="whitespace-nowrap max-w-0 truncate hidden sm:table-cell"
+                class="whitespace-nowrap max-w-0 truncate"
               >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Recusandae ut consectetur cumque odit! Corporis commodi maiores
-                nostrum nulla! Doloremque nesciunt explicabo cum, quidem, sequi
-                accusamus, officiis ipsam quia fugiat cupiditate repudiandae.
-                Eligendi consectetur ad molestias perspiciatis officia debitis
-                nesciunt, praesentium cum tempore earum error delectus in est
-                odio. Necessitatibus, voluptatibus.
-              </td>
+                 hidden sm:table-cell 
+              </td>-->
               <td
                 th:text="${app.university	}"
-                class="whitespace-nowrap max-w-0 truncate hidden sm:table-cell"
+                class="whitespace-nowrap max-w-0 truncate"
               >
-                <!-- <div th:each="mem : ${app.team}" th:text="${mem}"></div> -->
-                NA
+                <!-- hidden sm:table-cell -->
               </td>
-              <td class="w-auto flex justify-center gap-2 whitespace-nowrap">
+              <td>
                 <button
-                  class="btn-row border-black hover:bg-[#FEE902] bg-black rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
+                  class="btn-row border-black hover:bg-green-500 bg-green-600 rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
                   type="button"
                   th:data-id="${app.applicantIdPk}"
                   name="accept"
@@ -133,7 +120,7 @@
                   Accept
                 </button>
                 <button
-                  class="btn-row border-black hover:bg-[#FEE902] bg-black rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs p-1"
+                  class="btn-row border-black hover:bg-red-500 bg-red-600 rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
                   type="button"
                   th:data-id="${app.applicantIdPk}"
                   name="reject"
@@ -149,10 +136,10 @@
       <!-- </div> -->
 
       <div
-        class="bottom-0 right-0 px-2 mr-2 flex justify-end text-xl font-primary absolute hover:text-white"
+        class="bottom-0 right-0 mr-12 mb-1 flex justify-end text-base font-primary absolute bg-customyellow text-black rounded-sm"
       >
         <form th:action="@{/logout}" method="POST">
-          <button>Logout</button>
+          <button class="hover:text-white px-2">Logout</button>
         </form>
       </div>
     </div>
@@ -174,38 +161,40 @@
     >
       <div class="modal-dialog accepted-modal-dialog" role="document">
         <div class="modal-content accepted-modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title font-bold text-green-700">Confirmation</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+          <div class="mb-24">
+            <div
+              class="rounded-t-md flex items-center flex-col justify-items-center mx-auto absolute z-10 w-full py-2 border-b-2"
             >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <img th:src="@{/icons/check.png}" />
+
+              <h5 class="modal-title font-bold text-green-700">Confirmation</h5>
+            </div>
           </div>
-          <div class="modal-body" id="modal-body">
+          <div class="modal-body justify-center flex" id="modal-body">
             <form th:action="@{/officer/action}" method="POST">
-              <div class="mb-3">Do you want to accept this application?</div>
+              <div class="my-3">Do you want to accept this application?</div>
               <input
                 type="hidden"
                 name="applicantIdPk"
                 id="accept-applicant-id-pk"
                 value=""
               />
-              <button
-                type="button"
-                class="h-8 border-black hover:bg-[#FEE902] bg-black rounded-lg w-32 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
-              >
-                Cancel
-              </button>
-              <button
-                name="accept"
-                class="px-3 h-8 border-black hover:bg-[#FEE902] bg-black rounded-lg hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
-              >
-                Send to manager
-              </button>
+              <div class="justify-between flex">
+                <button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  type="button"
+                  class="close h-8 border-black hover:bg-[#F9F9F9] rounded-lg w-32 hover:text-black text-black border font-secondary sm:text-sm text-xs sm:p-1"
+                >
+                  Cancel
+                </button>
+                <button
+                  name="accept"
+                  class="px-3 h-8 border-black hover:bg-green-500 bg-green-600 rounded-lg hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
+                >
+                  Send to manager
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -220,16 +209,14 @@
     >
       <div class="modal-dialog rejected-modal-dialog" role="document">
         <div class="modal-content rejected-modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title font-bold text-red-700">Rejected</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+          <div class="mb-24">
+            <div
+              class="rounded-t-md flex items-center flex-col justify-items-center mx-auto absolute z-10 w-full py-2 border-b-2"
             >
-              <span aria-hidden="true">&times;</span>
-            </button>
+              <img th:src="@{/images/warning.png}" />
+
+              <h5 class="modal-title font-bold text-red-700">Rejected</h5>
+            </div>
           </div>
           <div class="modal-body" id="modal-body">
             <form th:action="@{/officer/action}" method="POST">
@@ -239,8 +226,11 @@
                 id="reject-applicant-id-pk"
                 value="0"
               />
-              <label>Input Feedback</label>
-              <textarea name="feedback"></textarea>
+              <textarea
+                name="feedback"
+                placeholder="Input Feedback"
+                class="resize-none border w-full indent-2 h-20 mt-2"
+              ></textarea>
               <div>
                 <div class="font-medium mb-2">Qualified for Reapplication?</div>
                 <div>
@@ -252,14 +242,23 @@
                   <label>No</label>
                 </div>
               </div>
-              <button type="button" btn-row>Cancel</button>
-              <button
-                name="reject"
-                class="h-8 border-black hover:bg-[#FEE902] bg-black rounded-lg w-32 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
-              >
-                Reject
-              </button>
-              <!-- once rejected, send info to applicant email the feedback -->
+              <div class="justify-between flex mx-16">
+                <button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  type="button"
+                  class="close h-8 border-black hover:bg-[#F9F9F9] rounded-lg w-32 hover:text-black text-black border font-secondary sm:text-sm text-xs sm:p-1"
+                >
+                  Cancel
+                </button>
+                <button
+                  name="reject"
+                  class="w-3/6 px-3 h-8 border-black hover:bg-red-500 bg-red-600 rounded-lg hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
+                >
+                  Reject
+                </button>
+                <!-- once rejected, send info to applicant email the feedback -->
+              </div>
             </form>
           </div>
         </div>
@@ -334,24 +333,6 @@
           });
         }
 
-        async function getApplicantDetails() {
-          try {
-            const response = await fetch("/officer/retrieve-all");
-
-            document.getElementById("modal-body").innerHTML =
-              '<div class="loader"></div>';
-
-            if (!response.ok) {
-              document.getElementById("modal-body").innerHTML =
-                '<div><div>Reload</div><a href="/officer/home">Reload</a></div>';
-            }
-
-            const data = await response.json();
-            console.log(data);
-          } catch (error) {
-            console.error("Error:", error);
-          }
-        }
       });
 
       async function retrieveApplicantDetails(applicantIdPk) {
@@ -405,12 +386,12 @@
         let objectives = document.querySelector(".objectives");
         let scopeProposal = document.querySelector(".scopeProposal");
         let methodology = document.querySelector(".methodology");
-        //let vitaeFile = document.querySelector('.vitaeFile');
+        let vitaeFile = document.querySelector('.vitaeFile');
         let supportLink = document.querySelector(".supportLink");
         let groupName = document.querySelector(".groupName");
         let groupLeader = document.querySelector(".groupLeader");
         let leaderNumber = document.querySelector(".leaderNumber");
-        let leaderEmail = document.querySelector(".leaderEmail");
+        let leaderAddress = document.querySelector(".leaderAddress");
         let members = document.querySelectorAll(".members");
         let university = document.querySelector(".university");
         let technologyAns = document.querySelectorAll(".technologyAns");
@@ -549,11 +530,14 @@
         scopeProposal.textContent = applicant.scopeProposal;
         //Methodology
         methodology.textContent = applicant.methodology;
+        //Vitae File
+        vitaeFile.href = "/view/" + applicant.vitaeFile;
         //Supporting Link
         if (applicant.supportLink != "") {
-          supportLink.value = applicant.supportLink;
+          supportLink.innerHTML = applicant.supportLink;
+          supportLink.href = applicant.supportLink;
         } else {
-          supportLink.value = "NA";
+          supportLink.innerHTML = "NA";
         }
         //Group Name
         groupName.value = applicant.groupName;
@@ -563,7 +547,7 @@
         //Leader Mobile Number
         leaderNumber.value = applicant.mobileNumber;
         //Leader Email
-        leaderEmail.value = applicant.emailAddress;
+        leaderAddress.value = applicant.address;
         //Members
         if (
           applicant.members[0] != undefined &&

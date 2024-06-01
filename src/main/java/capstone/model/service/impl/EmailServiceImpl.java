@@ -1,0 +1,104 @@
+package capstone.model.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import capstone.common.constant.CommonConstant;
+import capstone.model.service.EmailService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+
+@Service
+public class EmailServiceImpl implements EmailService {
+
+    @Autowired
+    private JavaMailSender emailSender;
+
+    @Override
+    public void sendRejectionMail(String feedback, boolean resubmitFlg, String email, String token)
+            throws MessagingException {
+
+        MimeMessage message = emailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom(CommonConstant.EMAIL);
+        helper.setTo(email);
+        helper.setSubject("Application Denied");
+
+        String htmlText = "<h1>Feedback:</h1>" +
+                "<p>" + feedback + "</p>" +
+                "<p>" + "Reapplication: " + (resubmitFlg ? "Yes" : "No") + "</p>";
+
+        if (resubmitFlg) {
+            htmlText += "<div>Please review the feedback and consider resubmitting a revised application.</div>"
+                    + "<a href='http://localhost:8080/applicant/form/resubmit?token=" + token + "'>"
+                    + "resubmit</a>";
+        } else {
+            htmlText += "<div>You are not qualified to resubmit this application. Please consider submitting a new application if you wish to reapply.</div>"
+                    + "<a href='http://localhost:8080/applicant/form?token=" + token + "'>"
+                    + "reapply</a>";
+        }
+
+        helper.setText(htmlText, true);
+
+        emailSender.send(message);
+
+    }
+
+    @Override
+    public void sendActivationMail(String password, String email) throws MessagingException {
+
+        MimeMessage message = emailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom(CommonConstant.EMAIL);
+        helper.setTo(email);
+        helper.setSubject("Account Activated");
+
+        String htmlText = "<h1>Welcome!</h1>" +
+                "<p>Your account has been activated.</p>" +
+                "<p>Your email: </p>" + email + "</p>" +
+                "<p>Your password: " + password + "</p>" +
+                "<div><a href='http://localhost:8080/login'>Login Now</a></div>";
+
+        helper.setText(htmlText, true);
+
+        emailSender.send(message);
+
+    }
+
+    @Override
+    public void sendFailedMail(boolean resubmitFlg, String email, String token)
+            throws MessagingException {
+
+        MimeMessage message = emailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom(CommonConstant.EMAIL);
+        helper.setTo(email);
+        helper.setSubject("Application Failed");
+
+        String htmlText = "<div>Your application did not pass the evaluation, as it did not reach the passing score of 6 out of 10. </div> ";
+
+        if (resubmitFlg) {
+            htmlText += "<div>Please review the feedback and consider resubmitting a revised application.</div>"
+                    + "<a href='http://localhost:8080/applicant/form/resubmit?token=" + token + "'>"
+                    + "resubmit</a>";
+        } else {
+            htmlText += "<div>You are not qualified to resubmit this application. Please consider submitting a new application if you wish to reapply.</div>"
+                    + "<a href='http://localhost:8080/applicant/form?token=" + token + "'>"
+                    + "reapply</a>";
+        }
+
+        helper.setText(htmlText, true);
+
+        emailSender.send(message);
+
+    }
+
+}

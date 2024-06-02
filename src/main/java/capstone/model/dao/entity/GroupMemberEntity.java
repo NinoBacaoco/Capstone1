@@ -12,25 +12,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "t_group_member")
+@Table(name="t_group_member")
 public class GroupMemberEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPk;
-
-    @Column(nullable = false)
-    private int groupIdPk;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String firstName;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String lastName;
-
-    @Column(nullable = false)
-    private Timestamp createdDate;
-
-    @Column(nullable = false)
-    private Boolean deleteFlg;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idPk;
+	
+	@Column(nullable = false)
+	private int groupIdPk;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String firstName;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String lastName;
+	
+	@Column(nullable = false)
+	private Timestamp createdDate;
+	
+	@Column(nullable = false)
+	private Boolean deleteFlg;
 }

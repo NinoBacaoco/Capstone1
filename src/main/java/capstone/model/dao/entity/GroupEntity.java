@@ -12,36 +12,36 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "m_group")
+@Table(name="m_group")
 public class GroupEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPk;
-
-    private int applicantIdPk;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String groupName;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String firstName;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String lastName;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String mobileNumber;
-
-    @Column(columnDefinition = "varchar(255)", nullable = false)
-    private String address;
-
-    @Column(columnDefinition = "varchar(255)")
-    private String university;
-
-    @Column(nullable = false)
-    private Timestamp createdDate;
-
-    @Column(nullable = false)
-    private Boolean deleteFlg;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idPk;
+	
+	private int applicantIdPk;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String groupName;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String firstName;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String lastName;
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String mobileNumber; 
+	
+	@Column(columnDefinition = "varchar(255)", nullable = false)
+	private String address; 
+	
+	@Column(columnDefinition = "varchar(255)")
+	private String university;
+	
+	@Column(nullable = false)
+	private Timestamp createdDate;
+	
+	@Column(nullable = false)
+	private Boolean deleteFlg;
 }

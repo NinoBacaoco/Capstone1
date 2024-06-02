@@ -8,12 +8,12 @@ import lombok.Data;
 
 @Data
 public class ManagerWebDto {
-
-    public List<ApplicantObj> listOfApplicants;
-
-    public int applicantIdPk;
-
-    public List<Integer> chosenApplicant;
-
-    ApplicantDetailsObj applicantDetailsObj;
+	
+	public List<ApplicantObj> listOfApplicants;
+	
+	public int applicantIdPk;
+	
+	public List<Integer> chosenApplicant;
+	
+	ApplicantDetailsObj applicantDetailsObj;
 }

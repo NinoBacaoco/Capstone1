@@ -412,6 +412,8 @@ public class ApplicantServiceImpl implements ApplicantService {
 
                 newUser.setDeleteFlg(false);
 
+                newUser.setUpdatedDate(currentDateTime);
+
                 userIdPk = userLogic.saveUser(newUser);
 
                 UserInfoAccountEntity newUserAccount = new UserInfoAccountEntity();

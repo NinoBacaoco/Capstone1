@@ -37,9 +37,10 @@ public class UserInformationEntity {
     @Column(nullable = false)
     private Boolean initialChangePass;
 
-    @Column(nullable = false)
     private Timestamp createdDate;
 
     @Column(nullable = false)
     private Boolean deleteFlg;
+
+    private Timestamp updatedDate;
 }

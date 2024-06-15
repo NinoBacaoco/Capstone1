@@ -39,6 +39,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("TBIBOARD"))) { // Redirect to the
                                                                                                     // default user
             response.sendRedirect("/tbi-board/home");
+        } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ADMIN"))) { // Redirect to the
+                                                                                                 // default user
+            response.sendRedirect("/admin/home");
+        } else {
+            response.sendRedirect("/login");
         }
 
         if (authentication != null) {

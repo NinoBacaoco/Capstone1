@@ -23,7 +23,12 @@ public class AdminController {
     }
 
     @GetMapping("/admin/applicants")
-    public String showApplicants() {
+    public String showApplicants(@ModelAttribute AdminWebDto webDto) {
+
+        AdminInOutDto outDto = adminService.getAllApplicants();
+
+        webDto.setAllApplicants(outDto.getAllApplicants());
+
         // This will return the name of the HTML file (without the .html extension)
         return "admin/applicants";
     }
@@ -37,5 +42,12 @@ public class AdminController {
 
         // This will return the name of the HTML file (without the .html extension)
         return "admin/users";
+    }
+
+    @GetMapping("/admin/create-user")
+    public String createUser(@ModelAttribute AdminWebDto webDto) {
+
+        // This will return the name of the HTML file (without the .html extension)
+        return "admin/createUser";
     }
 }

@@ -11,8 +11,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "t_rejected_applicant")
-public class RejectedApplicantEntity {
+@Table(name = "t_accepted_applicant")
+public class AcceptedApplicantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +20,10 @@ public class RejectedApplicantEntity {
 
     private int applicantIdPk;
 
-    private String feedback;
-
-    private Boolean resubmitFlg;
-
     private Timestamp createdDate;
+
+    private int createdBy;
 
     private Boolean deleteFlg;
 
-    private String token;
-
-    private int createdBy;
 }

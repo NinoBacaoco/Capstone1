@@ -18,7 +18,9 @@ public class JoinApplicantProject {
                 (Integer) objects[3],
                 (String) objects[4],
                 (Integer) objects[5],
-                (String) objects[6]);
+                (String) objects[6],
+                (String) objects[7],
+                (String) objects[8]);
     }
 
     public int applicantIdPk;
@@ -34,4 +36,8 @@ public class JoinApplicantProject {
     public int score;
 
     public String feedback;
+
+    public String acceptedBy;
+
+    public String evaluatedBy;
 }

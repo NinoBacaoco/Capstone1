@@ -212,10 +212,7 @@
                 <circle class="fill"></circle>
                 <!-- <circle class="progress"></circle> -->
               </svg>
-              <div
-                class="orb_value count"
-                th:text="*{adminDashboardObj.inOfficerCount}"
-              ></div>
+              <div class="orb_value count" th:text="*{adminDashboardObj.inOfficerCount}"></div>
             </div>
             <div class="orb_label text-sm">in officer</div>
           </div>
@@ -225,12 +222,9 @@
                 <circle class="fill"></circle>
                 <!-- <circle class="progress"></circle> -->
               </svg>
-              <div
-                class="orb_value count"
-                th:text="*{adminDashboardObj.inTbiBoardCount}"
-              ></div>
+              <div class="orb_value count" th:text="*{adminDashboardObj.inTbiBoardCount}"></div>
             </div>
-            <div class="orb_label text-sm">in tbi board</div>
+            <div class="orb_label text-sm" >in tbi board</div>
           </div>
           <div class="orb">
             <div class="orb_graphic">
@@ -238,10 +232,7 @@
                 <circle class="fill"></circle>
                 <!-- <circle class="progress"></circle> -->
               </svg>
-              <div
-                class="orb_value count"
-                th:text="*{adminDashboardObj.inManagerCount}"
-              ></div>
+              <div class="orb_value count" th:text="*{adminDashboardObj.inManagerCount}"></div>
             </div>
             <div class="orb_label text-sm">in manager</div>
           </div>
@@ -251,11 +242,23 @@
                 <circle class="fill"></circle>
                 <!-- <circle class="progress"></circle> -->
               </svg>
-              <div class="orb_value count">123</div>
+              <div class="orb_value count" th:text="*{adminDashboardObj.reapplicationRejectedCount}">123</div>
             </div>
-            <div class="orb_label text-sm">reapplication</div>
+            <div class="orb_label text-sm">reapplication<br>rejected</div>
           </div>
         </div>
+         <div class="orb">
+            <div class="orb_graphic">
+              <svg>
+                <circle class="fill"></circle>
+                <!-- <circle class="progress"></circle> -->
+              </svg>
+              <div class="orb_value count" th:text="*{adminDashboardObj.reapplicationFailedCount}">123</div>
+            </div>
+            <div class="orb_label text-sm">reapplication<br>rejected</div>
+          </div>
+        </div>
+        
         <!-- squares -->
 
         <div class="square_orb w-full">
@@ -269,7 +272,7 @@
                 class="orb_value count border-2 rounded-lg stroke-2 border-red-600"
                 th:text="*{adminDashboardObj.applicantCount}"
               >
-                123
+               123
               </div>
             </div>
             <div class="orb_label text-sm">applicants</div>
@@ -319,7 +322,7 @@
             </div>
             <div class="orb_label text-sm">managers</div>
           </div>
-          <div class="orb">
+           <div class="orb">
             <div class="orb_graphic">
               <svg>
                 <div class="fill"></div>
@@ -340,10 +343,11 @@
     </div>
     <!-- officer -->
     <script th:inline="javascript">
-      const webDto = /*[[${adminWebDto}]]*/ "";
-      const obj = webDto.adminDashboardObj;
-      console.log(webDto);
-
+		
+	  const webDto = /*[[${adminWebDto}]]*/'';
+	  const obj = webDto.adminDashboardObj;
+	  console.log(webDto);
+	  	
       var xValues = ["passed", "failed"];
       var yValues = [obj.applicationPassedCount, obj.applicationFailedCount];
       var barColors = ["#b91d47", "#00aba9"];
@@ -371,12 +375,9 @@
           },
         },
       });
-
+      
       var xValues2 = ["accepted", "rejected"];
-      var yValues2 = [
-        obj.applicationAcceptedCount,
-        obj.applicationRejectedCount,
-      ];
+      var yValues2 = [obj.applicationAcceptedCount, obj.applicationRejectedCount];
       var barColors2 = ["#b91d47", "#00aba9"];
 
       new Chart("tbiBoard", {
@@ -402,7 +403,7 @@
           },
         },
       });
-
+      
       $(document).ready(function () {
         $(".count").each(function () {
           $(this)
@@ -423,7 +424,11 @@
       });
     </script>
     <!-- tbiboard -->
-    <script></script>
-    <script></script>
+    <script>
+      
+    </script>
+    <script>
+      
+    </script>
   </body>
 </html>

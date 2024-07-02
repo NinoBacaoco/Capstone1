@@ -32,4 +32,6 @@ public class EvaluatedApplicantEntity {
 
     private String token;
 
+    private Boolean resubmitFlg;
+
 }

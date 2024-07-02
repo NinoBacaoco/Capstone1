@@ -8,18 +8,20 @@ import lombok.Data;
 
 @Data
 public class ManagerInOutDto {
-	
+
 	public List<ApplicantObj> listOfApplicants;
-	
+
 	public int applicantIdPk;
-	
+
 	public String feedback;
-	
+
 	public Boolean resubmitFlg;
-	
+
 	public List<Integer> chosenApplicant;
-	
+
 	public int status;
-	
+
 	ApplicantDetailsObj applicantDetailsObj;
+
+	public Boolean transferring;
 }

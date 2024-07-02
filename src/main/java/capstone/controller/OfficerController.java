@@ -37,7 +37,7 @@ public class OfficerController {
     }
 
     @PostMapping(value = "/action", params = "accept")
-    public String acceptApplicant(@ModelAttribute OfficerWebDto webDto) {
+    public String acceptApplicant(@ModelAttribute OfficerWebDto webDto) throws MessagingException {
 
         OfficerInOutDto inDto = new OfficerInOutDto();
 

@@ -31,7 +31,7 @@ public interface ManagerService {
      * @param inDto
      * @return ManagerInOutDto
      */
-    public void updateApplicantStatus(ManagerInOutDto inDto);
+    public void updateApplicantStatus(ManagerInOutDto inDto) throws MessagingException;
 
     /**
      * TO get all evaluated applicants for manager

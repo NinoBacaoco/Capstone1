@@ -76,6 +76,14 @@ public interface UserLogic {
     public UserInformationEntity getUserByApplicantIdPk(int applicantIdPk);
 
     /**
+     * To get user by applicant id pk
+     * 
+     * @param token
+     * @return UserInformationEntity
+     */
+    public List<UserInformationEntity> getUsersByApplicantIdPks(List<Integer> applicantIdPks);
+
+    /**
      * To get all users
      * 
      * @return List<UserInformationEntity>

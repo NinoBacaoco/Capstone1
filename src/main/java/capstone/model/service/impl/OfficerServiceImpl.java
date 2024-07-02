@@ -118,7 +118,7 @@ public class OfficerServiceImpl implements OfficerService {
     }
 
     @Override
-    public OfficerInOutDto acceptApplicant(OfficerInOutDto inDto) {
+    public OfficerInOutDto acceptApplicant(OfficerInOutDto inDto) throws MessagingException {
 
         UserInformationEntity loggedInUser = loggedInUserService.getUserInformation();
 
@@ -147,6 +147,9 @@ public class OfficerServiceImpl implements OfficerService {
         } else {
             applicantLogic.updateApplicantStatus(3, List.of(inDto.getApplicantIdPk()));
         }
+
+        emailService.sendAcceptedMail(userLogic.getUserByIdPk(applicantEntity.getCreatedBy()).getEmail());
+
         return outDto;
     }
 

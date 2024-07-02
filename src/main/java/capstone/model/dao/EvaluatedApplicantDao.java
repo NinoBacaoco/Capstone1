@@ -12,24 +12,26 @@ import capstone.model.dao.entity.EvaluatedApplicantEntity;
 @Transactional
 public interface EvaluatedApplicantDao extends JpaRepository<EvaluatedApplicantEntity, Integer> {
 
-    public final String UPDATE_EVALUATED_APPLICANT = "UPDATE t_evaluated_applicant "
-            + "SET "
-            + "	token = :token "
-            + "WHERE "
-            + "	applicant_id_pk = :applicantIdPk "
-            + "AND "
-            + "	delete_flg = false";
+        public final String UPDATE_EVALUATED_APPLICANT = "UPDATE t_evaluated_applicant "
+                        + "SET "
+                        + "	token = :token, "
+                        + "	resubmit_flg = :resubmitFlg"
+                        + "WHERE "
+                        + "	applicant_id_pk = :applicantIdPk "
+                        + "AND "
+                        + "	delete_flg = false";
 
-    public final String GET_EVALUATED_APPLICANT_BY_TOKEN = "SELECT e"
-            + " FROM EvaluatedApplicantEntity e"
-            + " WHERE e.token = :token"
-            + " AND e.deleteFlg = false";
+        public final String GET_EVALUATED_APPLICANT_BY_TOKEN = "SELECT e"
+                        + " FROM EvaluatedApplicantEntity e"
+                        + " WHERE e.token = :token"
+                        + " AND e.deleteFlg = false";
 
-    @Query(value = GET_EVALUATED_APPLICANT_BY_TOKEN)
-    public EvaluatedApplicantEntity getEvaluatedApplicantByToken(String token) throws DataAccessException;
+        @Query(value = GET_EVALUATED_APPLICANT_BY_TOKEN)
+        public EvaluatedApplicantEntity getEvaluatedApplicantByToken(String token) throws DataAccessException;
 
-    @Modifying
-    @Query(value = UPDATE_EVALUATED_APPLICANT, nativeQuery = true)
-    public void updateEvaluatedApplicant(@Param("token") String token,
-            @Param("applicantIdPk") int applicantIdPk) throws DataAccessException;
+        @Modifying
+        @Query(value = UPDATE_EVALUATED_APPLICANT, nativeQuery = true)
+        public void updateEvaluatedApplicant(@Param("token") String token,
+                        @Param("resubmitFlg") boolean resubmitFlg,
+                        @Param("applicantIdPk") int applicantIdPk) throws DataAccessException;
 }

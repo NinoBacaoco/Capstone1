@@ -3,6 +3,7 @@ package capstone.model.service;
 import org.springframework.stereotype.Service;
 
 import capstone.model.dto.TbiBoardInOutDto;
+import jakarta.mail.MessagingException;
 
 @Service
 public interface TbiBoardService {
@@ -19,7 +20,7 @@ public interface TbiBoardService {
      * 
      * @return
      */
-    public void evaluateApplicant(TbiBoardInOutDto inDto);
+    public void evaluateApplicant(TbiBoardInOutDto inDto) throws MessagingException;
 
     /**
      * To get the details of the application by id pk

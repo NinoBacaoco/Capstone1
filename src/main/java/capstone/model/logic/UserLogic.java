@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import capstone.model.dao.entity.UserDetailsEntity;
 import capstone.model.dao.entity.UserInfoAccountEntity;
 import capstone.model.dao.entity.UserInformationEntity;
 
@@ -76,9 +77,22 @@ public interface UserLogic {
     public UserInformationEntity getUserByApplicantIdPk(int applicantIdPk);
 
     /**
+     * To get user by applicant id pk
+     * 
+     * @param token
+     * @return UserInformationEntity
+     */
+    public List<UserInformationEntity> getUsersByApplicantIdPks(List<Integer> applicantIdPks);
+
+    /**
      * To get all users
      * 
      * @return List<UserInformationEntity>
      */
-    public List<UserInformationEntity> getAllUsers();
+    public List<UserDetailsEntity> getAllUsers();
+
+    /**
+     * To delete user by changing the delete_flg to true
+     */
+    public void deleteUser(int userIdPk);
 }

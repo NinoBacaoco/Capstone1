@@ -253,4 +253,22 @@ public class ApplicantLogicImpl implements ApplicantLogic {
         acceptedApplicantDao.save(entity);
     }
 
+    @Override
+    public void updatePreviousAcceptedApplicant(int applicantIdPk) {
+
+        acceptedApplicantDao.updatePreviousAcceptedApplicant(applicantIdPk);
+    }
+
+    @Override
+    public void updatePreviousRejectedApplicant(int applicantIdPk) {
+
+        rejectedApplicantDao.updatePreviousRejectedApplicant(applicantIdPk);
+    }
+
+    @Override
+    public void updatePreviousEvaluatedApplicant(int applicantIdPk) {
+
+        evaluatedApplicantDao.updatePreviousEvaluatedApplicant(applicantIdPk);
+    }
+
 }

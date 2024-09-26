@@ -375,5 +375,95 @@
         </div>
       </div>
     </div>
+    <!-- officer -->
+    <script th:inline="javascript">
+      const webDto = /*[[${adminWebDto}]]*/ "";
+      const obj = webDto.adminDashboardObj;
+      console.log(webDto);
+
+      var xtbiBoardValues = ["passed", "failed"];
+      var ytbiBoardValues = [
+        obj.applicationPassedCount,
+        obj.applicationFailedCount,
+      ];
+      var barColors = ["#2493DF", "#FF4C4C"];
+
+      new Chart("tbiBoard", {
+        type: "doughnut",
+        data: {
+          labels: xtbiBoardValues,
+          datasets: [
+            {
+              backgroundColor: barColors,
+              data: ytbiBoardValues,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            // text: "tbi board",
+            // position: "bottom",
+          },
+          legend: {
+            display: true,
+            position: "bottom", // Position legend below the chart
+          },
+        },
+      });
+
+      var xofficerValues2 = ["accepted", "rejected"];
+      var yofficerValues2 = [
+        obj.applicationAcceptedCount,
+        obj.applicationRejectedCount,
+      ];
+      var barColors2 = ["#00C838", "#FF4C4C"];
+
+      new Chart("officer", {
+        type: "doughnut",
+        data: {
+          labels: xofficerValues2,
+          datasets: [
+            {
+              backgroundColor: barColors2,
+              data: yofficerValues2,
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            // text: "officer",
+            // position: "bottom",
+          },
+          legend: {
+            display: true,
+            position: "bottom", // Position legend below the chart
+          },
+        },
+      });
+
+      $(document).ready(function () {
+        $(".count").each(function () {
+          $(this)
+            .prop("Counter", 0)
+            .animate(
+              {
+                Counter: $(this).text(),
+              },
+              {
+                duration: 1500,
+                easing: "linear",
+                step: function (now) {
+                  $(this).text(Math.ceil(now));
+                },
+              }
+            );
+        });
+      });
+    </script>
+    <!-- tbiboard -->
+    <script></script>
+    <script></script>
   </body>
 </html>

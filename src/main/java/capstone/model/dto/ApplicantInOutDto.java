@@ -10,153 +10,152 @@ import lombok.Data;
 
 @Data
 public class ApplicantInOutDto {
-	
-	//Applicant Id Pk
+
+	// Applicant Id Pk
 	public int applicantIdPk;
-	
-	//Result
+
+	// Result
 	public String result;
-	
-	//Error
+
+	// Error
 	public ErrorObj error;
-	
-	//Email
+
+	// Email
 	public String email;
-	
-	//Agree 
+
+	// Agree
 	public Boolean agreeFlg;
-	
-	//Title
+
+	// Title
 	public String projectTitle;
-	
-	//Description
+
+	// Description
 	public String projectDescription;
-	
-	//Teams
+
+	// Teams
 	public List<String[]> teams;
-	
-	//Problem Statement
+
+	// Problem Statement
 	public String problemStatement;
-	
-	//Target Market
+
+	// Target Market
 	public String targetMarket;
-	
-	//Solution Description
+
+	// Solution Description
 	public String solutionDescription;
-	
-	//Historical Timeline
+
+	// Historical Timeline
 	public List<String[]> historicalTimeline;
-	
-	//Product Service Offering
+
+	// Product Service Offering
 	public List<String> productServiceOffering;
-	
-	//Pricing Strategy
+
+	// Pricing Strategy
 	public List<String> pricingStrategy;
-	
-	//Intellectual Property Status
+
+	// Intellectual Property Status
 	public String intPropertyStatus;
-	
-	//Objectives
+
+	// Objectives
 	public String objectives;
-	
-	//Scope of the proposal
+
+	// Scope of the proposal
 	public String scopeProposal;
-	
-	//Methodlogy
+
+	// Methodlogy
 	public String methodology;
-	
-	//Curriculum Vitae
+
+	// Curriculum Vitae
 	public MultipartFile vitaeFile;
 	public String vitaeFileName;
-	
-	//Support link
+
+	// Support link
 	public String supportLink;
-	
-	//Group Name
+
+	// Group Name
 	public String groupName;
-	
-	//Group Leader
+
+	// Group Leader
 	public String groupLeader;
-	
-	//Leader Mobile Numebr
+
+	// Leader Mobile Numebr
 	public String leaderNumber;
-	
-	//Leader email address
+
+	// Leader email address
 	public String leaderAddress;
-	
-	//Members;
+
+	// Members;
 	public List<String> members;
-	
-	//University
+
+	// University
 	public String university;
-	
-	//Technology Answer
+
+	// Technology Answer
 	public int technologyAns;
-	
-	//Product Development
+
+	// Product Development
 	public int productDevelopmentAns;
-	
-	//Competitive Landscape
+
+	// Competitive Landscape
 	public int CompetitiveLandscapeAns;
-	
-	//Product Development/design
+
+	// Product Development/design
 	public int productDesignAns;
-	
-	//Team Answer
+
+	// Team Answer
 	public int teamAns;
-	
-	//Go-To-Market
+
+	// Go-To-Market
 	public int goToMarketAns;
-	
-	//Manufacturing 
+
+	// Manufacturing
 	public int manufacturingAns;
-	
-	//Eligibility Agreement
+
+	// Eligibility Agreement
 	public Boolean eligibilityAgreeFlg;
-	
-	//Commitment One
+
+	// Commitment One
 	public Boolean commitmentOneFlg;
-	
-	//Commitment Two
+
+	// Commitment Two
 	public Boolean commitmentTwoFlg;
-	
-	//Commitment Three
+
+	// Commitment Three
 	public Boolean commitmentThreeFlg;
-	
-	//Commitment Four
+
+	// Commitment Four
 	public Boolean commitmentFourFlg;
-	
+
 	/*
 	 * Change Password
 	 */
-	
-	//Current Password
+
+	// Current Password
 	public String currentPassword;
-	
-	//New Password
+
+	// New Password
 	public String newPassword;
-	
-	//Confirm Password
+
+	// Confirm Password
 	public String confirmPassword;
-	
+
 	/*
 	 * Details
 	 */
-	
+
 	ApplicantDetailsObj applicantDetailsObj;
-	
+
 	/*
 	 * Resubmission
 	 */
 	public String token;
-	
+
 	public String feedback;
-	
+
 	public int status;
-	
+
 	public int score;
-	
-	
+
 	/*
 	 * Reapply
 	 */

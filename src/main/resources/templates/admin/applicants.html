@@ -169,16 +169,6 @@
         </table>
       </div>
     </div>
-    <!-- applicant details -->
-    <!-- <div class="modal" tabindex="-1" role="dialog" id="details-modal">
-      <div class="modal-dialog" role="document">
-        <div
-          th:replace="~{fragments/applicantdetails :: applicantDetailsFragment}"
-          class="modal-content"
-        ></div>
-      </div>
-    </div> -->
-
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -195,5 +185,72 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <script th:inline="javascript">
+      const webDto = /*[[${adminWebDto}]]*/ "";
+      console.log(webDto);
+      $(document).ready(function () {
+        $("#applicants-table").dataTable({
+          columnDefs: [
+            {
+              // targets: "no-sort",
+              // targets: [-1, -2],
+              // orderable: false,
+            },
+          ],
+          searching: true,
+          ordering: true,
+          info: true,
+          lengthChange: false,
+        });
+
+        // let btnRows = document.getElementsByClassName("btn-row");
+
+        // var rowBtnClicked = false;
+
+        // for (let btn of btnRows) {
+        //   btn.addEventListener("click", function () {
+        //     rowBtnClicked = true;
+        //     let idPk = this.getAttribute("data-id");
+        //     if (this.name === "feedback") {
+        //       let evaluated = document.querySelector(".evaluated");
+        //       let rejected = document.querySelector(".rejected");
+
+        //       webDto.listOfApplicants.forEach((applicant) => {
+        //         if (applicant.applicantIdPk == idPk) {
+        //           evaluated.style.display = "inline";
+        //           rejected.style.display = "none";
+        //           let score = document.querySelector(".score");
+        //           let feedback = document.querySelector(".evaluated-feedback");
+
+        //           if (applicant.status == 5) {
+        //             score.innerHTML =
+        //               "<p style='font-weight: 600; '>Score: </p>" +
+        //               applicant.score;
+        //           } else {
+        //             score.innerHTML = "";
+        //           }
+
+        //           feedback.innerHTML =
+        //             "<p style='font-weight: 600; '>Feedback: </p>" +
+        //             applicant.feedback;
+        //         }
+        //       });
+
+        //       $("#feedback-modal").modal("show");
+        //     }
+        //     setTimeout(() => {
+        //       rowBtnClicked = false;
+        //     }, 100);
+        //   });
+        // }
+      });
+    </script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>

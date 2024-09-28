@@ -7,85 +7,89 @@ import lombok.Data;
 @Data
 public class ApplicantDetailsObj {
 
-    public int applicantIdPk;
+    private int applicantIdPk;
 
-    public String email;
+    private String encryptedApplicantIdPk;
 
-    public Boolean agreeFlg;
+    private String email;
 
-    public String projectTitle;
+    private Boolean agreeFlg;
 
-    public String projectDescription;
+    private String projectTitle;
 
-    public List<String[]> teams;
+    private String projectDescription;
 
-    public String problemStatement;
+    private List<String[]> teams;
 
-    public String targetMarket;
+    private String problemStatement;
 
-    public String solutionDescription;
+    private String targetMarket;
 
-    public List<String[]> historicalTimeline;
+    private String solutionDescription;
 
-    public String[] productServiceOffering;
+    private List<String[]> historicalTimeline;
 
-    public String[] pricingStrategy;
+    private String[] productServiceOffering;
 
-    public String intPropertyStatus;
+    private String[] pricingStrategy;
 
-    public String objectives;
+    private String intPropertyStatus;
 
-    public String scopeProposal;
+    private String objectives;
 
-    public String methodology;
+    private String scopeProposal;
 
-    public String vitaeFile;
+    private String methodology;
 
-    public String supportLink;
+    private String vitaeFile;
 
-    public String groupName;
+    private String supportLink;
 
-    public String leaderFirstName;
+    private String groupName;
 
-    public String leaderLastName;
+    private String leaderFirstName;
 
-    public String mobileNumber;
+    private String leaderLastName;
 
-    public String address;
+    private String mobileNumber;
 
-    public String university;
+    private String address;
 
-    public String[] members;
+    private String university;
 
-    public int technologyAns;
+    private String[] members;
 
-    public int productDevelopmentAns;
+    private int technologyAns;
 
-    public int competitiveLandscapeAns;
+    private int productDevelopmentAns;
 
-    public int productDesignAns;
+    private int competitiveLandscapeAns;
 
-    public int teamAns;
+    private int productDesignAns;
 
-    public int goToMarketAns;
+    private int teamAns;
 
-    public int manufacturingAns;
+    private int goToMarketAns;
 
-    public Boolean eligibilityAgreeFlg;
+    private int manufacturingAns;
 
-    public Boolean commitmentOneFlg;
+    private Boolean eligibilityAgreeFlg;
 
-    public Boolean commitmentTwoFlg;
+    private Boolean commitmentOneFlg;
 
-    public Boolean commitmentThreeFlg;
+    private Boolean commitmentTwoFlg;
 
-    public Boolean commitmentFourFlg;
+    private Boolean commitmentThreeFlg;
 
-    public int status;
+    private Boolean commitmentFourFlg;
 
-    public int score;
+    private int status;
 
-    public String feedback;
+    private int score;
 
-    public String certificateName;
+    private String feedback;
+
+    private String certificateName;
+
+    private int totalRating;
 }

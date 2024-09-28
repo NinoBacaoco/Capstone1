@@ -10,6 +10,8 @@ public class ApplicantObj {
     // Applicant Id
     public int applicantIdPk;
 
+    public String encryptedApplicantIdPk;
+
     // Id
     public String email;
 
@@ -19,7 +21,7 @@ public class ApplicantObj {
 
     public String university;
 
-    public int score;
+    public int totalRating;
 
     public String feedback;
 

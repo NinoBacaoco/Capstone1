@@ -8,9 +8,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Scope("prototype")
-public class ApplicantDetailsEntity {
-
-    public ApplicantDetailsEntity(Object[] objects) {
+public class ApplicantDetailsFeedbackEntity {
+    public ApplicantDetailsFeedbackEntity(Object[] objects) {
         this(
                 (Integer) objects[0],
                 (String) objects[1],
@@ -51,8 +50,43 @@ public class ApplicantDetailsEntity {
                 (Boolean) objects[36],
                 (Boolean) objects[37],
                 (Integer) objects[38],
-                (String) objects[39],
-                (Integer) objects[40]);
+                (String) objects[39], // asd
+                (Boolean) objects[40],
+                (String) objects[41],
+                (Boolean) objects[42],
+                (String) objects[43],
+                (Boolean) objects[44],
+                (String) objects[45],
+                (Boolean) objects[46],
+                (String) objects[47],
+                (Boolean) objects[48],
+                (String) objects[49],
+                (Boolean) objects[50],
+                (String) objects[51],
+                (Boolean) objects[52],
+                (String) objects[53],
+                (Boolean) objects[54],
+                (String) objects[55],
+                (Boolean) objects[56],
+                (String) objects[57],
+                (String) objects[58], // end of officer
+                (Integer) objects[59],
+                (String) objects[60],
+                (Integer) objects[61],
+                (String) objects[62],
+                (Integer) objects[63],
+                (String) objects[64],
+                (Integer) objects[65],
+                (String) objects[66],
+                (Integer) objects[67],
+                (String) objects[68],
+                (Integer) objects[69],
+                (String) objects[70],
+                (Integer) objects[71],
+                (String) objects[72],
+                (Integer) objects[73],
+                (String) objects[74],
+                (String) objects[75]);
     }
 
     private int applicantIdPk;
@@ -135,5 +169,75 @@ public class ApplicantDetailsEntity {
 
     private String certificateName;
 
-    private int totalRating;
+    private Boolean oCtOneFlg;
+
+    private String oCtOneComments;
+
+    private Boolean oCtTwoFlg;
+
+    private String oCtTwoComments;
+
+    private Boolean oCtThreeFlg;
+
+    private String oCtThreeComments;
+
+    private Boolean oCtFourFlg;
+
+    private String oCtFourComments;
+
+    private Boolean oCtFiveFlg;
+
+    private String oCtFiveComments;
+
+    private Boolean oCtSixFlg;
+
+    private String oCtSixComments;
+
+    private Boolean oCtSevenFlg;
+
+    private String oCtSevenComments;
+
+    private Boolean oCtEightFlg;
+
+    private String oCtEightComments;
+
+    private Boolean oCtNineFlg;
+
+    private String oCtNineComments;
+
+    private String recommendation;
+
+    private int tCtOneRating;
+
+    private String tCtOneComments;
+
+    private int tCtTwoRating;
+
+    private String tCtTwoComments;
+
+    private int tCtThreeRating;
+
+    private String tCtThreeComments;
+
+    private int tCtFourRating;
+
+    private String tCtFourComments;
+
+    private int tCtFiveRating;
+
+    private String tCtFiveComments;
+
+    private int tCtSixRating;
+
+    private String tCtSixComments;
+
+    private int tCtSevenRating;
+
+    private String tCtSevenComments;
+
+    private int tCtEightRating;
+
+    private String tCtEightComments;
+
+    private String tbiFeedback;
 }

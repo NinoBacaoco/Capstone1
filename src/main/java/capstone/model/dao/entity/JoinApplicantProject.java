@@ -9,35 +9,33 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Scope("prototype")
 public class JoinApplicantProject {
+	
+	public JoinApplicantProject(Object[] objects) {
+		this(
+			(Integer) objects[0],
+			(String) objects[1],
+			(String) objects[2],
+			(Integer) objects[3],
+			(String) objects[4],
+			(Integer) objects[5],
+			(String) objects[6],
+			(String) objects[7]
+		);
+	}
+	
+	public int applicantIdPk;
+	
+	public String email;
+	
+	public String projectTitle;
 
-    public JoinApplicantProject(Object[] objects) {
-        this(
-                (Integer) objects[0],
-                (String) objects[1],
-                (String) objects[2],
-                (Integer) objects[3],
-                (String) objects[4],
-                (Integer) objects[5],
-                (String) objects[6],
-                (String) objects[7],
-                (String) objects[8]);
-    }
-
-    public int applicantIdPk;
-
-    public String email;
-
-    public String projectTitle;
-
-    public int status;
-
-    public String university;
-
-    public int score;
-
-    public String feedback;
-
-    public String acceptedBy;
-
-    public String evaluatedBy;
+	public int status;
+	
+	public String university;
+	
+	public int totalRating;
+	
+	public String acceptedBy;
+	
+	public String evaluatedBy;
 }

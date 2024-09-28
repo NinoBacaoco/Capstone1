@@ -4,145 +4,155 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
+import capstone.model.dao.entity.PrescreenDetailsEntity;
 import capstone.model.object.ApplicantDetailsObj;
+import capstone.model.object.ApplicantOfficerFeedbackObj;
+import capstone.model.object.ApplicantTbiFeedbackObj;
 import capstone.model.object.ErrorObj;
 import lombok.Data;
 
 @Data
 public class ApplicantWebDto {
 
-    // Email
-    public String email;
+        // Email
+        private String email;
 
-    // Agree
-    public Boolean agreeFlg;
+        // Agree
+        private Boolean agreeFlg;
 
-    // Title
-    public String projectTitle;
+        // Title
+        private String projectTitle;
 
-    // Description
-    public String projectDescription;
+        // Description
+        private String projectDescription;
 
-    // Teams
-    public List<String[]> teams = List.of(new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" });
+        // Teams
+        private List<String[]> teams = List.of(new String[] { "", "" }, new String[] { "", "" },
+                        new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" });
 
-    // Problem Statement
-    public String problemStatement;
+        // Problem Statement
+        private String problemStatement;
 
-    // Target Market
-    public String targetMarket;
+        // Target Market
+        private String targetMarket;
 
-    // Solution Description
-    public String solutionDescription;
+        // Solution Description
+        private String solutionDescription;
 
-    // Historical Timeline
-    public List<String[]> historicalTimeline = List.of(new String[] { "", "" }, new String[] { "", "" },
-            new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" });
+        // Historical Timeline
+        private List<String[]> historicalTimeline = List.of(new String[] { "", "" }, new String[] { "", "" },
+                        new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" });
 
-    // Product Service Offering
-    public List<String> productServiceOffering = new ArrayList<>(Arrays.asList("", "", "", ""));
+        // Product Service Offering
+        private List<String> productServiceOffering = new ArrayList<>(Arrays.asList("", "", "", ""));
 
-    // Pricing Strategy
-    public List<String> pricingStrategy = new ArrayList<>(Arrays.asList("", "", "", ""));
+        // Pricing Strategy
+        private List<String> pricingStrategy = new ArrayList<>(Arrays.asList("", "", "", ""));
 
-    // Intellectual Property Status
-    public String intPropertyStatus;
+        // Intellectual Property Status
+        private String intPropertyStatus;
 
-    // Objectives
-    public String objectives;
+        // Objectives
+        private String objectives;
 
-    // Scope of the proposal
-    public String scopeProposal;
+        // Scope of the proposal
+        private String scopeProposal;
 
-    // Methodlogy
-    public String methodology;
+        // Methodlogy
+        private String methodology;
 
-    // //Curriculum Vitae
-    public String vitaeFileName;
+        // //Curriculum Vitae
+        private String vitaeFileName;
 
-    // Support link
-    public String supportLink;
+        // Support link
+        private String supportLink;
 
-    // Group Name
-    public String groupName;
+        // Group Name
+        private String groupName;
 
-    // Group Leader
-    public String groupLeader;
+        // Group Leader
+        private String groupLeader;
 
-    // Leader Mobile Numebr
-    public String leaderNumber;
+        // Leader Mobile Numebr
+        private String leaderNumber;
 
-    // Leader email address
-    public String leaderAddress;
+        // Leader email address
+        private String leaderAddress;
 
-    // Members;
-    public List<String> members = new ArrayList<>(Arrays.asList("", "", "", "", ""));
+        // Members;
+        private List<String> members = new ArrayList<>(Arrays.asList("", "", "", "", ""));
 
-    // University
-    public String university;
+        // University
+        private String university;
 
-    // Technology Answer
-    public int technologyAns;
+        // Technology Answer
+        private int technologyAns;
 
-    // Product Development
-    public int productDevelopmentAns;
+        // Product Development
+        private int productDevelopmentAns;
 
-    // Competitive Landscape
-    public int CompetitiveLandscapeAns;
+        // Competitive Landscape
+        private int CompetitiveLandscapeAns;
 
-    // Product Development/design
-    public int productDesignAns;
+        // Product Development/design
+        private int productDesignAns;
 
-    // Team Answer
-    public int teamAns;
+        // Team Answer
+        private int teamAns;
 
-    // Go-To-Market
-    public int goToMarketAns;
+        // Go-To-Market
+        private int goToMarketAns;
 
-    // Manufacturing
-    public int manufacturingAns;
+        // Manufacturing
+        private int manufacturingAns;
 
-    // Eligibility Agreement
-    public Boolean eligibilityAgreeFlg;
+        // Eligibility Agreement
+        private Boolean eligibilityAgreeFlg;
 
-    // Commitment One
-    public Boolean commitmentOneFlg;
+        // Commitment One
+        private Boolean commitmentOneFlg;
 
-    // Commitment Two
-    public Boolean commitmentTwoFlg;
+        // Commitment Two
+        private Boolean commitmentTwoFlg;
 
-    // Commitment Three
-    public Boolean commitmentThreeFlg;
+        // Commitment Three
+        private Boolean commitmentThreeFlg;
 
-    // Commitment Four
-    public Boolean commitmentFourFlg;
+        // Commitment Four
+        private Boolean commitmentFourFlg;
 
-    // Feedback
-    public String feedback;
+        // Feedback
+        private String feedback;
 
-    // Token
-    public String token;
+        // Token
+        private String token;
 
-    // Re apply token
-    public String reApplyToken;
+        // Re apply token
+        private String reApplyToken;
 
-    /*
-     * Change Password
-     */
+        private Boolean onlyOfficer;
 
-    // Current Password
-    public String currentPassword;
+        private Boolean bothFeedback;
 
-    // New Password
-    public String newPassword;
+        private ApplicantOfficerFeedbackObj appOffFeedbackObj;
 
-    // Confirm Password
-    public String confirmPassword;
+        private ApplicantTbiFeedbackObj applicantTbiFeedbackObj;
 
-    public ApplicantDetailsObj applicantDetailsObj;
+        /*
+         * Change Password
+         */
 
-    public ErrorObj error;
+        // Current Password
+        private String currentPassword;
+
+        // New Password
+        private String newPassword;
+
+        // Confirm Password
+        private String confirmPassword;
+
+        private ApplicantDetailsObj applicantDetailsObj;
+
+        private ErrorObj error;
 
 }

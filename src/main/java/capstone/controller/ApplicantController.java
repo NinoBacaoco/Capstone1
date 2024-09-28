@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import capstone.common.constant.CommonConstant;
+import capstone.common.constant.MessageConstant;
 import capstone.controller.webdto.ApplicantWebDto;
 import capstone.model.dto.ApplicantInOutDto;
 import capstone.model.service.ApplicantService;
@@ -156,15 +157,18 @@ public class ApplicantController {
 
             if (!button.equals("resubmit")) {
                 if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
+                    System.out.println("REAPPLY");
                     return "redirect:/applicant/form?token=" + webDto.getReApplyToken();
                 }
+                System.out.println("WTF");
                 return "redirect:/applicant/form";
             } else {
+                System.out.println("RESUBMIT");
                 return "redirect:/applicant/form/resubmit?token=" + webDto.getToken();
             }
         }
 
-        applicantService.saveApplication(inDto);
+        // applicantService.saveApplication(inDto);
 
         if (!button.equals("resubmit")) {
             if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
@@ -242,7 +246,7 @@ public class ApplicantController {
 
         inDto.setToken(token);
 
-        ApplicantInOutDto outDto = applicantService.getApplicantDetailsByToken(inDto);
+        ApplicantInOutDto outDto = applicantService.getApplicantDetailsWithFeedbackByToken(inDto);
 
         webDto.setEmail(outDto.getEmail());
 
@@ -314,7 +318,13 @@ public class ApplicantController {
 
         webDto.setCommitmentFourFlg(outDto.getCommitmentFourFlg());
 
-        webDto.setFeedback(outDto.getFeedback());
+        webDto.setOnlyOfficer(outDto.getOnlyOfficerFeedback());
+
+        webDto.setBothFeedback(outDto.getBothFeedback());
+
+        webDto.setAppOffFeedbackObj(outDto.getAppOffFeedbackObj());
+
+        webDto.setApplicantTbiFeedbackObj(outDto.getApplicantTbiFeedbackObj());
 
         model.addAttribute("applicantWebDto", webDto);
 

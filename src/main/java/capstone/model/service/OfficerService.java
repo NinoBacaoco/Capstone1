@@ -13,7 +13,7 @@ public interface OfficerService {
      * 
      * @return OfficerInOutDto
      */
-    public OfficerInOutDto getAllApplicants();
+    public OfficerInOutDto getAllApplicants() throws Exception;
 
     /**
      * To accept an applicantion
@@ -21,7 +21,7 @@ public interface OfficerService {
      * @param inDto
      * @return OfficerInOutDto
      */
-    public OfficerInOutDto acceptApplicant(OfficerInOutDto inDto) throws MessagingException;
+    public void acceptApplicant(OfficerInOutDto inDto) throws MessagingException;
 
     /**
      * To reject an applicants
@@ -29,7 +29,7 @@ public interface OfficerService {
      * @param inDto
      * @return OfficerInOutDto
      */
-    public OfficerInOutDto rejectApplicant(OfficerInOutDto inDto) throws MessagingException;
+    public void rejectApplicant(OfficerInOutDto inDto) throws MessagingException;
 
     /**
      * To get the details of the application by id pk

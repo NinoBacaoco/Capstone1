@@ -7,13 +7,20 @@ import org.springframework.stereotype.Service;
 
 import capstone.model.dao.entity.AcceptedApplicantEntity;
 import capstone.model.dao.entity.ApplicantDetailsEntity;
+import capstone.model.dao.entity.ApplicantDetailsFeedbackEntity;
 import capstone.model.dao.entity.ApplicantEntity;
+import capstone.model.dao.entity.ApplicantMonthly;
 import capstone.model.dao.entity.EvaluatedApplicantEntity;
+import capstone.model.dao.entity.EvaluationDetailsEntity;
 import capstone.model.dao.entity.GroupEntity;
 import capstone.model.dao.entity.GroupMemberEntity;
 import capstone.model.dao.entity.JoinApplicantProject;
+import capstone.model.dao.entity.ManagerEvaluatedApplicantEntity;
+import capstone.model.dao.entity.ManagerEvaluationDetailsEntity;
+import capstone.model.dao.entity.PrescreenDetailsEntity;
 import capstone.model.dao.entity.ProjectEntity;
 import capstone.model.dao.entity.RejectedApplicantEntity;
+import capstone.model.dao.entity.UserCertificateEntity;
 
 @Service
 public interface ApplicantLogic {
@@ -68,7 +75,7 @@ public interface ApplicantLogic {
          * 
          * @param entity
          */
-        public void saveRejectedApplicantEntity(RejectedApplicantEntity entity);
+        public int saveRejectedApplicantEntity(RejectedApplicantEntity entity);
 
         /**
          * To get the details of the applicant
@@ -97,7 +104,7 @@ public interface ApplicantLogic {
          * 
          * @param entity
          */
-        public void saveEvaluateedApplicant(EvaluatedApplicantEntity entity);
+        public int saveEvaluateedApplicant(EvaluatedApplicantEntity entity);
 
         /**
          * TO get applicant by who created it
@@ -113,6 +120,14 @@ public interface ApplicantLogic {
          * @return RejectedApplicantEntity
          */
         public RejectedApplicantEntity getRejectedApplicantByToken(String token);
+
+        /**
+         * To get rejetced applicant by ID
+         * 
+         * @param idPk
+         * @return RejectedApplicantEntity
+         */
+        public RejectedApplicantEntity getRejectedApplicantById(int idPk);
 
         /**
          * To get project by applicant id
@@ -263,11 +278,39 @@ public interface ApplicantLogic {
          * 
          * @param entity
          */
-        public void saveAcceptedApplicantEntity(AcceptedApplicantEntity entity);
+        public int saveAcceptedApplicantEntity(AcceptedApplicantEntity entity);
 
         public void updatePreviousAcceptedApplicant(int applicantIdPk);
 
         public void updatePreviousRejectedApplicant(int applicantIdPk);
 
         public void updatePreviousEvaluatedApplicant(int applicantIdPk);
+
+        public void savePrescreenDetailsEntity(PrescreenDetailsEntity entity);
+
+        public void saveEvaluationDetailsEntity(EvaluationDetailsEntity entity);
+
+        public List<ApplicantMonthly> getApplicantOnTodayMonth();
+
+        public List<ApplicantMonthly> getApplicantRankingOnTodayMonth();
+
+        public List<ApplicantMonthly> getApplicantRankingByYearMonth(int month, int year);
+
+        public List<ApplicantDetailsFeedbackEntity> getApplicantDetailsWithFeedback(int idPk);
+
+        public UserCertificateEntity getUserInformationForCeritificate(int applicantIdPk);
+
+        public int saveManagerEvaluatedApplicant(ManagerEvaluatedApplicantEntity entity);
+
+        public void saveManagerEvaluationDetails(ManagerEvaluationDetailsEntity entity);
+
+        public PrescreenDetailsEntity getRejectedPrescreenDetailsByToken(String token);
+
+        public PrescreenDetailsEntity getAcceptedPrescreenDetailsByApplicantIdPk(int applicantIdPk);
+
+        public EvaluationDetailsEntity getEvaluationDetailsByToken(String token);
+
+        public EvaluatedApplicantEntity getEvaluatedApplicantById(int idPk);
+
+        public AcceptedApplicantEntity getAcceptedApplicantByApplicantIdPk(int applicantIdPk);
 }

@@ -71,7 +71,7 @@
 
       .error-container {
         position: absolute;
-        top: 50px;
+        top: 40px;
         left: 0;
         width: 100%;
         display: flex;
@@ -91,14 +91,41 @@
         background-color: #cccccc;
         color: #666666;
       }
+
+      .no-pad {
+        padding: 0 !important;
+      }
+
+      .error {
+        padding-left: 20px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #dc143c;
+      }
     </style>
   </head>
-  <body class="font-secondary">
-    <div class="error-container" id="globalError" style="display: none">
+  <body
+    class="font-secondary bg-gradient-to-r from-formbg-dark to-formbg-light"
+    th:object="${applicantWebDto}"
+  >
+    <img
+      th:src="@{/images/honeycomb.png}"
+      src="/Capstone1/Capstone-1/src/main/resources/static/images/honeycomb.png"
+      class="mix-blend-overlay absolute top-0 right-0 md:fixed pointer-events-none z-0"
+    />
+    <div class="error-container" th:if="*{error != null}">
       <div>Please fill out all required fields!</div>
     </div>
     <a href="/" class="floating-back-button">Back to login</a>
-    <form id="regForm" action="" class="rounded-lg">
+    <form
+      th:action="@{/applicant/form}"
+      method="POST"
+      id="regForm"
+      action=""
+      class="rounded-lg"
+      enctype="multipart/form-data"
+    >
+      <!-- page 1 -->
       <div class="tab">
         <div>
           <div class="flex justify-between">
@@ -133,6 +160,7 @@
               type="email"
               id="email"
               name="email"
+              th:value="*{email}"
               placeholder="Enter your email here"
               class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
             />
@@ -141,6 +169,12 @@
               id="emailError"
               style="color: red"
             ></span>
+            <div
+              class="error"
+              th:if="*{error != null} AND *{error.emailError != null}"
+            >
+              <div th:each="err : *{error.emailError}" th:text="${err}"></div>
+            </div>
           </div>
           <hr class="ml-6 mr-6 my-8" />
           <div class="relative">
@@ -205,6 +239,7 @@
                     id="agreeYes"
                     name="agreeFlg"
                     value="true"
+                    th:checked="*{agreeFlg != null AND agreeFlg}"
                   />
                   <span>I AGREE</span>
                 </label>
@@ -216,6 +251,7 @@
                     id="agreeNo"
                     name="agreeFlg"
                     value="false"
+                    th:checked="*{agreeFlg != null AND agreeFlg}"
                   />
                   <span>I DO NOT AGREE</span>
                 </label>
@@ -224,6 +260,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div
+        class="error"
+        th:if="*{error != null} AND *{error.agreeFlgError != null}"
+      >
+        <div th:text="*{error.agreeFlgError}"></div>
       </div>
 
       <!-- 2nd page -->
@@ -270,7 +312,7 @@
               A. Project Description<span class="text-red-600"> *</span>
             </h2>
             <textarea
-              oninput="this.className = ''"
+              oninput="this.className = 'resize-none mt-2 bg-white w-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm h-20 z-10'"
               type="text"
               placeholder="Type something here..."
               name="projectDescription"
@@ -313,6 +355,7 @@
                   <input
                     oninput="this.className = ''"
                     name="teams[0][0]"
+                    th:value="*{teams[0][0]}"
                     type="text"
                     placeholder="Last Name, First Name"
                     class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -324,6 +367,7 @@
                   <!-- th:value="*{teams[0][1]}" -->
                   <input
                     name="teams[0][1]"
+                    th:value="*{teams[0][1]}"
                     oninput="this.className = ''"
                     type="text"
                     placeholder="Input position/role"
@@ -336,7 +380,8 @@
                   <!-- th:value="*{teams[0][0]}" -->
                   <input
                     oninput="this.className = ''"
-                    name="teams[0][0]"
+                    name="teams[1][0]"
+                    th:value="*{teams[1][0]}"
                     type="text"
                     placeholder="Last Name, First Name"
                     class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -347,7 +392,8 @@
                 >
                   <!-- th:value="*{teams[0][1]}" -->
                   <input
-                    name="teams[0][1]"
+                    name="teams[1][1]"
+                    th:value="*{teams[1][1]}"
                     oninput="this.className = ''"
                     type="text"
                     placeholder="Input position/role"
@@ -360,7 +406,8 @@
                   <!-- th:value="*{teams[0][0]}" -->
                   <input
                     oninput="this.className = ''"
-                    name="teams[0][0]"
+                    name="teams[2][0]"
+                    th:value="*{teams[2][0]}"
                     type="text"
                     placeholder="Last Name, First Name"
                     class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -371,7 +418,8 @@
                 >
                   <!-- th:value="*{teams[0][1]}" -->
                   <input
-                    name="teams[0][1]"
+                    name="teams[2][1]"
+                    th:value="*{teams[2][1]}"
                     oninput="this.className = ''"
                     type="text"
                     placeholder="Input position/role"
@@ -384,7 +432,8 @@
                   <!-- th:value="*{teams[0][0]}" -->
                   <input
                     oninput="this.className = ''"
-                    name="teams[0][0]"
+                    name="teams[3][0]"
+                    th:value="*{teams[3][0]}"
                     type="text"
                     placeholder="Last Name, First Name"
                     class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -395,7 +444,8 @@
                 >
                   <!-- th:value="*{teams[0][1]}" -->
                   <input
-                    name="teams[0][1]"
+                    name="teams[3][1]"
+                    th:value="*{teams[3][1]}"
                     oninput="this.className = ''"
                     type="text"
                     placeholder="Input position/role"
@@ -408,7 +458,8 @@
                   <!-- th:value="*{teams[0][0]}" -->
                   <input
                     oninput="this.className = ''"
-                    name="teams[0][0]"
+                    name="teams[4][0]"
+                    th:value="*{teams[4][0]}"
                     type="text"
                     placeholder="Last Name, First Name"
                     class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -419,7 +470,8 @@
                 >
                   <!-- th:value="*{teams[0][1]}" -->
                   <input
-                    name="teams[0][1]"
+                    name="teams[4][1]"
+                    th:value="*{teams[4][1]}"
                     oninput="this.className = ''"
                     type="text"
                     placeholder="Input position/role"
@@ -444,7 +496,7 @@
                 1. Problem Statement<span class="text-red-600"> *</span>
               </p>
               <textarea
-                oninput="this.className = ''"
+                oninput="this.className = 'resize-none mt-2 bg-white w-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm h-20 z-10'"
                 placeholder="Type something here..."
                 name="problemStatement"
                 th:text="*{problemStatement}"
@@ -454,6 +506,15 @@
                 • Maximum of 200 words<br />
                 • Provide the context of the problem.
               </small>
+              <div
+                class="error no-pad"
+                th:if="*{error != null} AND *{error.problemStatementError != null}"
+              >
+                <div
+                  th:each="err : *{error.problemStatementError}"
+                  th:text="${err}"
+                ></div>
+              </div>
               <div>
                 <p class="text-sm mt-4">
                   2. Target Market<span class="text-red-600"> *</span>
@@ -510,15 +571,6 @@
                   ></div>
                 </div>
               </div>
-              <div
-                class="error no-pad"
-                th:if="*{error != null} AND *{error.problemStatementError != null}"
-              >
-                <div
-                  th:each="err : *{error.problemStatementError}"
-                  th:text="${err}"
-                ></div>
-              </div>
             </div>
             <hr class="my-4" />
 
@@ -549,6 +601,7 @@
                         oninput="this.className = 'w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1'"
                         type="text"
                         name="historicalTimeline[0][0]"
+                        th:value="*{historicalTimeline[0][0]}"
                         placeholder="mm/yyyy"
                         class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                       />
@@ -560,6 +613,7 @@
                         type="text"
                         oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="historicalTimeline[0][1]"
+                        th:text="*{historicalTimeline[0][1]}"
                         placeholder="Enter key activities or milestones here"
                         class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -572,6 +626,7 @@
                         oninput="this.className = 'w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1'"
                         type="text"
                         name="historicalTimeline[1][0]"
+                        th:value="*{historicalTimeline[1][0]}"
                         placeholder="mm/yyyy"
                         class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                       />
@@ -582,6 +637,7 @@
                         type="text"
                         oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="historicalTimeline[1][1]"
+                        th:text="*{historicalTimeline[1][1]}"
                         placeholder="Enter key activities or milestones here"
                         class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -594,6 +650,7 @@
                         oninput="this.className = 'w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1'"
                         type="text"
                         name="historicalTimeline[2][0]"
+                        th:value="*{historicalTimeline[2][0]}"
                         placeholder="mm/yyyy"
                         class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                       />
@@ -604,6 +661,7 @@
                         type="text"
                         oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="historicalTimeline[2][1]"
+                        th:text="*{historicalTimeline[2][1]}"
                         placeholder="Enter key activities or milestones here"
                         class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -616,6 +674,7 @@
                         oninput="this.className = 'w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1'"
                         type="text"
                         name="historicalTimeline[3][0]"
+                        th:value="*{historicalTimeline[3][0]}"
                         placeholder="mm/yyyy"
                         class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                       />
@@ -626,6 +685,7 @@
                         type="text"
                         oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="historicalTimeline[3][1]"
+                        th:text="*{historicalTimeline[3][1]}"
                         placeholder="Enter key activities or milestones here"
                         class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -638,6 +698,7 @@
                         oninput="this.className = 'w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1'"
                         type="text"
                         name="historicalTimeline[4][0]"
+                        th:value="*{historicalTimeline[4][0]}"
                         placeholder="mm/yyyy"
                         class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                       />
@@ -648,6 +709,7 @@
                         type="text"
                         oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="historicalTimeline[4][1]"
+                        th:text="*{historicalTimeline[4][1]}"
                         placeholder="Enter key activities or milestones here"
                         class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -714,32 +776,36 @@
                     <td class="border border-gray-500 px-2 py-2">
                       <!-- oninput="this.className = ''" -->
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="productServiceOffering[0]"
+                        th:text="*{productServiceOffering[0]}"
                         placeholder="Enter product/service offering"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="productServiceOffering[1]"
+                        th:text="*{productServiceOffering[1]}"
                         placeholder="Enter product/service offering"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="productServiceOffering[2]"
+                        th:text="*{productServiceOffering[2]}"
                         placeholder="Enter product/service offering"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="productServiceOffering[3]"
+                        th:text="*{productServiceOffering[3]}"
                         placeholder="Enter product/service offering"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -753,32 +819,36 @@
                     </th>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="pricingStrategy[0]"
+                        th:text="*{pricingStrategy[0]}"
                         placeholder="Enter pricing strategy"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="pricingStrategy[1]"
+                        th:text="*{pricingStrategy[1]}"
                         placeholder="Enter pricing strategy"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="pricingStrategy[2]"
+                        th:text="*{pricingStrategy[2]}"
                         placeholder="Enter pricing strategy"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
                     </td>
                     <td class="border border-gray-500 px-2 py-2">
                       <textarea
-                        oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
+                        oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                         name="pricingStrategy[3]"
+                        th:text="*{pricingStrategy[3]}"
                         placeholder="Enter pricing strategy"
                         class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                       ></textarea>
@@ -786,15 +856,15 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div
+              class="error no-pad"
+              th:if="*{error != null} AND *{error.productServiceOfferingError != null}"
+            >
               <div
-                class="error no-pad"
-                th:if="*{error != null} AND *{error.productServiceOfferingError != null}"
-              >
-                <div
-                  th:each="err : *{error.productServiceOfferingError}"
-                  th:text="${err}"
-                ></div>
-              </div>
+                th:each="err : *{error.productServiceOfferingError}"
+                th:text="${err}"
+              ></div>
             </div>
             <hr class="my-4" />
 
@@ -806,10 +876,11 @@
 
               <!-- th:value="*{intPropertyStatus}" -->
               <textarea
-                oninput="this.className = ''"
+                oninput="this.className = 'resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                 type="text"
                 placeholder="Type something here..."
                 name="intPropertyStatus"
+                th:value="*{intPropertyStatus}"
                 class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
               ></textarea>
             </div>
@@ -826,7 +897,7 @@
               A. Objectives<span class="text-red-600"> *</span>
             </h2>
             <textarea
-              oninput="this.className = ''"
+              oninput="this.className = 'resize-none mt-2 bg-white w-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm h-20 z-10'"
               type="text"
               placeholder="Type something here..."
               name="objectives"
@@ -946,7 +1017,7 @@
           >
             <h2 class="text-black mb-3">
               Links to any supporting materials
-              <span class="text-red-600"> *</span>
+              <!-- <span class="text-red-600"> *</span> -->
             </h2>
             <input
               type="text"
@@ -966,21 +1037,23 @@
           Group Info
         </h1>
         <div>
-          <div
-            class="flex flex-col ml-6 w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
-          >
-            <h2 class="text-black mb-3">
-              Group Name<span class="text-red-600"> *</span>
-            </h2>
-            <input
-              type="text"
-              required
-              oninput="this.className = ''"
-              placeholder="Input here"
-              name="groupName"
-              th:value="*{groupName}"
-              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-            />
+          <div class="ml-6">
+            <div
+              class="flex flex-col w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+            >
+              <h2 class="text-black mb-3">
+                Group Name<span class="text-red-600"> *</span>
+              </h2>
+              <input
+                type="text"
+                required
+                oninput="this.className = ''"
+                placeholder="Input here"
+                name="groupName"
+                th:value="*{groupName}"
+                class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+              />
+            </div>
             <div
               class="error no-pad"
               th:if="*{error != null} AND *{error.groupNameError != null}"
@@ -992,25 +1065,27 @@
             </div>
           </div>
           <hr class="my-4" />
-          <div
-            class="flex flex-col ml-6 w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
-          >
-            <h2 class="text-black mb-3">
-              Team Leader - Team Member 1 (Last Name, First Name)<span
-                class="text-red-600"
-              >
-                *</span
-              >
-            </h2>
-            <input
-              type="text"
-              required
-              oninput="this.className = ''"
-              placeholder="Input here"
-              name="groupLeader"
-              th:value="*{groupLeader}"
-              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-            />
+          <div class="ml-6">
+            <div
+              class="flex flex-col w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+            >
+              <h2 class="text-black mb-3">
+                Team Leader - Team Member 1 (Last Name, First Name)<span
+                  class="text-red-600"
+                >
+                  *</span
+                >
+              </h2>
+              <input
+                type="text"
+                required
+                oninput="this.className = ''"
+                placeholder="Input here"
+                name="groupLeader"
+                th:value="*{groupLeader}"
+                class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+              />
+            </div>
             <div
               class="error no-pad"
               th:if="*{error != null} AND *{error.groupLeaderError != null}"
@@ -1022,22 +1097,24 @@
             </div>
           </div>
           <hr class="my-4" />
-          <div
-            class="flex flex-col ml-6 w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
-          >
-            <h2 class="text-black mb-3">
-              Team Leader's <strong> Mobile Number </strong>
-              <span class="text-red-600"> *</span>
-            </h2>
-            <input
-              type="text"
-              required
-              oninput="this.className = ''"
-              placeholder="Input here"
-              name="leaderNumber"
-              th:value="*{leaderNumber}"
-              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-            />
+          <div class="ml-6">
+            <div
+              class="flex flex-col w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+            >
+              <h2 class="text-black mb-3">
+                Team Leader's <strong> Mobile Number </strong>
+                <span class="text-red-600"> *</span>
+              </h2>
+              <input
+                type="text"
+                required
+                oninput="this.className = ''"
+                placeholder="Input here"
+                name="leaderNumber"
+                th:value="*{leaderNumber}"
+                class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+              />
+            </div>
             <div
               class="error no-pad"
               th:if="*{error != null} AND *{error.leaderNumberError != null}"
@@ -1049,23 +1126,25 @@
             </div>
           </div>
           <hr class="my-4" />
-          <div
-            class="flex flex-col ml-6 w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
-          >
-            <h2 class="text-black mb-3">
-              Team Leader's
-              <strong> Email Address </strong>
-              <span class="text-red-600"> *</span>
-            </h2>
-            <!-- th:value="*{leaderAddress}" -->
-            <input
-              type="text"
-              required
-              oninput="this.className = ''"
-              placeholder="Input here"
-              name="leaderAddress"
-              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-            />
+          <div class="ml-6">
+            <div
+              class="flex flex-col w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+            >
+              <h2 class="text-black mb-3">
+                Team Leader's
+                <strong>Address </strong>
+                <span class="text-red-600"> *</span>
+              </h2>
+              <!-- th:value="*{leaderAddress}" -->
+              <input
+                type="text"
+                required
+                oninput="this.className = ''"
+                placeholder="Input here"
+                name="leaderAddress"
+                class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+              />
+            </div>
             <div
               class="error no-pad"
               th:if="*{error != null} AND *{error.leaderAddressError != null}"
@@ -1287,7 +1366,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.technologyAnsError != null}"
           >
             <div th:text="*{error.technologyAnsError}"></div>
@@ -1368,7 +1447,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.productDevelopmentAnsError != null}"
           >
             <div th:text="*{error.productDevelopmentAnsError}"></div>
@@ -1455,7 +1534,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.competitiveLandscapeAnsError != null}"
           >
             <div th:text="*{error.competitiveLandscapeAnsError}"></div>
@@ -1538,7 +1617,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.productDesignAnsError != null}"
           >
             <div th:text="*{error.productDesignAnsError}"></div>
@@ -1622,7 +1701,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.teamAnsError != null}"
           >
             <div th:text="*{error.teamAnsError}"></div>
@@ -1706,7 +1785,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.goToMarketAnsError != null}"
           >
             <div th:text="*{error.goToMarketAnsError}"></div>
@@ -1788,7 +1867,7 @@
             </div>
           </div>
           <div
-            class="error no-pad"
+            class="error"
             th:if="*{error != null} AND *{error.manufacturingAnsError != null}"
           >
             <div th:text="*{error.manufacturingAnsError}"></div>
@@ -1802,16 +1881,16 @@
         >
           Eligibility and Agreement:
         </h1>
-        <div>
+        <div class="ml-6">
           <div
             class="pt-3 flex flex-col w-full relative border-gray-200 bg-transparent focus-within:border-blue-600"
           >
-            <h2 class="text-black ml-6 pr-3">
+            <h2 class="text-black pr-3">
               I confirm that I have read, understood, and agree to comply with
               the eligibility criteria and rules of LaunchLab program.
             </h2>
           </div>
-          <div class="ml-6 pr-2 text-sm">
+          <div class="pr-2 text-sm">
             <div class="flex flex-row items-center">
               <label class="cursor-pointer flex items-center">
                 <input
@@ -2093,11 +2172,9 @@
         <span class="step"></span>
         <span class="step"></span>
       </div>
+      <input type="hidden" name="button" value="submit" />
     </form>
     <script>
-      // Set this to true for development mode, false for production
-      const DEVELOPMENT_MODE = true;
-
       var currentTab = 0;
       showTab(currentTab);
 
@@ -2118,31 +2195,47 @@
 
         // Scroll to the top of the page
         window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Check agreements and commitments on the relevant tabs
+        if (n === 0) {
+          // First page agreement
+          checkAgreement();
+        } else if (n === 4) {
+          // Assuming the eligibility agreement is on the 5th tab (index 4)
+          checkEligibilityAgreement();
+        } else if (n === 5) {
+          // Assuming the commitment verification is on the 6th tab (index 5)
+          checkCommitmentVerification();
+        } else {
+          // Enable the Next button for all other tabs
+          updateNextButtonAppearance(false);
+        }
       }
 
       function nextPrev(n) {
         var x = document.getElementsByClassName("tab");
 
-        // In development mode, skip validation
-        if (DEVELOPMENT_MODE || (n === 1 && validateForm())) {
+        // Check if it's the submit button on the last tab
+        if (currentTab === x.length - 1 && n === 1) {
+          if (validateForm()) {
+            // Submit the form
+            document.getElementById("regForm").submit();
+          }
+          return; // Stop here to prevent moving to a non-existent next tab
+        }
+
+        // For other tabs, proceed as before
+        if (validateForm()) {
           x[currentTab].style.display = "none";
           currentTab += n;
           if (currentTab >= x.length) {
-            // For development, just go back to the first tab instead of submitting
-            if (DEVELOPMENT_MODE) {
-              currentTab = 0;
-            } else {
-              document.getElementById("regForm").submit();
-              return false;
-            }
+            currentTab = x.length - 1; // Ensure we don't go past the last tab
           }
           showTab(currentTab);
         }
       }
 
       function validateForm() {
-        if (DEVELOPMENT_MODE) return true; // Skip validation in development mode
-
         const emailInput = document.getElementById("email");
         const emailError = document.getElementById("emailError");
         const radioButtons = document.getElementsByName("agreeFlg");
@@ -2186,147 +2279,84 @@
         x[n].className += " active";
       }
 
-      function updateNextButtonAppearance(isDisagreed) {
+      function updateNextButtonAppearance(isDisabled) {
         const nextBtn = document.getElementById("nextBtn");
-        if (isDisagreed) {
+        if (isDisabled) {
           nextBtn.classList.add("disagreed");
+          nextBtn.disabled = true;
         } else {
           nextBtn.classList.remove("disagreed");
+          nextBtn.disabled = false;
         }
       }
 
-      // Add event listeners to radio buttons
-      document.getElementsByName("agreeFlg").forEach((radio) => {
-        radio.addEventListener("change", function () {
-          updateNextButtonAppearance(this.value === "false");
+      function checkAgreement() {
+        const agreeRadios = document.getElementsByName("agreeFlg");
+        agreeRadios.forEach((radio) => {
+          radio.addEventListener("change", function () {
+            updateNextButtonAppearance(this.value === "false");
+          });
         });
-      });
 
-      // Initial state: button is in normal state
-      updateNextButtonAppearance(false);
-
-      // Add development mode indicator
-      if (DEVELOPMENT_MODE) {
-        const devModeIndicator = document.createElement("div");
-        devModeIndicator.textContent = "Development Mode";
-        devModeIndicator.style.position = "fixed";
-        devModeIndicator.style.top = "10px";
-        devModeIndicator.style.right = "10px";
-        devModeIndicator.style.backgroundColor = "yellow";
-        devModeIndicator.style.padding = "5px";
-        devModeIndicator.style.borderRadius = "5px";
-        document.body.appendChild(devModeIndicator);
+        // Initial check
+        const disagreementRadio = Array.from(agreeRadios).find(
+          (radio) => radio.checked && radio.value === "false"
+        );
+        updateNextButtonAppearance(!!disagreementRadio);
       }
+
+      function checkEligibilityAgreement() {
+        const eligibilityRadios = document.getElementsByName(
+          "eligibilityAgreeFlg"
+        );
+        eligibilityRadios.forEach((radio) => {
+          radio.addEventListener("change", function () {
+            updateNextButtonAppearance(this.value === "false");
+          });
+        });
+
+        // Initial check
+        const disagreementRadio = Array.from(eligibilityRadios).find(
+          (radio) => radio.checked && radio.value === "false"
+        );
+        updateNextButtonAppearance(!!disagreementRadio);
+      }
+
+      function checkCommitmentVerification() {
+        const commitmentQuestions = [
+          "commitmentOneFlg",
+          "commitmentTwoFlg",
+          "commitmentThreeFlg",
+          "commitmentFourFlg",
+        ];
+
+        function checkAllCommitments() {
+          const anyNoSelected = commitmentQuestions.some((question) => {
+            const radios = document.getElementsByName(question);
+            return Array.from(radios).find(
+              (radio) => radio.checked && radio.value === "false"
+            );
+          });
+          updateNextButtonAppearance(anyNoSelected);
+        }
+
+        commitmentQuestions.forEach((question) => {
+          const radios = document.getElementsByName(question);
+          radios.forEach((radio) => {
+            radio.addEventListener("change", checkAllCommitments);
+          });
+        });
+
+        // Initial check
+        checkAllCommitments();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAgreement();
+      });
+    </script>
+    <script th:inline="javascript">
+      console.log(/*[[${applicantWebDto}]]*/ "");
     </script>
   </body>
 </html>
-<!-- 
-*********DO NOT REMOVE THIS*********
-REPLACE THIS CODE TO THE SCRIPT ABOVE
-REPLACE THIS CODE TO THE SCRIPT ABOVE
-REPLACE THIS CODE TO THE SCRIPT ABOVE
-*********DO NOT REMOVE THIS*********
-
-
-<script>
-  var currentTab = 0;
-  showTab(currentTab);
-
-  function showTab(n) {
-    var x = document.getElementsByClassName("tab");
-    // Hide all tabs
-    for (var i = 0; i < x.length; i++) {
-      x[i].style.display = "none";
-    }
-    // Show the current tab
-    x[n].style.display = "block";
-    
-    // Update button display
-    document.getElementById("prevBtn").style.display = n === 0 ? "none" : "inline";
-    document.getElementById("nextBtn").innerHTML = n === x.length - 1 ? "Submit" : "Next";
-    
-    fixStepIndicator(n);
-    
-    // Scroll to the top of the current tab
-    x[n].scrollIntoView({ behavior: "smooth", block: "start" });
-
-        // Scroll to the top of the page
-        window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function nextPrev(n) {
-    var x = document.getElementsByClassName("tab");
-    if (n === 1 && !validateForm()) return false;
-    x[currentTab].style.display = "none";
-    currentTab += n;
-    if (currentTab >= x.length) {
-      document.getElementById("regForm").submit();
-      return false;
-    }
-    showTab(currentTab);
-  }
-
-  function validateForm() {
-    const emailInput = document.getElementById("email");
-    const emailError = document.getElementById("emailError");
-    const radioButtons = document.getElementsByName("agreeFlg");
-    const radioError = document.getElementById("radioError");
-
-    let isValid = true;
-
-    // Email validation
-    if (!emailInput.checkValidity()) {
-      emailError.textContent = "Please enter a valid email address.";
-      emailInput.focus();
-      isValid = false;
-    } else {
-      emailError.textContent = "";
-    }
-
-    // Agreement radio button validation
-    let isRadioChecked = false;
-    for (let radioButton of radioButtons) {
-      if (radioButton.checked) {
-        isRadioChecked = true;
-        break;
-      }
-    }
-    if (!isRadioChecked) {
-      radioError.textContent = "Please select an option.";
-      isValid = false;
-    } else {
-      radioError.textContent = "";
-    }
-
-    return isValid;
-  }
-
-  function fixStepIndicator(n) {
-    var i,
-      x = document.getElementsByClassName("step");
-    for (i = 0; i < x.length; i++) {
-      x[i].className = x[i].className.replace(" active", "");
-    }
-    x[n].className += " active";
-  }
-
-  function updateNextButtonAppearance(isDisagreed) {
-    const nextBtn = document.getElementById("nextBtn");
-    if (isDisagreed) {
-      nextBtn.classList.add("disagreed");
-    } else {
-      nextBtn.classList.remove("disagreed");
-    }
-  }
-
-  // Add event listeners to radio buttons
-  document.getElementsByName("agreeFlg").forEach((radio) => {
-    radio.addEventListener("change", function () {
-      updateNextButtonAppearance(this.value === "false");
-    });
-  });
-
-  // Initial state: button is in normal state
-  updateNextButtonAppearance(false);
-</script>
-   -->

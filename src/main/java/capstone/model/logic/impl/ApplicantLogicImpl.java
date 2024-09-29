@@ -8,19 +8,30 @@ import org.springframework.stereotype.Service;
 import capstone.model.dao.AcceptedApplicantDao;
 import capstone.model.dao.ApplicantDao;
 import capstone.model.dao.EvaluatedApplicantDao;
+import capstone.model.dao.EvaluationDetailsDao;
 import capstone.model.dao.GroupDao;
 import capstone.model.dao.GroupMemberDao;
+import capstone.model.dao.ManagerEvaluatedApplicantDao;
+import capstone.model.dao.ManagerEvaluationDetailsDao;
+import capstone.model.dao.PrescreenDetailsDao;
 import capstone.model.dao.ProjectDao;
 import capstone.model.dao.RejectedApplicantDao;
 import capstone.model.dao.entity.AcceptedApplicantEntity;
 import capstone.model.dao.entity.ApplicantDetailsEntity;
+import capstone.model.dao.entity.ApplicantDetailsFeedbackEntity;
 import capstone.model.dao.entity.ApplicantEntity;
+import capstone.model.dao.entity.ApplicantMonthly;
 import capstone.model.dao.entity.EvaluatedApplicantEntity;
+import capstone.model.dao.entity.EvaluationDetailsEntity;
 import capstone.model.dao.entity.GroupEntity;
 import capstone.model.dao.entity.GroupMemberEntity;
 import capstone.model.dao.entity.JoinApplicantProject;
+import capstone.model.dao.entity.ManagerEvaluatedApplicantEntity;
+import capstone.model.dao.entity.ManagerEvaluationDetailsEntity;
+import capstone.model.dao.entity.PrescreenDetailsEntity;
 import capstone.model.dao.entity.ProjectEntity;
 import capstone.model.dao.entity.RejectedApplicantEntity;
+import capstone.model.dao.entity.UserCertificateEntity;
 import capstone.model.logic.ApplicantLogic;
 
 @Service
@@ -46,6 +57,18 @@ public class ApplicantLogicImpl implements ApplicantLogic {
 
     @Autowired
     private AcceptedApplicantDao acceptedApplicantDao;
+
+    @Autowired
+    private PrescreenDetailsDao prescreenDetailsDao;
+
+    @Autowired
+    private EvaluationDetailsDao evaluationDetailsDao;
+
+    @Autowired
+    private ManagerEvaluatedApplicantDao mEvaluatedApplicantDao;
+
+    @Autowired
+    private ManagerEvaluationDetailsDao mEvaluationDetailsDao;
 
     @Override
     public int saveApplicantEntity(ApplicantEntity entity) {
@@ -83,9 +106,11 @@ public class ApplicantLogicImpl implements ApplicantLogic {
     }
 
     @Override
-    public void saveRejectedApplicantEntity(RejectedApplicantEntity entity) {
+    public int saveRejectedApplicantEntity(RejectedApplicantEntity entity) {
 
         rejectedApplicantDao.save(entity);
+
+        return entity.getIdPk();
     }
 
     @Override
@@ -107,10 +132,11 @@ public class ApplicantLogicImpl implements ApplicantLogic {
     }
 
     @Override
-    public void saveEvaluateedApplicant(EvaluatedApplicantEntity entity) {
+    public int saveEvaluateedApplicant(EvaluatedApplicantEntity entity) {
 
         evaluatedApplicantDao.save(entity);
 
+        return entity.getIdPk();
     }
 
     @Override
@@ -248,9 +274,11 @@ public class ApplicantLogicImpl implements ApplicantLogic {
     }
 
     @Override
-    public void saveAcceptedApplicantEntity(AcceptedApplicantEntity entity) {
+    public int saveAcceptedApplicantEntity(AcceptedApplicantEntity entity) {
 
         acceptedApplicantDao.save(entity);
+
+        return entity.getIdPk();
     }
 
     @Override
@@ -269,6 +297,99 @@ public class ApplicantLogicImpl implements ApplicantLogic {
     public void updatePreviousEvaluatedApplicant(int applicantIdPk) {
 
         evaluatedApplicantDao.updatePreviousEvaluatedApplicant(applicantIdPk);
+    }
+
+    @Override
+    public void savePrescreenDetailsEntity(PrescreenDetailsEntity entity) {
+
+        prescreenDetailsDao.save(entity);
+    }
+
+    @Override
+    public void saveEvaluationDetailsEntity(EvaluationDetailsEntity entity) {
+
+        evaluationDetailsDao.save(entity);
+
+    }
+
+    @Override
+    public List<ApplicantMonthly> getApplicantOnTodayMonth() {
+
+        return applicantDao.getApplicantOnTodayMonth();
+    }
+
+    @Override
+    public List<ApplicantDetailsFeedbackEntity> getApplicantDetailsWithFeedback(int idPk) {
+
+        return applicantDao.getApplicantDetailsWithFeedback(idPk);
+    }
+
+    @Override
+    public UserCertificateEntity getUserInformationForCeritificate(int applicantIdPk) {
+
+        return applicantDao.getUserInformationForCertificate(applicantIdPk);
+    }
+
+    @Override
+    public int saveManagerEvaluatedApplicant(ManagerEvaluatedApplicantEntity entity) {
+
+        mEvaluatedApplicantDao.save(entity);
+
+        return entity.getIdPk();
+    }
+
+    @Override
+    public void saveManagerEvaluationDetails(ManagerEvaluationDetailsEntity entity) {
+
+        mEvaluationDetailsDao.save(entity);
+    }
+
+    @Override
+    public List<ApplicantMonthly> getApplicantRankingOnTodayMonth() {
+
+        return applicantDao.getApplicantRankingOnTodayMonth();
+    }
+
+    @Override
+    public List<ApplicantMonthly> getApplicantRankingByYearMonth(int month, int year) {
+
+        return applicantDao.getApplicantRankingByYearMonth(month, year);
+    }
+
+    @Override
+    public PrescreenDetailsEntity getRejectedPrescreenDetailsByToken(String token) {
+
+        return prescreenDetailsDao.getRejectedPrescreenDetailsByToken(token);
+    }
+
+    @Override
+    public RejectedApplicantEntity getRejectedApplicantById(int idPk) {
+
+        return rejectedApplicantDao.getRejectedApplicantById(idPk);
+    }
+
+    @Override
+    public PrescreenDetailsEntity getAcceptedPrescreenDetailsByApplicantIdPk(int applicantIdPk) {
+
+        return prescreenDetailsDao.getAcceptedPrescreenDetailsByApplicantIdPk(applicantIdPk);
+    }
+
+    @Override
+    public EvaluationDetailsEntity getEvaluationDetailsByToken(String token) {
+
+        return evaluationDetailsDao.getEvaluationDetailsByToken(token);
+    }
+
+    @Override
+    public EvaluatedApplicantEntity getEvaluatedApplicantById(int idPk) {
+
+        return evaluatedApplicantDao.getEvaluatedApplicantById(idPk);
+    }
+
+    @Override
+    public AcceptedApplicantEntity getAcceptedApplicantByApplicantIdPk(int applicantIdPk) {
+
+        return acceptedApplicantDao.getAcceptedApplicantByApplicantIdPk(applicantIdPk);
     }
 
 }

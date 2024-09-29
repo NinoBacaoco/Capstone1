@@ -13,7 +13,7 @@ public interface TbiBoardService {
      * 
      * @return ManagerInOutDto
      */
-    public TbiBoardInOutDto getAllApplicants();
+    public TbiBoardInOutDto getAllApplicants() throws Exception;
 
     /**
      * To evaluate applicant
@@ -28,5 +28,5 @@ public interface TbiBoardService {
      * @param inDto
      * @return ApplicantInOutDto
      */
-    public TbiBoardInOutDto getApplicantDetails(TbiBoardInOutDto inDto);
+    public TbiBoardInOutDto getApplicantDetails(TbiBoardInOutDto inDto) throws Exception;
 }

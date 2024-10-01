@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import capstone.model.dao.entity.ApplicantDetailsEntity;
 import capstone.model.dao.entity.EvaluatedApplicantEntity;
+import capstone.model.dao.entity.EvaluationDetailsEntity;
 import capstone.model.dao.entity.JoinApplicantProject;
+import capstone.model.dao.entity.TbiBoardDashboardEntity;
 import capstone.model.dao.entity.UserInformationEntity;
 import capstone.model.dto.OfficerInOutDto;
 import capstone.model.dto.TbiBoardInOutDto;
@@ -26,6 +28,7 @@ import capstone.model.logic.ApplicantLogic;
 import capstone.model.logic.UserLogic;
 import capstone.model.object.ApplicantDetailsObj;
 import capstone.model.object.ApplicantObj;
+import capstone.model.object.TbiBoardDashboardObj;
 import capstone.model.service.CommonService;
 import capstone.model.service.EmailService;
 import capstone.model.service.LoggedInUserService;
@@ -35,239 +38,277 @@ import jakarta.mail.MessagingException;
 @Service
 public class TbiBoardServiceImpl implements TbiBoardService {
 
-    @Autowired
-    private ApplicantLogic applicantLogic;
+	@Autowired
+	private ApplicantLogic applicantLogic;
 
-    @Autowired
-    private EmailService emailService;
+	@Autowired
+	private EmailService emailService;
 
-    @Autowired
-    private LoggedInUserService loggedInUserService;
+	@Autowired
+	private LoggedInUserService loggedInUserService;
+	
+	@Autowired
+	private CommonService commonService;
 
-    @Autowired
-    private UserLogic userLogic;
+	@Autowired
+	private UserLogic userLogic;
 
-    @Autowired
-    private Environment env;
 
-    @Override
-    public TbiBoardInOutDto getAllApplicants() {
-        TbiBoardInOutDto outDto = new TbiBoardInOutDto();
+	@Override
+	public TbiBoardInOutDto getAllApplicants() throws Exception {
+		TbiBoardInOutDto outDto = new TbiBoardInOutDto();
 
-        List<Integer> status = List.of(4);
+		List<Integer> status = List.of(4);
 
-        List<JoinApplicantProject> listOfApplicant = applicantLogic.getAllApplicantByStatus(status);
+		List<JoinApplicantProject> listOfApplicant = applicantLogic.getAllApplicantByStatus(status);
 
-        List<ApplicantObj> listOfAppObj = new ArrayList<>();
+		List<ApplicantObj> listOfAppObj = new ArrayList<>();
+
+		for (JoinApplicantProject app : listOfApplicant) {
+
+			ApplicantObj obj = new ApplicantObj();
+			
+			obj.setEncryptedApplicantIdPk(commonService.encrypt(String.valueOf(app.getApplicantIdPk())));;
+
+			obj.setEmail(app.getEmail());
+
+			obj.setProjectTitle(app.getProjectTitle());
+
+			obj.setStatus(app.getStatus());
+
+			obj.setUniversity(app.getUniversity());
 
-        for (JoinApplicantProject app : listOfApplicant) {
+			listOfAppObj.add(obj);
 
-            ApplicantObj obj = new ApplicantObj();
+		}
 
-            obj.setApplicantIdPk(app.getApplicantIdPk());
+		outDto.setListOfApplicants(listOfAppObj);
 
-            obj.setEmail(app.getEmail());
+		return outDto;
+	}
 
-            obj.setProjectTitle(app.getProjectTitle());
+	@Override
+	public void evaluateApplicant(TbiBoardInOutDto inDto) throws MessagingException {
 
-            obj.setStatus(app.getStatus());
+		UserInformationEntity loggedInUser = loggedInUserService.getUserInformation();
 
-            obj.setUniversity(app.getUniversity());
+		Timestamp timeNow = new Timestamp(System.currentTimeMillis());
 
-            listOfAppObj.add(obj);
+		applicantLogic.updateApplicantStatus(5, List.of(inDto.getApplicantIdPk()));
 
-        }
+		EvaluatedApplicantEntity evaluatedApplicantEntity = new EvaluatedApplicantEntity();
 
-        outDto.setListOfApplicants(listOfAppObj);
+		evaluatedApplicantEntity.setApplicantIdPk(inDto.getApplicantIdPk());
 
-        return outDto;
-    }
+		evaluatedApplicantEntity.setCreatedBy(loggedInUser.getIdPk());
 
-    @Override
-    public void evaluateApplicant(TbiBoardInOutDto inDto) throws MessagingException {
+		evaluatedApplicantEntity.setCreatedDate(timeNow);
 
-        UserInformationEntity loggedInUser = loggedInUserService.getUserInformation();
+		evaluatedApplicantEntity.setDeleteFlg(false);
+		
+		UserInformationEntity user = userLogic.getUserByApplicantIdPk(inDto.getApplicantIdPk());
+		
+		applicantLogic.updatePreviousEvaluatedApplicant(inDto.getApplicantIdPk());
 
-        Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+		int idPk = applicantLogic.saveEvaluateedApplicant(evaluatedApplicantEntity);
 
-        applicantLogic.updateApplicantStatus(5, List.of(inDto.getApplicantIdPk()));
+		EvaluationDetailsEntity evaluation = new EvaluationDetailsEntity();
+		
+		evaluation.setEvaluatedApplicantIdPk(idPk);
+		
+		evaluation.setCtOneRating(inDto.getCtOneRating());
+		
+		evaluation.setCtOneComments(inDto.getCtOneComments());
+		
+		evaluation.setCtTwoRating(inDto.getCtTwoRating());
+		
+		evaluation.setCtTwoComments(inDto.getCtTwoComments());
+		
+		evaluation.setCtThreeRating(inDto.getCtThreeRating());
+		
+		evaluation.setCtThreeComments(inDto.getCtThreeComments());
+		
+		evaluation.setCtFourRating(inDto.getCtFourRating());
+		
+		evaluation.setCtFourComments(inDto.getCtFourComments());
+		
+		evaluation.setCtFiveRating(inDto.getCtFiveRating());
+		
+		evaluation.setCtFiveComments(inDto.getCtFiveComments());
+		
+		evaluation.setCtSixRating(inDto.getCtSixRating());
+		
+		evaluation.setCtSixComments(inDto.getCtSixComments());
+		
+		evaluation.setCtSevenRating(inDto.getCtSevenRating());
+		
+		evaluation.setCtSevenComments(inDto.getCtSevenComments());
+		
+		evaluation.setCtEightRating(inDto.getCtEightRating());
+		
+		evaluation.setCtEightComments(inDto.getCtEightComments());
+		
+		evaluation.setTbiFeedback(inDto.getTbiFeedback());
+		
+		evaluation.setCreatedBy(loggedInUser.getIdPk());
 
-        EvaluatedApplicantEntity evaluatedApplicantEntity = new EvaluatedApplicantEntity();
+		evaluation.setCreatedDate(timeNow);
 
-        evaluatedApplicantEntity.setApplicantIdPk(inDto.getApplicantIdPk());
+		evaluation.setDeleteFlg(false);
+		
+		evaluation.setTotal(commonService.calculateTotalRatings(inDto.getCtOneRating(),
+				inDto.getCtTwoRating(),
+				inDto.getCtThreeRating(),		
+				inDto.getCtFourRating(),
+				inDto.getCtFiveRating(),
+				inDto.getCtSixRating(),
+				inDto.getCtSevenRating(),
+				inDto.getCtEightRating()));
+				
+		applicantLogic.saveEvaluationDetailsEntity(evaluation);
+		
+		emailService.sendEvaluatedMail(user.getEmail());
 
-        evaluatedApplicantEntity.setScore(inDto.getScore());
+	}
 
-        evaluatedApplicantEntity.setFeedback(inDto.getFeedback());
+	@Override
+	public TbiBoardInOutDto getApplicantDetails(TbiBoardInOutDto inDto) throws Exception {
 
-        evaluatedApplicantEntity.setCreatedBy(loggedInUser.getIdPk());
+		TbiBoardInOutDto outDto = new TbiBoardInOutDto();
 
-        evaluatedApplicantEntity.setCreatedDate(timeNow);
+		List<ApplicantDetailsEntity> applicant = applicantLogic.getApplicantDetailsByIdPk(inDto.getApplicantIdPk());
 
-        evaluatedApplicantEntity.setDeleteFlg(false);
+		ApplicantDetailsObj applicantDetailsObj = new ApplicantDetailsObj();
 
-        UserInformationEntity user = userLogic.getUserByApplicantIdPk(inDto.getApplicantIdPk());
+		String[] members = new String[4];
 
-        if (inDto.getScore() > 5) {
+		int firstRow = 0;
+		for (ApplicantDetailsEntity app : applicant) {
 
-            String folderPath = env.getProperty("certificate.path").toString();
+			if (firstRow == 0) {
 
-            try {
-                // Load the image
-                File imageFile = new File(folderPath + "base_certificate.png");
-                BufferedImage image = ImageIO.read(imageFile);
+				//applicantDetailsObj.setApplicantIdPk(app.getApplicantIdPk());
+				
+				applicantDetailsObj.setEncryptedApplicantIdPk(commonService.encrypt(String.valueOf(app.getApplicantIdPk())));
 
-                Graphics g = image.getGraphics();
+				applicantDetailsObj.setEmail(app.getEmail());
 
-                g.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 130));
-                g.setColor(new Color(253, 204, 1));
+				applicantDetailsObj.setAgreeFlg(app.getAgreeFlg());
 
-                String fullName = user.getFirstName() + " " + user.getLastName();
-                int x = 132;
-                int y = 760;
-                g.drawString(fullName, x, y);
+				applicantDetailsObj.setProjectTitle(app.getProjectTitle());
 
-                g.dispose();
+				applicantDetailsObj.setProjectDescription(app.getProjectDescription());
 
-                String fileName = "certificate_" + user.getIdPk();
-                File outputFile = new File(folderPath + fileName + ".png");
-                ImageIO.write(image, "png", outputFile);
+				List<String[]> teams = new ArrayList<>();
 
-                applicantLogic.updateApplicantCeritificate(fileName, inDto.getApplicantIdPk());
-                ;
+				for(int i = 0; i < app.getTeams().length; i++) {
+					teams.add(app.getTeams()[i].split("\\|"));
+				}
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+				applicantDetailsObj.setTeams(teams);
 
-        applicantLogic.updatePreviousEvaluatedApplicant(inDto.getApplicantIdPk());
+				applicantDetailsObj.setProblemStatement(app.getProblemStatement());
 
-        emailService.sendEvaluatedMail(user.getEmail());
+				applicantDetailsObj.setTargetMarket(app.getTargetMarket());
 
-        applicantLogic.saveEvaluateedApplicant(evaluatedApplicantEntity);
+				applicantDetailsObj.setSolutionDescription(app.getSolutionDescription());
 
-    }
+				List<String[]> historicallTimelines = new ArrayList<>();
 
-    @Override
-    public TbiBoardInOutDto getApplicantDetails(TbiBoardInOutDto inDto) {
+				for(int i = 0; i < app.getHistoricalTimeline().length; i++) {
+					historicallTimelines.add(app.getHistoricalTimeline()[i].split("\\|"));
+				}
 
-        TbiBoardInOutDto outDto = new TbiBoardInOutDto();
+				applicantDetailsObj.setHistoricalTimeline(historicallTimelines);
 
-        List<ApplicantDetailsEntity> applicant = applicantLogic.getApplicantDetailsByIdPk(inDto.getApplicantIdPk());
+				applicantDetailsObj.setProductServiceOffering(app.getProductServiceOffering());
 
-        ApplicantDetailsObj applicantDetailsObj = new ApplicantDetailsObj();
+				applicantDetailsObj.setPricingStrategy(app.getPricingStrategy());
 
-        String[] members = new String[4];
+				applicantDetailsObj.setIntPropertyStatus(app.getIntPropertyStatus());
 
-        int firstRow = 0;
-        for (ApplicantDetailsEntity app : applicant) {
+				applicantDetailsObj.setObjectives(app.getObjectives());
 
-            if (firstRow == 0) {
+				applicantDetailsObj.setScopeProposal(app.getScopeProposal());
 
-                applicantDetailsObj.setApplicantIdPk(app.getApplicantIdPk());
+				applicantDetailsObj.setMethodology(app.getMethodology());
 
-                applicantDetailsObj.setEmail(app.getEmail());
+				applicantDetailsObj.setVitaeFile(app.getVitaeFile());
 
-                applicantDetailsObj.setAgreeFlg(app.getAgreeFlg());
+				applicantDetailsObj.setSupportLink(app.getSupportLink());
 
-                applicantDetailsObj.setProjectTitle(app.getProjectTitle());
+				applicantDetailsObj.setGroupName(app.getGroupName());
 
-                applicantDetailsObj.setProjectDescription(app.getProjectDescription());
+				applicantDetailsObj.setLeaderFirstName(app.getLeaderFirstName());
 
-                List<String[]> teams = new ArrayList<>();
+				applicantDetailsObj.setLeaderLastName(app.getLeaderLastName());
 
-                teams.add(app.getTeams()[0].split("\\|"));
-                teams.add(app.getTeams()[1].split("\\|"));
-                teams.add(app.getTeams()[2].split("\\|"));
+				applicantDetailsObj.setMobileNumber(app.getMobileNumber());
 
-                applicantDetailsObj.setTeams(teams);
+				applicantDetailsObj.setAddress(app.getAddress());
 
-                applicantDetailsObj.setProblemStatement(app.getProblemStatement());
+				applicantDetailsObj.setUniversity(app.getUniversity());
 
-                applicantDetailsObj.setTargetMarket(app.getTargetMarket());
+				applicantDetailsObj.setTechnologyAns(app.getTechnologyAns());
 
-                applicantDetailsObj.setSolutionDescription(app.getSolutionDescription());
+				applicantDetailsObj.setProductDesignAns(app.getProductDesignAns());
 
-                List<String[]> historicallTimelines = new ArrayList<>();
+				applicantDetailsObj.setCompetitiveLandscapeAns(app.getCompetitiveLandscapeAns());
 
-                historicallTimelines.add(app.getHistoricalTimeline()[0].split("\\|"));
-                historicallTimelines.add(app.getHistoricalTimeline()[1].split("\\|"));
-                historicallTimelines.add(app.getHistoricalTimeline()[2].split("\\|"));
-                historicallTimelines.add(app.getHistoricalTimeline()[3].split("\\|"));
-                historicallTimelines.add(app.getHistoricalTimeline()[4].split("\\|"));
+				applicantDetailsObj.setProductDevelopmentAns(app.getProductDevelopmentAns());
 
-                applicantDetailsObj.setHistoricalTimeline(historicallTimelines);
+				applicantDetailsObj.setTeamAns(app.getTeamAns());
 
-                applicantDetailsObj.setProductServiceOffering(app.getProductServiceOffering());
+				applicantDetailsObj.setGoToMarketAns(app.getGoToMarketAns());
 
-                applicantDetailsObj.setPricingStrategy(app.getPricingStrategy());
+				applicantDetailsObj.setManufacturingAns(app.getManufacturingAns());
 
-                applicantDetailsObj.setIntPropertyStatus(app.getIntPropertyStatus());
+				applicantDetailsObj.setEligibilityAgreeFlg(app.getEligibilityAgreeFlg());
 
-                applicantDetailsObj.setObjectives(app.getObjectives());
+				applicantDetailsObj.setCommitmentOneFlg(app.getCommitmentOneFlg());
 
-                applicantDetailsObj.setScopeProposal(app.getScopeProposal());
+				applicantDetailsObj.setCommitmentTwoFlg(app.getCommitmentTwoFlg());
 
-                applicantDetailsObj.setMethodology(app.getMethodology());
+				applicantDetailsObj.setCommitmentThreeFlg(app.getCommitmentThreeFlg());
 
-                applicantDetailsObj.setVitaeFile(app.getVitaeFile());
+				applicantDetailsObj.setCommitmentFourFlg(app.getCommitmentFourFlg());
 
-                applicantDetailsObj.setSupportLink(app.getSupportLink());
+				applicantDetailsObj.setStatus(app.getStatus());
 
-                applicantDetailsObj.setGroupName(app.getGroupName());
+			}
 
-                applicantDetailsObj.setLeaderFirstName(app.getLeaderFirstName());
+			members[firstRow] = app.getMemberLastName() + ", " + app.getMemberFirstName();
 
-                applicantDetailsObj.setLeaderLastName(app.getLeaderLastName());
+			firstRow++;
+		}
 
-                applicantDetailsObj.setMobileNumber(app.getMobileNumber());
+		applicantDetailsObj.setMembers(members);
 
-                applicantDetailsObj.setAddress(app.getAddress());
+		outDto.setApplicantDetailsObj(applicantDetailsObj);
 
-                applicantDetailsObj.setUniversity(app.getUniversity());
+		return outDto;
+	}
 
-                applicantDetailsObj.setTechnologyAns(app.getTechnologyAns());
-
-                applicantDetailsObj.setProductDesignAns(app.getProductDesignAns());
-
-                applicantDetailsObj.setCompetitiveLandscapeAns(app.getCompetitiveLandscapeAns());
-
-                applicantDetailsObj.setProductDevelopmentAns(app.getProductDevelopmentAns());
-
-                applicantDetailsObj.setTeamAns(app.getTeamAns());
-
-                applicantDetailsObj.setGoToMarketAns(app.getGoToMarketAns());
-
-                applicantDetailsObj.setManufacturingAns(app.getManufacturingAns());
-
-                applicantDetailsObj.setEligibilityAgreeFlg(app.getEligibilityAgreeFlg());
-
-                applicantDetailsObj.setCommitmentOneFlg(app.getCommitmentOneFlg());
-
-                applicantDetailsObj.setCommitmentTwoFlg(app.getCommitmentTwoFlg());
-
-                applicantDetailsObj.setCommitmentThreeFlg(app.getCommitmentThreeFlg());
-
-                applicantDetailsObj.setCommitmentFourFlg(app.getCommitmentFourFlg());
-
-                applicantDetailsObj.setStatus(app.getStatus());
-
-                applicantDetailsObj.setScore(app.getScore());
-
-                applicantDetailsObj.setFeedback(app.getFeedback());
-            }
-
-            members[firstRow] = app.getMemberLastName() + ", " + app.getMemberFirstName();
-
-            firstRow++;
-        }
-
-        applicantDetailsObj.setMembers(members);
-
-        outDto.setApplicantDetailsObj(applicantDetailsObj);
-
-        return outDto;
-    }
+	@Override
+	public TbiBoardInOutDto getDetailsForTbiBoardDashboard() {
+		
+		TbiBoardInOutDto outDto = new TbiBoardInOutDto();
+		
+		TbiBoardDashboardEntity entity = userLogic.getDetailsForTbiBoardDashboard();
+		
+		TbiBoardDashboardObj obj = new TbiBoardDashboardObj();
+		
+		obj.setPendingApplicantCount(entity.getPendingApplicantCount());
+		
+		obj.setEvaluatedApplicantCount(entity.getEvaluatedApplicantCount());
+		
+		obj.setAcceptanceRate(entity.getAcceptanceRate());
+		
+		obj.setFailedRate(entity.getFailedRate());
+		
+		outDto.setTbiBoardDashboardObj(obj);
+		
+		return outDto;
+	}
 
 }

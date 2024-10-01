@@ -4,41 +4,41 @@ import lombok.Data;
 
 @Data
 public class ApplicantOfficerFeedbackObj {
-    private Boolean ctOneFlg;
+	private Boolean ctOneFlg;
+	
+	private String ctOneComments;
+	
+	private Boolean ctTwoFlg;
+	
+	private String ctTwoComments;
 
-    private String ctOneComments;
+	private Boolean ctThreeFlg;
+	
+	private String ctThreeComments;
 
-    private Boolean ctTwoFlg;
+	private Boolean ctFourFlg;
+	
+	private String ctFourComments;
 
-    private String ctTwoComments;
+	private Boolean ctFiveFlg;
 
-    private Boolean ctThreeFlg;
+	private String ctFiveComments;
 
-    private String ctThreeComments;
+	private Boolean ctSixFlg;
 
-    private Boolean ctFourFlg;
+	private String ctSixComments;
 
-    private String ctFourComments;
+	private Boolean ctSevenFlg;
 
-    private Boolean ctFiveFlg;
+	private String ctSevenComments;
 
-    private String ctFiveComments;
+	private Boolean ctEightFlg;
 
-    private Boolean ctSixFlg;
+	private String ctEightComments;
 
-    private String ctSixComments;
+	private Boolean ctNineFlg;
 
-    private Boolean ctSevenFlg;
+	private String ctNineComments;
 
-    private String ctSevenComments;
-
-    private Boolean ctEightFlg;
-
-    private String ctEightComments;
-
-    private Boolean ctNineFlg;
-
-    private String ctNineComments;
-
-    private String recommendation;
+	private String recommendation;
 }

@@ -781,4 +781,32 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"
   ></script>
+  <script>
+    $(document).ready(function () {
+      $(".btn-row").on("click", function () {
+        var idPk = $(this).data("id");
+        var modalType = $(this).text().trim().toLowerCase();
+
+        if (modalType === "accept") {
+          $("#accept-applicant-id-pk").val(idPk);
+        } else if (modalType === "reject") {
+          $("#reject-applicant-id-pk").val(idPk);
+        }
+      });
+    });
+  </script>
+  <script>
+    // JavaScript function to remove the flash message after a specified time
+    function hideFlashMessage() {
+      const flashMessage = document.getElementById("flash-message");
+      if (flashMessage) {
+        setTimeout(() => {
+          flashMessage.style.display = "none";
+        }, 5000); // 5000 milliseconds = 5 seconds
+      }
+    }
+
+    // Call the function on page load
+    window.onload = hideFlashMessage;
+  </script>
 </html>

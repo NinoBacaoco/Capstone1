@@ -28,325 +28,326 @@ import capstone.model.service.ApplicantService;
 @RequestMapping("/applicant")
 public class ApplicantController {
 
-    @Autowired
-    private ApplicantService applicantService;
+	@Autowired
+	private ApplicantService applicantService;
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
 
-    /**
-     * To show the Applicant Form
-     * 
-     * @return String
-     */
-    @GetMapping("/form")
-    public String showApplicantForm(@ModelAttribute ApplicantWebDto webDto,
-            @RequestParam(name = "token", required = false) String token) {
+	/**
+	 * To show the Applicant Form
+	 * 
+	 * @return String
+	 */
+	@GetMapping("/form")
+	public String showApplicantForm(@ModelAttribute ApplicantWebDto webDto,
+			@RequestParam(name = "token", required = false) String token) {
 
-        if (token != null) {
-            ApplicantInOutDto inDto = new ApplicantInOutDto();
+		if (token != null) {
+			ApplicantInOutDto inDto = new ApplicantInOutDto();
 
-            inDto.setToken(token);
+			inDto.setToken(token);
 
-            ApplicantInOutDto outDto = applicantService.getUserReapply(inDto);
+			ApplicantInOutDto outDto = applicantService.getUserReapply(inDto);
 
-            webDto.setEmail(outDto.getEmail());
+			webDto.setEmail(outDto.getEmail());
 
-            webDto.setToken(token);
-        }
+			webDto.setToken(token);
+		}
 
-        return "applicant/applicationForm";
-    }
+		return "applicant/applicationForm";
+	}
 
-    /**
-     * To process the Applicant Form
-     * 
-     * @return String
-     */
-    @PostMapping("/form")
-    public String processApplicantForm(@ModelAttribute ApplicantWebDto webDto,
-            RedirectAttributes ra,
-            @RequestParam("button") String button,
-            @RequestParam("vitaeFile") MultipartFile file) throws IOException {
+	/**
+	 * To process the Applicant Form
+	 * 
+	 * @return String
+	 */
+	@PostMapping("/form")
+	public String processApplicantForm(@ModelAttribute ApplicantWebDto webDto,
+			RedirectAttributes ra,
+			@RequestParam("button") String button,
+			@RequestParam("vitaeFile") MultipartFile file) throws IOException {
 
-        ApplicantInOutDto inDto = new ApplicantInOutDto();
+		ApplicantInOutDto inDto = new ApplicantInOutDto();
 
-        inDto.setEmail(webDto.getEmail());
+		inDto.setEmail(webDto.getEmail());
 
-        inDto.setAgreeFlg(webDto.getAgreeFlg());
+		inDto.setAgreeFlg(webDto.getAgreeFlg());
 
-        inDto.setProjectTitle(webDto.getProjectTitle());
+		inDto.setProjectTitle(webDto.getProjectTitle());
 
-        inDto.setProjectDescription(webDto.getProjectDescription());
+		inDto.setProjectDescription(webDto.getProjectDescription());
 
-        inDto.setTeams(webDto.getTeams());
+		inDto.setTeams(webDto.getTeams());
 
-        inDto.setProblemStatement(webDto.getProblemStatement());
+		inDto.setProblemStatement(webDto.getProblemStatement());
 
-        inDto.setTargetMarket(webDto.getTargetMarket());
+		inDto.setTargetMarket(webDto.getTargetMarket());
 
-        inDto.setSolutionDescription(webDto.getSolutionDescription());
+		inDto.setSolutionDescription(webDto.getSolutionDescription());
 
-        inDto.setHistoricalTimeline(webDto.getHistoricalTimeline());
+		inDto.setHistoricalTimeline(webDto.getHistoricalTimeline());
 
-        inDto.setProductServiceOffering(webDto.getProductServiceOffering());
+		inDto.setProductServiceOffering(webDto.getProductServiceOffering());
 
-        inDto.setPricingStrategy(webDto.getPricingStrategy());
+		inDto.setPricingStrategy(webDto.getPricingStrategy());
 
-        inDto.setIntPropertyStatus(webDto.getIntPropertyStatus());
+		inDto.setIntPropertyStatus(webDto.getIntPropertyStatus());
 
-        inDto.setObjectives(webDto.getObjectives());
+		inDto.setObjectives(webDto.getObjectives());
 
-        inDto.setScopeProposal(webDto.getScopeProposal());
+		inDto.setScopeProposal(webDto.getScopeProposal());
 
-        inDto.setMethodology(webDto.getMethodology());
+		inDto.setMethodology(webDto.getMethodology());
 
-        inDto.setVitaeFile(file);
+		inDto.setVitaeFile(file);
 
-        inDto.setSupportLink(webDto.getSupportLink());
+		inDto.setSupportLink(webDto.getSupportLink());
 
-        inDto.setGroupName(webDto.getGroupName());
+		inDto.setGroupName(webDto.getGroupName());
 
-        inDto.setGroupLeader(webDto.getGroupLeader());
+		inDto.setGroupLeader(webDto.getGroupLeader());
 
-        inDto.setLeaderNumber(webDto.getLeaderNumber());
+		inDto.setLeaderNumber(webDto.getLeaderNumber());
 
-        inDto.setLeaderAddress(webDto.getLeaderAddress());
+		inDto.setLeaderAddress(webDto.getLeaderAddress());
 
-        inDto.setMembers(webDto.getMembers());
+		inDto.setMembers(webDto.getMembers());
 
-        inDto.setUniversity(webDto.getUniversity());
+		inDto.setUniversity(webDto.getUniversity());
 
-        inDto.setTechnologyAns(webDto.getTechnologyAns());
+		inDto.setTechnologyAns(webDto.getTechnologyAns());
 
-        inDto.setProductDevelopmentAns(webDto.getProductDevelopmentAns());
+		inDto.setProductDevelopmentAns(webDto.getProductDevelopmentAns());
 
-        inDto.setCompetitiveLandscapeAns(webDto.getCompetitiveLandscapeAns());
+		inDto.setCompetitiveLandscapeAns(webDto.getCompetitiveLandscapeAns());
 
-        inDto.setProductDesignAns(webDto.getProductDesignAns());
+		inDto.setProductDesignAns(webDto.getProductDesignAns());
 
-        inDto.setTeamAns(webDto.getTeamAns());
+		inDto.setTeamAns(webDto.getTeamAns());
 
-        inDto.setGoToMarketAns(webDto.getGoToMarketAns());
+		inDto.setGoToMarketAns(webDto.getGoToMarketAns());
 
-        inDto.setManufacturingAns(webDto.getManufacturingAns());
+		inDto.setManufacturingAns(webDto.getManufacturingAns());
 
-        inDto.setEligibilityAgreeFlg(webDto.getEligibilityAgreeFlg());
+		inDto.setEligibilityAgreeFlg(webDto.getEligibilityAgreeFlg());
 
-        inDto.setCommitmentOneFlg(webDto.getCommitmentOneFlg());
+		inDto.setCommitmentOneFlg(webDto.getCommitmentOneFlg());
 
-        inDto.setCommitmentTwoFlg(webDto.getCommitmentTwoFlg());
+		inDto.setCommitmentTwoFlg(webDto.getCommitmentTwoFlg());
 
-        inDto.setCommitmentThreeFlg(webDto.getCommitmentThreeFlg());
+		inDto.setCommitmentThreeFlg(webDto.getCommitmentThreeFlg());
 
-        inDto.setCommitmentFourFlg(webDto.getCommitmentFourFlg());
+		inDto.setCommitmentFourFlg(webDto.getCommitmentFourFlg());
 
-        inDto.setToken(webDto.getToken());
+		inDto.setToken(webDto.getToken());
 
-        inDto.setReApplyToken(webDto.getReApplyToken());
+		inDto.setReApplyToken(webDto.getReApplyToken());
 
-        inDto.setVitaeFileName(webDto.getVitaeFileName());
+		inDto.setVitaeFileName(webDto.getVitaeFileName());
+			
+		ApplicantInOutDto outDto = applicantService.validateApplication(inDto);
 
-        ApplicantInOutDto outDto = applicantService.validateApplication(inDto);
+		if (CommonConstant.INVALID.equals(outDto.getResult())) {
 
-        if (CommonConstant.INVALID.equals(outDto.getResult())) {
+			webDto.setError(outDto.getError());
 
-            webDto.setError(outDto.getError());
+			ra.addFlashAttribute("applicantWebDto", webDto);
+			
+			if (!button.equals("resubmit")) {
+				if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
+					System.out.println("REAPPLY");
+					return "redirect:/applicant/form/resubmit?token=" + webDto.getReApplyToken();
+				}
+				System.out.println("WTF");
+				return "redirect:/applicant/form";
+			} else {
+				System.out.println("RESUBMIT");
+				return "redirect:/applicant/form/resubmit?token=" + webDto.getToken();
+			}
+		}
 
-            ra.addFlashAttribute("applicantWebDto", webDto);
+		applicantService.saveApplication(inDto);
 
-            if (!button.equals("resubmit")) {
-                if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
-                    System.out.println("REAPPLY");
-                    return "redirect:/applicant/form?token=" + webDto.getReApplyToken();
-                }
-                System.out.println("WTF");
-                return "redirect:/applicant/form";
-            } else {
-                System.out.println("RESUBMIT");
-                return "redirect:/applicant/form/resubmit?token=" + webDto.getToken();
-            }
-        }
+		if (!button.equals("resubmit")) {
+			if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
+				ra.addFlashAttribute("success",
+						"Your reapplication was successful! We'll notify you of the outcome soon.");
+			}else {
+				ra.addFlashAttribute("success",
+						"You have sucessfully registered! Wait for the email that will be sent to you!");
+			}
+		} else {
+			ra.addFlashAttribute("success", "Resubmission successful! You'll receive an update shortly.");
+		}
 
-        // applicantService.saveApplication(inDto);
+		return "redirect:/login";
+	}
 
-        if (!button.equals("resubmit")) {
-            if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
-                ra.addFlashAttribute("success",
-                        "Your reapplication was successful! We'll notify you of the outcome soon.");
-            }
-            ra.addFlashAttribute("success",
-                    "You have sucessfully registered! Wait for the email that will be sent to you!");
-        } else {
-            ra.addFlashAttribute("success", "Resubmission successful! You'll receive an update shortly.");
-        }
+	/**
+	 * Showing applicant home page
+	 * 
+	 * @param webDto
+	 * @return String
+	 */
+	@GetMapping("/home")
+	public String showApplicantHome(@ModelAttribute ApplicantWebDto webDto) {
 
-        return "redirect:/login";
-    }
+		ApplicantInOutDto outDto = applicantService.getApplicantDetails();
 
-    /**
-     * Showing applicant home page
-     * 
-     * @param webDto
-     * @return String
-     */
-    @GetMapping("/home")
-    public String showApplicantHome(@ModelAttribute ApplicantWebDto webDto) {
+		webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
 
-        ApplicantInOutDto outDto = applicantService.getApplicantDetails();
+		return "applicant/home";
+	}
 
-        webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
+	/**
+	 * Change Password
+	 * 
+	 * @param webDto
+	 * @param ra
+	 * @return String
+	 */
+	@PostMapping("/change-password")
+	public String processChangePassword(@ModelAttribute ApplicantWebDto webDto, RedirectAttributes ra) {
 
-        return "applicant/home";
-    }
+		ApplicantInOutDto inDto = new ApplicantInOutDto();
 
-    /**
-     * Change Password
-     * 
-     * @param webDto
-     * @param ra
-     * @return String
-     */
-    @PostMapping("/change-password")
-    public String processChangePassword(@ModelAttribute ApplicantWebDto webDto, RedirectAttributes ra) {
+		inDto.setCurrentPassword(webDto.getCurrentPassword());
 
-        ApplicantInOutDto inDto = new ApplicantInOutDto();
+		inDto.setNewPassword(webDto.getNewPassword());
 
-        inDto.setCurrentPassword(webDto.getCurrentPassword());
+		inDto.setConfirmPassword(webDto.getConfirmPassword());
 
-        inDto.setNewPassword(webDto.getNewPassword());
+		ApplicantInOutDto outDto = applicantService.validatePassword(inDto);
 
-        inDto.setConfirmPassword(webDto.getConfirmPassword());
+		if (CommonConstant.INVALID.equals(outDto.getResult())) {
 
-        ApplicantInOutDto outDto = applicantService.validatePassword(inDto);
+			ra.addFlashAttribute("error", outDto.getError());
 
-        if (CommonConstant.INVALID.equals(outDto.getResult())) {
+			return "redirect:/applicant/home";
+		}
 
-            ra.addFlashAttribute("error", outDto.getError());
+		applicantService.changePassword(inDto);
 
-            return "redirect:/applicant/home";
-        }
+		return "redirect:/applicant/home";
+	}
 
-        applicantService.changePassword(inDto);
+	/**
+	 * To show the Applicant Form
+	 * 
+	 * @return String
+	 */
+	@GetMapping("/form/resubmit")
+	public String showResubmission(Model model,
+			@ModelAttribute ApplicantWebDto webDto,
+			@RequestParam("token") String token) {
 
-        return "redirect:/applicant/home";
-    }
+		ApplicantInOutDto inDto = new ApplicantInOutDto();
 
-    /**
-     * To show the Applicant Form
-     * 
-     * @return String
-     */
-    @GetMapping("/form/resubmit")
-    public String showResubmission(Model model,
-            @ModelAttribute ApplicantWebDto webDto,
-            @RequestParam("token") String token) {
+		inDto.setToken(token);
 
-        ApplicantInOutDto inDto = new ApplicantInOutDto();
+		ApplicantInOutDto outDto = applicantService.getApplicantDetailsWithFeedbackByToken(inDto);
 
-        inDto.setToken(token);
+		webDto.setEmail(outDto.getEmail());
 
-        ApplicantInOutDto outDto = applicantService.getApplicantDetailsWithFeedbackByToken(inDto);
+		webDto.setAgreeFlg(outDto.getAgreeFlg());
 
-        webDto.setEmail(outDto.getEmail());
+		webDto.setProjectTitle(outDto.getProjectTitle());
 
-        webDto.setAgreeFlg(outDto.getAgreeFlg());
+		webDto.setProjectDescription(outDto.getProjectDescription());
 
-        webDto.setProjectTitle(outDto.getProjectTitle());
+		webDto.setTeams(outDto.getTeams());
 
-        webDto.setProjectDescription(outDto.getProjectDescription());
+		webDto.setProblemStatement(outDto.getProblemStatement());
 
-        webDto.setTeams(outDto.getTeams());
+		webDto.setTargetMarket(outDto.getTargetMarket());
 
-        webDto.setProblemStatement(outDto.getProblemStatement());
+		webDto.setSolutionDescription(outDto.getSolutionDescription());
 
-        webDto.setTargetMarket(outDto.getTargetMarket());
+		webDto.setHistoricalTimeline(outDto.getHistoricalTimeline());
 
-        webDto.setSolutionDescription(outDto.getSolutionDescription());
+		webDto.setProductServiceOffering(outDto.getProductServiceOffering());
 
-        webDto.setHistoricalTimeline(outDto.getHistoricalTimeline());
+		webDto.setPricingStrategy(outDto.getPricingStrategy());
 
-        webDto.setProductServiceOffering(outDto.getProductServiceOffering());
+		webDto.setIntPropertyStatus(outDto.getIntPropertyStatus());
 
-        webDto.setPricingStrategy(outDto.getPricingStrategy());
+		webDto.setObjectives(outDto.getObjectives());
 
-        webDto.setIntPropertyStatus(outDto.getIntPropertyStatus());
+		webDto.setScopeProposal(outDto.getScopeProposal());
 
-        webDto.setObjectives(outDto.getObjectives());
+		webDto.setMethodology(outDto.getMethodology());
 
-        webDto.setScopeProposal(outDto.getScopeProposal());
+		webDto.setVitaeFileName(outDto.getVitaeFileName());
 
-        webDto.setMethodology(outDto.getMethodology());
+		webDto.setSupportLink(outDto.getSupportLink());
 
-        webDto.setVitaeFileName(outDto.getVitaeFileName());
+		webDto.setGroupName(outDto.getGroupName());
 
-        webDto.setSupportLink(outDto.getSupportLink());
+		webDto.setGroupLeader(outDto.getGroupLeader());
 
-        webDto.setGroupName(outDto.getGroupName());
+		webDto.setLeaderNumber(outDto.getLeaderNumber());
 
-        webDto.setGroupLeader(outDto.getGroupLeader());
+		webDto.setLeaderAddress(outDto.getLeaderAddress());
 
-        webDto.setLeaderNumber(outDto.getLeaderNumber());
+		webDto.setMembers(outDto.getMembers());
 
-        webDto.setLeaderAddress(outDto.getLeaderAddress());
+		webDto.setUniversity(outDto.getUniversity());
 
-        webDto.setMembers(outDto.getMembers());
+		webDto.setTechnologyAns(outDto.getTechnologyAns());
 
-        webDto.setUniversity(outDto.getUniversity());
+		webDto.setProductDevelopmentAns(outDto.getProductDevelopmentAns());
 
-        webDto.setTechnologyAns(outDto.getTechnologyAns());
+		webDto.setCompetitiveLandscapeAns(outDto.getCompetitiveLandscapeAns());
 
-        webDto.setProductDevelopmentAns(outDto.getProductDevelopmentAns());
+		webDto.setProductDesignAns(outDto.getProductDesignAns());
 
-        webDto.setCompetitiveLandscapeAns(outDto.getCompetitiveLandscapeAns());
+		webDto.setTeamAns(outDto.getTeamAns());
 
-        webDto.setProductDesignAns(outDto.getProductDesignAns());
+		webDto.setGoToMarketAns(outDto.getGoToMarketAns());
 
-        webDto.setTeamAns(outDto.getTeamAns());
+		webDto.setManufacturingAns(outDto.getManufacturingAns());
 
-        webDto.setGoToMarketAns(outDto.getGoToMarketAns());
+		webDto.setEligibilityAgreeFlg(outDto.getEligibilityAgreeFlg());
 
-        webDto.setManufacturingAns(outDto.getManufacturingAns());
+		webDto.setCommitmentOneFlg(outDto.getCommitmentOneFlg());
 
-        webDto.setEligibilityAgreeFlg(outDto.getEligibilityAgreeFlg());
+		webDto.setCommitmentTwoFlg(outDto.getCommitmentTwoFlg());
 
-        webDto.setCommitmentOneFlg(outDto.getCommitmentOneFlg());
+		webDto.setCommitmentThreeFlg(outDto.getCommitmentThreeFlg());
 
-        webDto.setCommitmentTwoFlg(outDto.getCommitmentTwoFlg());
+		webDto.setCommitmentFourFlg(outDto.getCommitmentFourFlg());
 
-        webDto.setCommitmentThreeFlg(outDto.getCommitmentThreeFlg());
+		webDto.setOnlyOfficer(outDto.getOnlyOfficerFeedback());
+		
+		webDto.setBothFeedback(outDto.getBothFeedback());
+		
+		webDto.setAppOffFeedbackObj(outDto.getAppOffFeedbackObj());
+		
+		webDto.setApplicantTbiFeedbackObj(outDto.getApplicantTbiFeedbackObj());
+		
+		model.addAttribute("applicantWebDto", webDto);
 
-        webDto.setCommitmentFourFlg(outDto.getCommitmentFourFlg());
+		model.addAttribute("token", token);
 
-        webDto.setOnlyOfficer(outDto.getOnlyOfficerFeedback());
+		return "applicant/resubmitform";
+	}
 
-        webDto.setBothFeedback(outDto.getBothFeedback());
-
-        webDto.setAppOffFeedbackObj(outDto.getAppOffFeedbackObj());
-
-        webDto.setApplicantTbiFeedbackObj(outDto.getApplicantTbiFeedbackObj());
-
-        model.addAttribute("applicantWebDto", webDto);
-
-        model.addAttribute("token", token);
-
-        return "applicant/resubmitform";
-    }
-
-    // /**
-    // * To show the Applicant Form
-    // * @return String
-    // */
-    // @PostMapping(value="/form/resubmit")
-    // public String postResubmission(@ModelAttribute ApplicantWebDto webDto,
-    // @RequestParam("button") String button,
-    // RedirectAttributes ra) {
-    //
-    // System.out.println("TOKEN: " + button);
-    //
-    // ra.addFlashAttribute("success", "You have sucessfully registered! Wait for
-    // the email that will be sent to you!");
-    //
-    // return "redirect:/login";
-    // }
+	// /**
+	// * To show the Applicant Form
+	// * @return String
+	// */
+	// @PostMapping(value="/form/resubmit")
+	// public String postResubmission(@ModelAttribute ApplicantWebDto webDto,
+	// @RequestParam("button") String button,
+	// RedirectAttributes ra) {
+	//
+	// System.out.println("TOKEN: " + button);
+	//
+	// ra.addFlashAttribute("success", "You have sucessfully registered! Wait for
+	// the email that will be sent to you!");
+	//
+	// return "redirect:/login";
+	// }
 }

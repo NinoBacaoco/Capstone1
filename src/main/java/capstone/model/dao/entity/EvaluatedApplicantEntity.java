@@ -11,27 +11,23 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "t_evaluated_applicant")
+@Table(name="t_evaluated_applicant")
 public class EvaluatedApplicantEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int idPk;
-
-    public int applicantIdPk;
-
-    public int score;
-
-    public String feedback;
-
-    public int createdBy;
-
-    public Timestamp createdDate;
-
-    public Boolean deleteFlg;
-
-    private String token;
-
-    private Boolean resubmitFlg;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public int idPk;
+	
+	public int applicantIdPk;
+	
+	public int createdBy;
+	
+	public Timestamp createdDate;
+	
+	public Boolean deleteFlg;
+	
+	private String token;
+	
+	private Boolean resubmitFlg;
 
 }

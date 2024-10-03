@@ -4,19 +4,58 @@ import java.util.List;
 
 import capstone.model.object.ApplicantDetailsObj;
 import capstone.model.object.ApplicantObj;
+import capstone.model.object.TbiBoardDashboardObj;
 import lombok.Data;
 
 @Data
 public class TbiBoardWebDto {
-    public List<ApplicantObj> listOfApplicants;
+	
+	private TbiBoardDashboardObj tbiBoardDashboardObj;
+	
+	public List<ApplicantObj> listOfApplicants;
+	
+	public int applicantIdPk;
+	
+	public String encryptedApplicantIdPk;
+	
+	public List<Integer> chosenApplicant;
 
-    public int applicantIdPk;
+	ApplicantDetailsObj applicantDetailsObj;
+	
+	/*
+	 * Evaluation DTO
+	 */
+	private int ctOneRating;
 
-    public List<Integer> chosenApplicant;
+	private String ctOneComments;
 
-    public int score;
+	private int ctTwoRating;
 
-    public String feedback;
+	private String ctTwoComments;
 
-    ApplicantDetailsObj applicantDetailsObj;
+	private int ctThreeRating;
+
+	private String ctThreeComments;
+	
+	private int ctFourRating;
+	
+	private String ctFourComments;
+	
+	private int ctFiveRating;
+	
+	private String ctFiveComments;
+	
+	private int ctSixRating;
+	
+	private String ctSixComments;
+	
+	private int ctSevenRating;
+	
+	private String ctSevenComments;
+
+	private int ctEightRating;
+
+	private String ctEightComments;
+
+	private String tbiFeedback;
 }

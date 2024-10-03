@@ -93,7 +93,7 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-maven-plugin</artifactId>
     <configuration>
-        <mainClass>capstone.project.Capstone1Application</mainClass>
+        <mainClass>capstone.Capstone1Application</mainClass>
         <excludes>
             <exclude>
                 <groupId>org.projectlombok</groupId>

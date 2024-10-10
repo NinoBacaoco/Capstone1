@@ -19,38 +19,38 @@ import capstone.model.dao.entity.UserDetailsEntity;
 import capstone.model.dao.entity.UserInformationEntity;
 
 @Transactional
-public interface UserInformationDao extends JpaRepository<UserInformationEntity, Integer>{
+public interface UserInformationDao extends JpaRepository<UserInformationEntity, Integer> {
 
 	public final String GET_USER_BY_USERNAME = "SELECT e"
 			+ " FROM UserInformationEntity e"
 			+ " WHERE e.email = :email"
 			+ " AND e.deleteFlg = false";
-	
+
 	public final String GET_USER_BY_ID_PK = "SELECT e"
 			+ " FROM UserInformationEntity e"
 			+ " WHERE e.idPk = :idPk"
 			+ " AND e.deleteFlg = false";
-	
+
 	public final String GET_USER_BY_EVALUATED_TOKEN = "SELECT u "
 			+ "FROM EvaluatedApplicantEntity e "
 			+ "JOIN ApplicantEntity a ON a.idPk = e.applicantIdPk "
 			+ "JOIN UserInformationEntity u ON u.idPk = a.createdBy "
 			+ "WHERE e.token = :token "
 			+ "AND e.deleteFlg = false";
-	
+
 	public final String GET_USER_BY_REJECTED_TOKEN = "SELECT u "
 			+ "FROM RejectedApplicantEntity e "
 			+ "JOIN ApplicantEntity a ON a.idPk = e.applicantIdPk "
 			+ "JOIN UserInformationEntity u ON u.idPk = a.createdBy "
 			+ "WHERE e.token = :token "
 			+ "AND e.deleteFlg = false";
-	
+
 	public final String GET_USER_BY_APPLICANT_ID_PK = "SELECT u "
 			+ "FROM ApplicantEntity a "
 			+ "JOIN UserInformationEntity u ON u.idPk = a.createdBy AND u.deleteFlg = false "
 			+ "WHERE a.idPk = :applicantIdPk "
 			+ "AND a.deleteFlg = false";
-	
+
 	public final String GET_DETAILS_FOR_ADMIN_DASHBOARD = "SELECT CAST( ( "
 			+ "  SELECT COUNT(e) "
 			+ "  FROM t_evaluated_applicant e	 "
@@ -136,8 +136,8 @@ public interface UserInformationDao extends JpaRepository<UserInformationEntity,
 			+ "        FROM m_applicant e "
 			+ "        WHERE e.delete_flg = false "
 			+ "		AND e.certificate_name IS NOT NULL "
-			+ "    ) AS INTEGER) AS issued_certifate;";	
-	
+			+ "    ) AS INTEGER) AS issued_certifate;";
+
 	public final String GET_DETAILS_FOR_TBI_DASHBOARD = "SELECT   "
 			+ "    COALESCE(CAST( (  "
 			+ "        SELECT COUNT(e)  "
@@ -164,7 +164,7 @@ public interface UserInformationDao extends JpaRepository<UserInformationEntity,
 			+ "        FROM t_rejected_applicant e  "
 			+ "        WHERE e.delete_flg = false  "
 			+ "    ) AS INTEGER) ,0)AS rejection_rate ";
-	
+
 	public final String GET_DETAILS_FOR_OFFICER_DASHBOARD = "SELECT   "
 			+ "    CAST( (  "
 			+ "        SELECT COUNT(e)  "
@@ -194,7 +194,7 @@ public interface UserInformationDao extends JpaRepository<UserInformationEntity,
 			+ "		WHERE r.resubmit_flg = true  "
 			+ "		AND e.status IN (1,3,4,40,5,50,6,7,8)  "
 			+ "    ) AS INTEGER) AS resubmitted_applicant_count";
-	
+
 	public final String GET_DETAILS_FOR_MANAGER_DASHBOARD = "SELECT \r\n"
 			+ "    COALESCE(CAST( (\r\n"
 			+ "        SELECT COUNT(e)\r\n"
@@ -273,13 +273,13 @@ public interface UserInformationDao extends JpaRepository<UserInformationEntity,
 			+ "        FROM t_rejected_applicant e\r\n"
 			+ "		WHERE e.resubmit_flg = false\r\n"
 			+ "    ) AS INTEGER), 0) AS rejected_application_not_eligible_count";
-	
+
 	public final String GET_USERS_BY_APPLICANT_ID_PKS = "SELECT u "
 			+ "FROM ApplicantEntity a "
 			+ "JOIN UserInformationEntity u ON u.idPk = a.createdBy AND u.deleteFlg = false "
 			+ "WHERE a.idPk IN (:applicantIdPks) "
 			+ "AND a.deleteFlg = false";
-	
+
 	public final String GET_ALL_USERS = "SELECT e.id_pk,  "
 			+ "e.email, "
 			+ "CONCAT(e.first_name, ' ', e.last_name) AS fullName, "
@@ -310,116 +310,122 @@ public interface UserInformationDao extends JpaRepository<UserInformationEntity,
 			+ " AS deletable "
 			+ "FROM m_user_information e "
 			+ "WHERE e.delete_flg = false";
-	
+
 	public final String DELETE_USER = "UPDATE m_user_information  "
 			+ "SET "
 			+ "	delete_flg = true "
 			+ "WHERE "
 			+ "	id_pk = :userIdPk ";
-	
-	public final String UPDATE_USER = "UPDATE m_user_information "
-	        + "SET "
-	        + "    first_name = :firstName, "
-	        + "    last_name = :lastName, "
-	        + "    mobile_number = :mobileNumber, "
-	        + "    role = :role, "
-	        + "    updated_date = :updatedDate "
-	        + "WHERE "
-	        + "    id_pk = :userIdPk";
 
-	
+	public final String UPDATE_USER = "UPDATE m_user_information "
+			+ "SET "
+			+ "    first_name = :firstName, "
+			+ "    last_name = :lastName, "
+			+ "    mobile_number = :mobileNumber, "
+			+ "    role = :role, "
+			+ "    updated_date = :updatedDate "
+			+ "WHERE "
+			+ "    id_pk = :userIdPk";
+
 	@Modifying
-	@Query(value=DELETE_USER, nativeQuery=true)
+	@Query(value = DELETE_USER, nativeQuery = true)
 	public void deleteUser(@Param("userIdPk") int userIdPk) throws DataAccessException;
-	
+
 	@Modifying
-	@Query(value=UPDATE_USER, nativeQuery=true) 
+	@Query(value = UPDATE_USER, nativeQuery = true)
 	public int updateUser(@Param("firstName") String firstName,
 			@Param("lastName") String lastName,
 			@Param("mobileNumber") String mobileNumber,
 			@Param("role") String role,
 			@Param("updatedDate") Timestamp updatedDate,
 			@Param("userIdPk") int userIdPk) throws DataAccessException;
-	
-	@Query(value=GET_USER_BY_APPLICANT_ID_PK)
+
+	@Query(value = GET_USER_BY_APPLICANT_ID_PK)
 	public UserInformationEntity getUserByApplicantIdPk(int applicantIdPk) throws DataAccessException;
-	
-	@Query(value=GET_USERS_BY_APPLICANT_ID_PKS)
-	public List<UserInformationEntity> getUsersByApplicantIdPks(List<Integer> applicantIdPks) throws DataAccessException;
 
-	@Query(value=GET_USER_BY_EVALUATED_TOKEN)
+	@Query(value = GET_USERS_BY_APPLICANT_ID_PKS)
+	public List<UserInformationEntity> getUsersByApplicantIdPks(List<Integer> applicantIdPks)
+			throws DataAccessException;
+
+	@Query(value = GET_USER_BY_EVALUATED_TOKEN)
 	public UserInformationEntity getUserByEvaluatedtoken(String token) throws DataAccessException;
-	
-	@Query(value=GET_USER_BY_REJECTED_TOKEN)
+
+	@Query(value = GET_USER_BY_REJECTED_TOKEN)
 	public UserInformationEntity getUserByRejectedtoken(String token) throws DataAccessException;
-	
-	@Query(value=GET_USER_BY_USERNAME)
+
+	@Query(value = GET_USER_BY_USERNAME)
 	public UserInformationEntity getUserByUsername(String email) throws DataAccessException;
-	
-	@Query(value=GET_USER_BY_ID_PK)
+
+	@Query(value = GET_USER_BY_ID_PK)
 	public UserInformationEntity getUserByIdPk(int idPk) throws DataAccessException;
-	
-	@Query(value=GET_ALL_USERS, nativeQuery=true)
+
+	@Query(value = GET_ALL_USERS, nativeQuery = true)
 	public List<Object[]> getAllUsersRaw() throws DataAccessException;
-	
+
 	default List<UserDetailsEntity> getAllUsers() {
-		
+
 		List<Object[]> rawResults = getAllUsersRaw();
-	    List<UserDetailsEntity> users = new ArrayList<>();
+		List<UserDetailsEntity> users = new ArrayList<>();
 
-	    for (Object[] objects : rawResults) {
-	    	UserDetailsEntity applicant = new UserDetailsEntity(objects);  
-	        users.add(applicant);
-	    }
+		for (Object[] objects : rawResults) {
+			UserDetailsEntity applicant = new UserDetailsEntity(objects);
+			users.add(applicant);
+		}
 
-	    return users;
+		return users;
 	};
-	
-	@Query(value=GET_DETAILS_FOR_ADMIN_DASHBOARD, nativeQuery=true)
+
+	@Query(value = GET_DETAILS_FOR_ADMIN_DASHBOARD, nativeQuery = true)
 	public List<Object[]> getDetailsForAdminRaw() throws DataAccessException;
-	
+
 	default AdminDashboardEntity getDetailsForAdmiDashboard() {
-		
+
 		Object[] data = getDetailsForAdminRaw().get(0);
-		
+
 		AdminDashboardEntity entity = new AdminDashboardEntity(data);
-		
+
 		return entity;
 	};
-	
-	@Query(value=GET_DETAILS_FOR_TBI_DASHBOARD, nativeQuery=true)
+
+	@Query(value = GET_DETAILS_FOR_TBI_DASHBOARD, nativeQuery = true)
 	public List<Object[]> getDetailsForTbiBoardRaw() throws DataAccessException;
-	
-	default TbiBoardDashboardEntity  getDetailsForTbiBoardDashboard() {
-		
+
+	default TbiBoardDashboardEntity getDetailsForTbiBoardDashboard() {
+
 		Object[] data = getDetailsForTbiBoardRaw().get(0);
-		
+
 		TbiBoardDashboardEntity entity = new TbiBoardDashboardEntity(data);
-		
+
 		return entity;
 	};
-	
-	@Query(value=GET_DETAILS_FOR_OFFICER_DASHBOARD, nativeQuery=true)
+
+	@Query(value = GET_DETAILS_FOR_OFFICER_DASHBOARD, nativeQuery = true)
 	public List<Object[]> getDetailsForOfficerRaw() throws DataAccessException;
-	
-	default OfficerDashboardEntity  getDetailsForOfficerDashboard() {
-		
+
+	default OfficerDashboardEntity getDetailsForOfficerDashboard() {
+
 		Object[] data = getDetailsForOfficerRaw().get(0);
-		
+
 		OfficerDashboardEntity entity = new OfficerDashboardEntity(data);
-		
+
 		return entity;
 	};
-	
-	@Query(value=GET_DETAILS_FOR_MANAGER_DASHBOARD, nativeQuery=true)
+
+	@Query(value = GET_DETAILS_FOR_MANAGER_DASHBOARD, nativeQuery = true)
 	public List<Object[]> getDetailsForManagerRaw() throws DataAccessException;
-	
-	default ManagerDashboardEntity  getDetailsForManagerDashboard() {
-		
+
+	default ManagerDashboardEntity getDetailsForManagerDashboard() {
+
 		Object[] data = getDetailsForManagerRaw().get(0);
-		
+
 		ManagerDashboardEntity entity = new ManagerDashboardEntity(data);
-		
+
 		return entity;
 	};
+
+	public final String COUNT_ADMIN_USER = "SELECT COUNT(*) FROM m_user_information WHERE role = 'ADMIN'";
+
+	@Query(value = COUNT_ADMIN_USER, nativeQuery = true)
+	int countAdminUsers();
+
 }

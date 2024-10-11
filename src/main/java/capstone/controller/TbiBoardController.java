@@ -126,7 +126,6 @@ public class TbiBoardController {
 		inDto.setTbiFeedback(webDto.getTbiFeedback());
 				
 		tbiBoardService.evaluateApplicant(inDto);
-		System.out.println(webDto);
 		
 		ra.addFlashAttribute("succMsg", "The application has been evaluated!");
 		

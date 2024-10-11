@@ -34,7 +34,7 @@
     </style>
   </head>
   <body class="font-secondary">
-    <a href="/" class="rp-back-button">Back to login</a>
+    <a href="/login" class="rp-back-button">Back to login</a>
 
     <div class="min-h-screen flex items-center justify-center p-4">
       <div class="max-w-2xl w-full bg-white p-6 rounded-lg shadow-lg">
@@ -54,8 +54,7 @@
                   <select
                     id="month"
                     class="border w-2[100px] mt-1 pl-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm: rounded-md"
-                  >
-                  </select>
+                  ></select>
                 </div>
                 <div class="mr-4 border-blue-500 flex flex-row">
                   <label
@@ -89,104 +88,109 @@
               class="text-lg bg-gray-100 p-2 border border-gray-300 rounded-md hover:transform hover:scale-105 transition-transform duration-200"
             >
               Item 1
-            </li>         
+            </li>
           </ul>
         </div>
       </div>
     </div>
     <script>
-		 // JavaScript to dynamically add years to the dropdown
-		  const yearSelect = document.getElementById("year");
-		  const monthSelect = document.getElementById("month");
-		  
-		  const numberOfYears = 5; // Number of years to display
-		
-		  const currentYear = new Date().getFullYear();
-		  const currentMonth = new Date().getMonth() + 1; // getMonth() is 0-indexed (0 = January)
-		  
-		  setCurrentYearAndMonthRanking();
-		  getRankings(currentYear, currentMonth);
-		  
-		  document.querySelectorAll("select").forEach(s => s.addEventListener('change', function(){
-			  
-			  let selectedYear = this.id === 'year' ? this.value : currentYear;
-			  let selectedMonth = this.id === 'month' ? this.value : currentMonth;
-			  
-			  getRankings(selectedYear, selectedMonth);
-			  
-		  }));
-		  
-		  async function getRankings(year, month) {
-			  const url = `/retrieve/ranking?month=${month}&year=${year}`;
-	        const response = await fetch(url, { method: "GET" });
-	
-	        if (!response.ok) {
-	          const errorData = await response.json();
-	          throw new Error(`Server Error: ${errorData.message || "Unknown"}`);
-	        }
-	
-	        const data = await response.json();
-	
-			populateRanking(data);
-			}
-		
-		function populateRanking(data){
-			const rankList = document.querySelector(".rank-list");
-			rankList.innerHTML = '';
-			
-			if(data.applicantRankingMonthlyObj.length != 0){
-				for(let app of data.applicantRankingMonthlyObj){
-						let listHTML = `<li
+      // JavaScript to dynamically add years to the dropdown
+      const yearSelect = document.getElementById("year");
+      const monthSelect = document.getElementById("month");
+
+      const numberOfYears = 5; // Number of years to display
+
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1; // getMonth() is 0-indexed (0 = January)
+
+      setCurrentYearAndMonthRanking();
+      getRankings(currentYear, currentMonth);
+
+      document.querySelectorAll("select").forEach((s) =>
+        s.addEventListener("change", function () {
+          let selectedYear = this.id === "year" ? this.value : currentYear;
+          let selectedMonth = this.id === "month" ? this.value : currentMonth;
+
+          getRankings(selectedYear, selectedMonth);
+        })
+      );
+
+      async function getRankings(year, month) {
+        const url = `/retrieve/ranking?month=${month}&year=${year}`;
+        const response = await fetch(url, { method: "GET" });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Server Error: ${errorData.message || "Unknown"}`);
+        }
+
+        const data = await response.json();
+
+        populateRanking(data);
+      }
+
+      function populateRanking(data) {
+        const rankList = document.querySelector(".rank-list");
+        rankList.innerHTML = "";
+
+        if (data.applicantRankingMonthlyObj.length != 0) {
+          for (let app of data.applicantRankingMonthlyObj) {
+            let listHTML = `<li
 						              class="text-lg bg-gray-100 p-2 border border-gray-300 rounded-md hover:transform hover:scale-105 transition-transform duration-200"
 						            >
 						              ${app.projectTitle}
 						            </li> `;
-						 
-						 rankList.innerHTML += listHTML;
-				}
-			}else{
-				rankList.innerHTML = `<div
+
+            rankList.innerHTML += listHTML;
+          }
+        } else {
+          rankList.innerHTML = `<div
 						              class="text-lg bg-gray-100 p-2 border border-gray-300 rounded-md hover:transform hover:scale-105 transition-transform duration-200"
 						            >
 						              No Data
 						            </div> `;
-			}
-		}
+        }
+      }
 
-	
-		 function setCurrentYearAndMonthRanking(){
-								
-			  // Populate the year dropdown
-			  for (let i = 0; i < numberOfYears; i++) {
-			    const option = document.createElement("option");
-			    const year = currentYear + i;
-			    option.value = year;
-			    option.textContent = year;
-			    if (year === currentYear) {
-			      option.selected = true; // Set current year as selected
-			    }
-			    yearSelect.appendChild(option);
-			  }
-			
-			  // Populate the month dropdown
-			  const months = [
-			    "January", "February", "March", "April", "May", "June",
-			    "July", "August", "September", "October", "November", "December"
-			  ];
-			
-			  months.forEach((month, index) => {
-			    const option = document.createElement("option");
-			    option.value = index + 1; // Value from 1 to 12 for months
-			    option.textContent = month;
-			    if (index + 1 === currentMonth) {
-			      option.selected = true; // Set current month as selected
-			    }
-			    monthSelect.appendChild(option);
-			  });
-		}
+      function setCurrentYearAndMonthRanking() {
+        // Populate the year dropdown
+        for (let i = 0; i < numberOfYears; i++) {
+          const option = document.createElement("option");
+          const year = currentYear + i;
+          option.value = year;
+          option.textContent = year;
+          if (year === currentYear) {
+            option.selected = true; // Set current year as selected
+          }
+          yearSelect.appendChild(option);
+        }
 
-  
-</script>
+        // Populate the month dropdown
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
 
+        months.forEach((month, index) => {
+          const option = document.createElement("option");
+          option.value = index + 1; // Value from 1 to 12 for months
+          option.textContent = month;
+          if (index + 1 === currentMonth) {
+            option.selected = true; // Set current month as selected
+          }
+          monthSelect.appendChild(option);
+        });
+      }
+    </script>
   </body>
 </html>

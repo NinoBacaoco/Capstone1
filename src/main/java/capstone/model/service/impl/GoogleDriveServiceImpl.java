@@ -88,11 +88,12 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
-        // Load client secrets.
-        InputStream in = GoogleDriveService.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
-        if (in == null) {
-            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+        // Load client secrets from the file system
+        java.io.File credentialsFile = new java.io.File(CREDENTIALS_FILE_PATH);
+        if (!credentialsFile.exists()) {
+            throw new FileNotFoundException("Credentials file not found: " + CREDENTIALS_FILE_PATH);
         }
+        InputStream in = new FileInputStream(credentialsFile);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
@@ -102,9 +103,7 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
                 .setAccessType("offline")
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-        // returns an authorized Credential object.
-        return credential;
+        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
     public Drive getInstance() throws GeneralSecurityException, IOException {

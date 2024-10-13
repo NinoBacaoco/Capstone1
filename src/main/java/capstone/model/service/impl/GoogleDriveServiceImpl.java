@@ -76,8 +76,8 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_FILE);
-    private static final String CREDENTIALS_FILE_PATH = "/etc/secrets/CLIENT_SECRET";
-
+    private static final String CREDENTIALS_FILE_PATH = System.getProperty("credential.json.path", "/etc/secrets/CLIENT_SECRET");
+    
     /**
      * Creates an authorized Credential object.
      *

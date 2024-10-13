@@ -6,7 +6,7 @@ import com.google.api.services.drive.Drive; // Google Drive API
 import com.google.api.services.drive.model.File; // Google Drive File class
 import com.google.api.client.http.InputStreamContent; // For file content
 import java.util.Collections; // For Collections.singletonList
-import java.util.Optional; // For Optional
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -73,8 +73,11 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
 
     /**
      * Global instance of the scopes required by this quickstart.
+     * If modifying these scopes, delete your previously saved tokens/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_FILE);
+    // private static final String CREDENTIALS_FILE_PATH = "GOOGLE_CREDENTIALS_PATH"; 
+    private static final String CREDENTIALS_FILE_PATH = System.getenv("GOOGLE_CREDENTIALS_PATH");
 
     /**
      * Creates an authorized Credential object.
@@ -83,27 +86,25 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
+    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
         // Load client secrets.
-        String credentialsFilePath = env.getProperty("GOOGLE_CREDENTIALS_PATH"); // Get the path from environment
-        try (InputStream in = new FileInputStream(credentialsFilePath)) {
-            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-            // Build flow and trigger user authorization request.
-            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                    .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
-                    .setAccessType("offline")
-                    .build();
-            LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-            Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-            // returns an authorized Credential object.
-            return credential;
-        } catch (FileNotFoundException e) {
-            System.err.println("Credentials file not found: " + e.getMessage());
-            throw e; // Re-throw to indicate failure
+        InputStream in = GoogleDriveService.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        if (in == null) {
+            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+        // Build flow and trigger user authorization request.
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setAccessType("offline")
+                .build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        // returns an authorized Credential object.
+        return credential;
     }
 
     public Drive getInstance() throws GeneralSecurityException, IOException {
@@ -115,15 +116,17 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
         return service;
     }
 
-    @Override
-    public Optional<InputStream> getFileContentByName(String fileName, Boolean isPdf) throws IOException, GeneralSecurityException {
+    public InputStream getFileContentByName(String fileName, Boolean isPdf)
+            throws IOException, GeneralSecurityException {
+
         // Retrieve the folder ID from properties
         String folderId;
 
         // Check if we are dealing with PDFs or certificates
         if (isPdf) {
-            folderId = env.getProperty("pdf.folder.id"); // ID for the PDFs folder
+            folderId = env.getProperty("pdf.folder.id"); // ID for the pdfs folder
         } else {
+            System.out.println("CERTIFICATE");
             folderId = env.getProperty("certificate.folder.id"); // ID for the certificate folder
         }
 
@@ -140,17 +143,17 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
         List<File> files = result.getFiles();
 
         if (files == null || files.isEmpty()) {
-            return Optional.empty(); // No files found
+            return null; // No files found
         } else {
             File file = files.get(0); // Get the first matching file
 
             // Return the InputStream for the file's content
-            return Optional.of(service.files().get(file.getId()).executeMediaAsInputStream());
+            return service.files().get(file.getId()).executeMediaAsInputStream();
         }
     }
 
-    @Override
     public void uploadPdfFile(MultipartFile file, String fileName) {
+
         String folderId = env.getProperty("pdf.folder.id");
 
         try {

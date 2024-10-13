@@ -9,19 +9,25 @@ import lombok.Data;
 
 @Data
 public class TbiBoardWebDto {
-	
+
 	private TbiBoardDashboardObj tbiBoardDashboardObj;
-	
+
 	public List<ApplicantObj> listOfApplicants;
-	
+
 	public int applicantIdPk;
-	
+
 	public String encryptedApplicantIdPk;
-	
+
 	public List<Integer> chosenApplicant;
 
 	ApplicantDetailsObj applicantDetailsObj;
-	
+
+	private int projectIdPk;
+
+	private List<Integer> projectIdPks;
+
+	private int rejectedCount;
+
 	/*
 	 * Evaluation DTO
 	 */
@@ -36,21 +42,21 @@ public class TbiBoardWebDto {
 	private int ctThreeRating;
 
 	private String ctThreeComments;
-	
+
 	private int ctFourRating;
-	
+
 	private String ctFourComments;
-	
+
 	private int ctFiveRating;
-	
+
 	private String ctFiveComments;
-	
+
 	private int ctSixRating;
-	
+
 	private String ctSixComments;
-	
+
 	private int ctSevenRating;
-	
+
 	private String ctSevenComments;
 
 	private int ctEightRating;

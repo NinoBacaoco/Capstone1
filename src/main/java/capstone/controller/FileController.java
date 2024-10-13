@@ -1,14 +1,17 @@
 package capstone.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
@@ -25,54 +28,62 @@ import capstone.model.service.GoogleDriveService;
 @Controller
 public class FileController {
 
-    @Autowired
-    private ResourceLoader resourceLoader;
+	@Autowired
+	private Environment env;
 
-    @Autowired
-    private GoogleDriveService googleDriveService;
+	@Autowired
+	private ResourceLoader resourceLoader;
 
-    @GetMapping(value = "/view/{fileName}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> showPDF(@PathVariable String fileName) {
-        try {
-            // Get the InputStream for the file's content from Google Drive
-            Optional<InputStream> optionalInputStream = googleDriveService.getFileContentByName(fileName, true);
+	@Autowired
+	private GoogleDriveService googleDriveService;
 
-            if (optionalInputStream.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // File not found
-            }
+	@GetMapping(value = "/view/{fileName}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> showPDF(@PathVariable String fileName) {
 
-            byte[] pdfContent = IOUtils.toByteArray(optionalInputStream.get()); // Read the InputStream into a byte array
+		try {
+			// Get the InputStream for the file's content from Google Drive
+			InputStream inputStream = googleDriveService.getFileContentByName(fileName, true);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
+			if (inputStream == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // File not found
+			}
 
-            return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+			byte[] pdfContent = inputStream.readAllBytes(); // Read the InputStream into a byte array
 
-    @GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) throws GeneralSecurityException {
-        Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_PDF);
 
-        try {
-            // Use the getFileContentByName method to retrieve the image from Google Drive
-            Optional<InputStream> optionalImageStream = googleDriveService.getFileContentByName(imageName, false);
+			return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		} catch (GeneralSecurityException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 
-            if (optionalImageStream.isPresent()) {
-                return IOUtils.toByteArray(optionalImageStream.get()); // Return the image from Google Drive
-            } else {
-                // If not found in Google Drive, return the no_image.png
-                return Files.readAllBytes(noImgResource.getFile().toPath());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0]; // Return an empty byte array on error
-        }
-    }
+	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
+	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) throws GeneralSecurityException {
+		Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+
+		System.out.println(imageName);
+
+		// Attempt to get the image from Google Drive
+		InputStream inputStream = null;
+		try {
+			// Use the getFileContentByName method to retrieve the image from Google Drive
+			InputStream googleDriveImageStream = googleDriveService.getFileContentByName(imageName, false);
+
+			if (googleDriveImageStream != null) {
+				return IOUtils.toByteArray(googleDriveImageStream); // Return the image from Google Drive
+			} else {
+				// If not found in Google Drive, return the no_image.png
+				return Files.readAllBytes(noImgResource.getFile().toPath());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new byte[0]; // Return an empty byte array on error
+		}
+	}
 }

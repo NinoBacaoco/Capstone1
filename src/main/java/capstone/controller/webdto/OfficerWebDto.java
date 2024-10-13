@@ -9,41 +9,46 @@ import lombok.Data;
 
 @Data
 public class OfficerWebDto {
-	
+
 	private OfficerDashboardObj officerDashboardObj;
 
 	private List<ApplicantObj> listOfApplicants;
-	
+
 	private int applicantIdPk;
-	
+
 	private String encryptedApplicantIdPk;
-	
+
 	private String feedback;
-	
+
 	private Boolean resubmitFlg;
-	
+
 	private ApplicantDetailsObj applicantDetailsObj;
-	
+
 	private String email;
-	
-	
+
+	private int projectIdPk;
+
+	private List<Integer> projectIdPks;
+
+	private int rejectedCount;
+
 	/*
 	 * For Prescreen DTO
 	 */
 	private Boolean ctOneFlg;
-	
+
 	private String ctOneComments;
-	
+
 	private Boolean ctTwoFlg;
-	
+
 	private String ctTwoComments;
 
 	private Boolean ctThreeFlg;
-	
+
 	private String ctThreeComments;
 
 	private Boolean ctFourFlg;
-	
+
 	private String ctFourComments;
 
 	private Boolean ctFiveFlg;

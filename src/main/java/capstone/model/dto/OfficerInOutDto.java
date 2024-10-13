@@ -9,36 +9,42 @@ import lombok.Data;
 
 @Data
 public class OfficerInOutDto {
-	
+
 	private OfficerDashboardObj officerDashboardObj;
-	
+
 	private List<ApplicantObj> listOfApplicants;
-	
+
 	private int applicantIdPk;
-	
+
 	private String feedback;
-	
+
 	private Boolean resubmitFlg;
-	
+
 	ApplicantDetailsObj applicantDetailsObj;
-	
+
+	private int projectIdPk;
+
+	private List<Integer> projectIdPks;
+
+	private int rejectedCount;
+
 	/*
 	 * For Prescreen DTO
 	 */
 	private Boolean ctOneFlg;
-	
+
 	private String ctOneComments;
-	
+
 	private Boolean ctTwoFlg;
-	
+
 	private String ctTwoComments;
 
 	private Boolean ctThreeFlg;
-	
+
 	private String ctThreeComments;
 
 	private Boolean ctFourFlg;
-	
+
 	private String ctFourComments;
 
 	private Boolean ctFiveFlg;

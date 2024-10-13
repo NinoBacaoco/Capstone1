@@ -12,34 +12,40 @@ import capstone.model.dao.entity.GroupEntity;
 @Transactional
 public interface GroupDao extends JpaRepository<GroupEntity, Integer> {
 
-    public final String GET_GROUP_BY_APPLICANT_ID = "SELECT e"
-            + " FROM GroupEntity e"
-            + " WHERE e.applicantIdPk = :applicantIdPk"
-            + " AND e.deleteFlg = false";
+        public final String GET_GROUP_BY_APPLICANT_ID = "SELECT e"
+                        + " FROM GroupEntity e"
+                        + " WHERE e.applicantIdPk = :applicantIdPk"
+                        + " AND e.deleteFlg = false";
 
-    public final String UPDATE_GROUP = "UPDATE m_group "
-            + "SET"
-            + "	group_name = :groupName,"
-            + "	first_name = :firstName,"
-            + "	last_name = :lastName,"
-            + "	mobile_number = :mobileNumber,"
-            + "	address = :address,"
-            + "	university = :university "
-            + "WHERE "
-            + "	applicant_id_pk = :applicantIdPk "
-            + "AND "
-            + "	delete_flg = false";
+        public final String UPDATE_GROUP = "UPDATE m_group "
+                        + "SET"
+                        + "	group_name = :groupName,"
+                        + "	first_name = :firstName,"
+                        + "	last_name = :lastName,"
+                        + "	mobile_number = :mobileNumber,"
+                        + "	address = :address,"
+                        + "	university = :university "
+                        + "WHERE "
+                        + "	applicant_id_pk = :applicantIdPk "
+                        + "AND "
+                        + "	delete_flg = false";
 
-    @Modifying
-    @Query(value = UPDATE_GROUP, nativeQuery = true)
-    public void updateGroupByApplicantId(@Param("groupName") String groupName,
-            @Param("firstName") String firstName,
-            @Param("lastName") String lastName,
-            @Param("mobileNumber") String mobileNumber,
-            @Param("address") String address,
-            @Param("university") String university,
-            @Param("applicantIdPk") int applicantIdPk) throws DataAccessException;
+        public final String DELETE_PREVIOUS_GROUP = "UPDATE m_group SET delete_flg = true WHERE applicant_id_pk = :applicantIdPk ";
 
-    @Query(value = GET_GROUP_BY_APPLICANT_ID)
-    public GroupEntity getGroupByApplicantId(int applicantIdPk) throws DataAccessException;
+        @Modifying
+        @Query(value = UPDATE_GROUP, nativeQuery = true)
+        public void updateGroupByApplicantId(@Param("groupName") String groupName,
+                        @Param("firstName") String firstName,
+                        @Param("lastName") String lastName,
+                        @Param("mobileNumber") String mobileNumber,
+                        @Param("address") String address,
+                        @Param("university") String university,
+                        @Param("applicantIdPk") int applicantIdPk) throws DataAccessException;
+
+        @Query(value = GET_GROUP_BY_APPLICANT_ID)
+        public GroupEntity getGroupByApplicantId(int applicantIdPk) throws DataAccessException;
+
+        @Modifying
+        @Query(value = DELETE_PREVIOUS_GROUP, nativeQuery = true)
+        public void deletePreviousGroup(int applicantIdPk) throws DataAccessException;
 }

@@ -27,7 +27,7 @@ public class OfficerController {
 
 	@Autowired
 	private OfficerService officerService;
-	
+
 	@Autowired
 	private CommonService commonService;
 
@@ -37,180 +37,192 @@ public class OfficerController {
 		OfficerInOutDto outDto = officerService.getAllApplicants();
 
 		webDto.setListOfApplicants(outDto.getListOfApplicants());
-		
+
 		outDto = officerService.getDetailsForOfficerDashboard();
-		
+
 		webDto.setOfficerDashboardObj(outDto.getOfficerDashboardObj());
 
 		return "officer/home";
 	}
 
-	@PostMapping(value = "/action", params = "accept") 
+	@PostMapping(value = "/action", params = "accept")
 	public String acceptApplicant(@ModelAttribute OfficerWebDto webDto, RedirectAttributes ra) throws Exception {
-		
-		if(CommonConstant.BLANK.equals(webDto.getRecommendation())) {
-			
+
+		if (CommonConstant.BLANK.equals(webDto.getRecommendation())) {
+
 			ra.addFlashAttribute("error", MessageConstant.FEEDBACK_BLANK);
-			
+
 			ra.addFlashAttribute("officerWebDto", webDto);
-			
+
 			return "redirect:/officer/prescreen?id=" + webDto.getEncryptedApplicantIdPk();
-			
+
 		}
-				
+
 		OfficerInOutDto inDto = new OfficerInOutDto();
 
 		inDto.setApplicantIdPk(Integer.valueOf(commonService.decrypt(webDto.getEncryptedApplicantIdPk())));
-		
+
 		inDto.setCtOneFlg(webDto.getCtOneFlg());
-		
+
 		inDto.setCtOneComments(webDto.getCtOneComments());
-		
+
 		inDto.setCtTwoFlg(webDto.getCtTwoFlg());
-		
+
 		inDto.setCtTwoComments(webDto.getCtTwoComments());
-		
+
 		inDto.setCtThreeFlg(webDto.getCtThreeFlg());
-		
+
 		inDto.setCtThreeComments(webDto.getCtThreeComments());
-		
+
 		inDto.setCtFourFlg(webDto.getCtFourFlg());
-		
+
 		inDto.setCtFourComments(webDto.getCtFourComments());
-		
+
 		inDto.setCtFiveFlg(webDto.getCtFiveFlg());
-		
+
 		inDto.setCtFiveComments(webDto.getCtFiveComments());
-		
+
 		inDto.setCtSixFlg(webDto.getCtSixFlg());
-		
+
 		inDto.setCtSixComments(webDto.getCtSixComments());
-		
+
 		inDto.setCtSevenFlg(webDto.getCtSevenFlg());
-		
+
 		inDto.setCtSevenComments(webDto.getCtSevenComments());
-		
+
 		inDto.setCtEightFlg(webDto.getCtEightFlg());
-		
+
 		inDto.setCtEightComments(webDto.getCtEightComments());
-		
+
 		inDto.setCtNineFlg(webDto.getCtNineFlg());
-		
+
 		inDto.setCtNineComments(webDto.getCtNineComments());
-		
+
 		inDto.setRecommendation(webDto.getRecommendation());
-		
-		 officerService.acceptApplicant(inDto);
-				
+
+		officerService.acceptApplicant(inDto);
+
+		ra.addFlashAttribute("succMsg", MessageConstant.ACCEPTED_APPLICATION);
+
 		return "redirect:/officer/home";
 	}
 
 	@PostMapping(value = "/action", params = "reject")
-	public String rejectApplicant(@ModelAttribute OfficerWebDto webDto, RedirectAttributes ra) throws NumberFormatException, Exception {
-		
-		if(CommonConstant.BLANK.equals(webDto.getRecommendation())) {
-			
+	public String rejectApplicant(@ModelAttribute OfficerWebDto webDto, RedirectAttributes ra)
+			throws NumberFormatException, Exception {
+
+		if (CommonConstant.BLANK.equals(webDto.getRecommendation())) {
+
 			ra.addFlashAttribute("error", MessageConstant.FEEDBACK_BLANK);
-			
+
 			ra.addFlashAttribute("officerWebDto", webDto);
-			
+
 			return "redirect:/officer/prescreen?id=" + webDto.getEncryptedApplicantIdPk();
-			
+
 		}
-		
-		if(webDto.getResubmitFlg() == null) {
-			
+
+		if (webDto.getResubmitFlg() == null) {
+
 			ra.addFlashAttribute("error", MessageConstant.RESUBMIT_FLG_BLANK);
-			
+
 			ra.addFlashAttribute("officerWebDto", webDto);
-			
+
 			return "redirect:/officer/prescreen?id=" + webDto.getEncryptedApplicantIdPk();
-			
+
 		}
 
 		OfficerInOutDto inDto = new OfficerInOutDto();
 
 		inDto.setApplicantIdPk(Integer.valueOf(commonService.decrypt(webDto.getEncryptedApplicantIdPk())));
-		
+
 		inDto.setResubmitFlg(webDto.getResubmitFlg());
-		
+
 		inDto.setCtOneFlg(webDto.getCtOneFlg());
-		
+
 		inDto.setCtOneComments(webDto.getCtOneComments());
-		
+
 		inDto.setCtTwoFlg(webDto.getCtTwoFlg());
-		
+
 		inDto.setCtTwoComments(webDto.getCtTwoComments());
-		
+
 		inDto.setCtThreeFlg(webDto.getCtThreeFlg());
-		
+
 		inDto.setCtThreeComments(webDto.getCtThreeComments());
-		
+
 		inDto.setCtFourFlg(webDto.getCtFourFlg());
-		
+
 		inDto.setCtFourComments(webDto.getCtFourComments());
-		
+
 		inDto.setCtFiveFlg(webDto.getCtFiveFlg());
-		
+
 		inDto.setCtFiveComments(webDto.getCtFiveComments());
-		
+
 		inDto.setCtSixFlg(webDto.getCtSixFlg());
-		
+
 		inDto.setCtSixComments(webDto.getCtSixComments());
-		
+
 		inDto.setCtSevenFlg(webDto.getCtSevenFlg());
-		
+
 		inDto.setCtSevenComments(webDto.getCtSevenComments());
-		
+
 		inDto.setCtEightFlg(webDto.getCtEightFlg());
-		
+
 		inDto.setCtEightComments(webDto.getCtEightComments());
-		
+
 		inDto.setCtNineFlg(webDto.getCtNineFlg());
-		
+
 		inDto.setCtNineComments(webDto.getCtNineComments());
-		
+
 		inDto.setRecommendation(webDto.getRecommendation());
-		
-		 officerService.rejectApplicant(inDto);
+
+		officerService.rejectApplicant(inDto);
+
+		ra.addFlashAttribute("succMsg", MessageConstant.REJECTED_APPLICATION);
 
 		return "redirect:/officer/home";
 	}
-	
+
 	@GetMapping(value = "/prescreen")
-	public String showPrescreenList(@RequestParam("id") String id, @ModelAttribute OfficerWebDto webDto) throws Exception {
-		
+	public String showPrescreenList(@RequestParam("id") String id, @ModelAttribute OfficerWebDto webDto)
+			throws Exception {
+
 		OfficerInOutDto inDto = new OfficerInOutDto();
-		  
+
 		inDto.setApplicantIdPk(Integer.parseInt(commonService.decrypt(id)));
- 
+
 		OfficerInOutDto outDto = officerService.getApplicantDetails(inDto);
-		
+
 		webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
-		
+
 		webDto.setEncryptedApplicantIdPk(id);
-	
+
+		webDto.setRejectedCount(outDto.getRejectedCount());
+
+		webDto.setProjectIdPks(outDto.getProjectIdPks());
+
 		return "officer/prescreenChecklist";
 	}
-	
-	@GetMapping("/retrieve/details")
-	public ResponseEntity<OfficerWebDto> getApplicantDetails(@RequestParam("applicantIdPk") String applicantIdPk) {
 
-		
+	@GetMapping("/retrieve/details")
+	public ResponseEntity<OfficerWebDto> getApplicantDetails(@RequestParam("applicantIdPk") String applicantIdPk,
+			@RequestParam("projectIdPk") String projectIdPk) throws NumberFormatException, Exception {
+
 		OfficerInOutDto inDto = new OfficerInOutDto();
-  
-		inDto.setApplicantIdPk(Integer.parseInt(applicantIdPk));
- 
-		OfficerInOutDto outDto = officerService.getApplicantDetails(inDto);
-  
-		if(outDto.getApplicantDetailsObj() == null) {
-  
-		}
-  
-		OfficerWebDto returnWebDto = new OfficerWebDto();
-				
-		returnWebDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
-		 
-		return ResponseEntity.ok(returnWebDto);
+
+		inDto.setApplicantIdPk(Integer.parseInt(commonService.decrypt(applicantIdPk)));
+
+		inDto.setProjectIdPk(Integer.parseInt(projectIdPk));
+
+		OfficerInOutDto outDto = officerService.getHistoryApplicantDetails(inDto);
+
+		OfficerWebDto webDto = new OfficerWebDto();
+
+		webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
+
+		webDto.setRejectedCount(outDto.getRejectedCount());
+
+		webDto.setProjectIdPks(outDto.getProjectIdPks());
+
+		return ResponseEntity.ok(webDto);
 	}
 }

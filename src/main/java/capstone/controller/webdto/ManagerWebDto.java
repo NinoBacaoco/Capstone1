@@ -13,33 +13,39 @@ import lombok.Data;
 
 @Data
 public class ManagerWebDto {
-	
+
 	private ManagerDashboardObj managerDashboardObj;
-	
+
 	private AdminDashboardObj adminDashboardObj;
 
 	private List<ApplicantObj> listOfApplicants;
 
 	private int applicantIdPk;
-	
+
 	private String encryptedApplicantIdPk;
 
 	private List<String> chosenApplicant;
 
 	private ApplicantDetailsObj applicantDetailsObj;
-	
+
 	private ApplicantOfficerFeedbackObj applicantOffFeedbackObj;
-	
+
 	private ApplicantTbiFeedbackObj applicantTbiFeedbackObj;
-	
+
 	private List<ApplicantMonthlyObj> applicantMonthlyObj;
-	
+
 	private List<ApplicantMonthlyObj> applicantRankingMonthlyObj;
-	
+
 	private int month;
-	
+
 	private int year;
-	
+
+	private int projectIdPk;
+
+	private List<Integer> projectIdPks;
+
+	private int rejectedCount;
+
 	/*
 	 * Evaluation DTO
 	 */
@@ -54,21 +60,21 @@ public class ManagerWebDto {
 	private int ctThreeRating;
 
 	private String ctThreeComments;
-	
+
 	private int ctFourRating;
-	
+
 	private String ctFourComments;
-	
+
 	private int ctFiveRating;
-	
+
 	private String ctFiveComments;
-	
+
 	private int ctSixRating;
-	
+
 	private String ctSixComments;
-	
+
 	private int ctSevenRating;
-	
+
 	private String ctSevenComments;
 
 	private int ctEightRating;

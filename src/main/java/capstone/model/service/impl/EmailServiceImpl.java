@@ -33,11 +33,11 @@ public class EmailServiceImpl implements EmailService {
 
 		if (resubmitFlg) {
 			htmlText += "<div>Please review the feedback and consider resubmitting a revised application.</div>"
-					+ "<a href='http://localhost:8080/applicant/form/resubmit?token=" + token + "'>"
+					+ "<a href='https://capstone-nmxx.onrender.com/applicant/form/resubmit?token=" + token + "'>"
 					+ "resubmit</a>";
 		} else {
 			htmlText += "<div>You are not qualified to resubmit this application. Please consider submitting a new application if you wish to reapply.</div>"
-					+ "<a href='http://localhost:8080/applicant/form?token=" + token + "'>"
+					+ "<a href='https://capstone-nmxx.onrender.com/applicant/form?token=" + token + "'>"
 					+ "reapply</a>";
 		}
 
@@ -62,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
 				"<p>Your account has been activated.</p>" +
 				"<p>Your email: </p>" + email + "</p>" +
 				"<p>Your password: " + password + "</p>" +
-				"<div><a href='http://localhost:8080/login'>Login Now</a></div>";
+				"<div><a href='https://capstone-nmxx.onrender.com/login'>Login Now</a></div>";
 
 		helper.setText(htmlText, true);
 
@@ -86,11 +86,11 @@ public class EmailServiceImpl implements EmailService {
 
 		if (resubmitFlg) {
 			htmlText += "<div>Please review the feedback and consider resubmitting a revised application.</div>"
-					+ "<a href='http://localhost:8080/applicant/form/resubmit?token=" + token + "'>"
+					+ "<a href='https://capstone-nmxx.onrender.com/applicant/form/resubmit?token=" + token + "'>"
 					+ "resubmit</a>";
 		} else {
 			htmlText += "<div>You are not qualified to resubmit this application. Please consider submitting a new application if you wish to reapply.</div>"
-					+ "<a href='http://localhost:8080/applicant/form?token=" + token + "'>"
+					+ "<a href='https://capstone-nmxx.onrender.com/applicant/form?token=" + token + "'>"
 					+ "reapply</a>";
 		}
 
@@ -146,7 +146,7 @@ public class EmailServiceImpl implements EmailService {
 		helper.setTo(email);
 		helper.setSubject("Application Evaluated");
 
-		String htmlText = "<div>Your application has been evaluated!. Please <a href='http://localhost:8080/login'>login</a> to see the result.</div> ";
+		String htmlText = "<div>Your application has been evaluated!. Please <a href='https://capstone-nmxx.onrender.com/login'>login</a> to see the result.</div> ";
 
 		helper.setText(htmlText, true);
 

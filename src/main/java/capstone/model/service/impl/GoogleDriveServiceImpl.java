@@ -51,7 +51,9 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
         } catch (GeneralSecurityException | IOException e) {
             System.err.println("Error initializing Google Drive API: " + e.getMessage());
             e.printStackTrace();
+            System.out.println("error ni sha");
         }
+        System.out.println("init");
     }
 
     public Drive getDriveService() {

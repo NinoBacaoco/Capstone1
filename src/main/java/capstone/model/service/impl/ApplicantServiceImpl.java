@@ -125,6 +125,13 @@ public class ApplicantServiceImpl implements ApplicantService {
 			hasError = true;
 		}
 
+		UserInformationEntity user = userLogic.getUserByEmail(inDto.getEmail());
+
+		if (user != null) {
+			emailError.add(MessageConstant.EMAIL_EXIST);
+			hasError = true;
+		}
+
 		if (CommonConstant.BLANK.equals(inDto.getProjectTitle())) {
 			projectTitleError.add(MessageConstant.PROJECT_TITLE_BLANK);
 			hasError = true;

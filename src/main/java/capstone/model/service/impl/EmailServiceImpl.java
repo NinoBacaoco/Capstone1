@@ -29,7 +29,6 @@ public class EmailServiceImpl implements EmailService {
 		helper.setSubject("Application Denied");
 
 		String htmlText = "<h1>Feedback:</h1>" +
-				"<p>" + feedback + "</p>" +
 				"<p>" + "Reapplication: " + (resubmitFlg ? "Yes" : "No") + "</p>";
 
 		if (resubmitFlg) {
@@ -156,50 +155,48 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendIssuedCertificate(String email) throws MessagingException {
-	    MimeMessage message = emailSender.createMimeMessage();
-	    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-	    helper.setFrom(CommonConstant.EMAIL);
-	    helper.setTo(email);
-	    helper.setSubject("Certificate Issued");
+		helper.setFrom(CommonConstant.EMAIL);
+		helper.setTo(email);
+		helper.setSubject("Certificate Issued");
 
-	    String htmlText = "<div>"
-	            + "<h1>Congratulations!</h1>"
-	            + "<p>We are pleased to inform you that your certificate has been successfully issued.</p>"
-	            + "<p>You can now download or access your certificate by logging into your account.</p>"
-	            + "<br>"
-	            + "<p>Thank you for your efforts and dedication.</p>"
-	            + "<p>Best regards,<br>The Certification Team</p>"
-	            + "</div>";
+		String htmlText = "<div>"
+				+ "<h1>Congratulations!</h1>"
+				+ "<p>We are pleased to inform you that your certificate has been successfully issued.</p>"
+				+ "<p>You can now download or access your certificate by logging into your account.</p>"
+				+ "<br>"
+				+ "<p>Thank you for your efforts and dedication.</p>"
+				+ "<p>Best regards,<br>The Certification Team</p>"
+				+ "</div>";
 
-	    helper.setText(htmlText, true);
+		helper.setText(htmlText, true);
 
-	    emailSender.send(message);
+		emailSender.send(message);
 	}
 
 	@Override
 	public void sendEvaluatedMailManager(String email) throws MessagingException {
-	    MimeMessage message = emailSender.createMimeMessage();
-	    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-	    helper.setFrom(CommonConstant.EMAIL);
-	    helper.setTo(email);
-	    helper.setSubject("Your Application Has Been Evaluated");
+		helper.setFrom(CommonConstant.EMAIL);
+		helper.setTo(email);
+		helper.setSubject("Your Application Has Been Evaluated");
 
-	    String htmlText = "<div>"
-	            + "<h1>Your Application Has Been Evaluated!</h1>"
-	            + "<p>We are pleased to inform you that your application has been evaluated successfully.</p>"
-	            + "<p>You can now log in to your account to check your ranking and see where you stand in the evaluation process.</p>"
-	            + "<br>"
-	            + "<p>Thank you for your participation and effort.</p>"
-	            + "<p>Best regards,<br>The Evaluation Team</p>"
-	            + "</div>";
+		String htmlText = "<div>"
+				+ "<h1>Your Application Has Been Evaluated!</h1>"
+				+ "<p>We are pleased to inform you that your application has been evaluated successfully.</p>"
+				+ "<p>You can now log in to your account to check your ranking and see where you stand in the evaluation process.</p>"
+				+ "<br>"
+				+ "<p>Thank you for your participation and effort.</p>"
+				+ "<p>Best regards,<br>The Evaluation Team</p>"
+				+ "</div>";
 
-	    helper.setText(htmlText, true);
+		helper.setText(htmlText, true);
 
-	    emailSender.send(message);
+		emailSender.send(message);
 	}
-
-
 
 }

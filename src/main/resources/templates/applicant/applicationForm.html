@@ -116,7 +116,7 @@
     <div class="error-container" th:if="*{error != null}">
       <div>Please fill out all required fields!</div>
     </div>
-    <a href="/login" class="floating-back-button">Back to login</a>
+    <a href="/" class="floating-back-button">Back to login</a>
     <form
       th:action="@{/applicant/form}"
       method="POST"
@@ -170,7 +170,7 @@
               style="color: red"
             ></span>
             <div
-              class="error"
+              class="error no-pad"
               th:if="*{error != null} AND *{error.emailError != null}"
             >
               <div th:each="err : *{error.emailError}" th:text="${err}"></div>
@@ -1080,7 +1080,7 @@
                 type="text"
                 required
                 oninput="this.className = ''"
-                placeholder="Lastname, Firstname"
+                placeholder="Input here"
                 name="groupLeader"
                 th:value="*{groupLeader}"
                 class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
@@ -1169,8 +1169,7 @@
               type="text"
               required
               oninput="this.className = ''"
-              placeholder="Lastname, Firstname"
-
+              placeholder="Input here"
               name="members[0]"
               class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
             />
@@ -1188,8 +1187,7 @@
               type="text"
               required
               oninput="this.className = ''"
-              placeholder="Lastname, Firstname"
-
+              placeholder="Input here"
               name="members[1]"
               class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
             />
@@ -1207,8 +1205,7 @@
               type="text"
               required
               oninput="this.className = ''"
-              placeholder="Lastname, Firstname"
-
+              placeholder="Input here"
               name="members[2]"
               class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
             />
@@ -1226,8 +1223,7 @@
               type="text"
               required
               oninput="this.className = ''"
-              placeholder="Lastname, Firstname"
-
+              placeholder="Input here"
               name="members[3]"
               class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
             />
@@ -1237,7 +1233,8 @@
             th:if="*{error != null} AND *{error.membersError != null}"
           >
             <div th:each="err : *{error.membersError}" th:text="${err}"></div>
-          </div> 
+          </div>
+          <!-- page 3 -->
           <hr class="my-4" />
           <div class="relative pt-3 ml-6 mb-3">
             <h2 class="text-black mb-3">
@@ -2152,7 +2149,7 @@
             Previous
           </button>
           <button
-            class="border bg-tanglow text-black hover:bg-black hover:text-white font-secondary font-medium right-0 rounded btn-neutral border-b-2 border-black border-opacity-100 w-36 h-12"
+            class="bg-tanglow text-black hover:bg-black hover:text-white font-secondary font-medium right-0 rounded btn-neutral border-b-2 border-black border-solid border-opacity-100 w-36 h-12"
             type="button"
             id="nextBtn"
             onclick="nextPrev(1)"

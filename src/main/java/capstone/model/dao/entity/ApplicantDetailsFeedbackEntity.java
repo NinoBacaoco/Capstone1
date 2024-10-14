@@ -86,7 +86,8 @@ public class ApplicantDetailsFeedbackEntity {
                 (String) objects[72],
                 (Integer) objects[73],
                 (String) objects[74],
-                (String) objects[75]);
+                (String) objects[75],
+                (Integer) objects[76]);
     }
 
     private int applicantIdPk;
@@ -240,4 +241,6 @@ public class ApplicantDetailsFeedbackEntity {
     private String tCtEightComments;
 
     private String tbiFeedback;
+
+    private int totalRating;
 }

@@ -613,6 +613,8 @@ public class ManagerServiceImpl implements ManagerService {
 
 				appTbiFeedbackObj.setTbiFeedback(app.getTbiFeedback());
 
+				appTbiFeedbackObj.setTotalRating(app.getTotalRating());
+
 			}
 
 			members[firstRow] = app.getMemberLastName() + ", " + app.getMemberFirstName();

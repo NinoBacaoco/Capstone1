@@ -78,7 +78,7 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_FILE);
     // private static final String CREDENTIALS_FILE_PATH =
     // "GOOGLE_CREDENTIALS_PATH";
-    private static final String CREDENTIALS_FILE_PATH = "./secrets/GOOGLE_CREDENTIALS_PATH.json";
+    private static final String CREDENTIALS_FILE_PATH = "./secrets/test.txt";
 
     /**
      * Creates an authorized Credential object.

@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GoogleDriveServiceImpl implements GoogleDriveService {
+    @Value("${google.service.port}")
+    private static int googleServicePort;
 
     @Autowired
     private Environment env;
@@ -104,7 +107,7 @@ public class GoogleDriveServiceImpl implements GoogleDriveService {
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
                 .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(googleServicePort).build();
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
         // returns an authorized Credential object.
         return credential;

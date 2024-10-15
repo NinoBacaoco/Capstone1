@@ -146,6 +146,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendEvaluatedMail(String email) throws MessagingException {
+		String siteURL = getSiteUrl();
 
 		MimeMessage message = emailSender.createMimeMessage();
 
@@ -155,8 +156,8 @@ public class EmailServiceImpl implements EmailService {
 		helper.setTo(email);
 		helper.setSubject("Application Evaluated");
 
-		String htmlText = "<div>Your application has been evaluated!. Please <a href='http://localhost:8080/login'>login</a> to see the result.</div> ";
-
+		String htmlText = "<div>Your application has been evaluated! Please <a href='" + siteURL
+				+ "/login'>login</a> to see the result.</div>";
 		helper.setText(htmlText, true);
 
 		emailSender.send(message);

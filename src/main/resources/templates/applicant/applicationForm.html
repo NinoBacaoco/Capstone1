@@ -268,7 +268,7 @@
         <div th:text="*{error.agreeFlgError}"></div>
       </div>
 
-      <!-- 2nd page -->
+      <!-- page 2 -->
       <div class="tab">
         <h1
           class="w-full bg-gradient-to-r from-[#E7BA05] to-customyellow font-semibold text-lg p-4 rounded-t-lg"
@@ -1029,7 +1029,7 @@
           </div>
         </div>
       </div>
-      <!-- group info -->
+      <!-- page 3 -->
       <div class="tab mb-3">
         <h1
           class="w-full bg-gradient-to-r from-formbg-dark to-formbg-light font-semibold text-lg p-4 rounded-t-lg"
@@ -1234,9 +1234,10 @@
           >
             <div th:each="err : *{error.membersError}" th:text="${err}"></div>
           </div>
-          <!-- page 3 -->
           <hr class="my-4" />
-          <div class="relative pt-3 ml-6 mb-3">
+          <div
+            class="flex flex-col ml-6 w-2/4 relative border-b border-gray-200 bg-transparent pt-3 focus-within:border-blue-600"
+          >
             <h2 class="text-black mb-3">
               University
               <span class="text-red-600"> *</span>
@@ -1246,18 +1247,15 @@
               organization. Do not use acronyms. Otherwise, put
               <strong>NA</strong>
             </small>
-            <div
-              class="flex flex-col w-2/4 relative border-b border-gray-200 bg-transparent focus-within:border-blue-600"
-            >
-              <input
-                type="text"
-                required
-                oninput="this.className = 'w-full text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm'"
-                placeholder="Input here"
-                name="university"
-                class="w-full text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-              />
-            </div>
+
+            <input
+              type="text"
+              required
+              oninput="this.className = ' '"
+              placeholder="Input here"
+              name="university"
+              class="w-full text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+            />
           </div>
         </div>
       </div>

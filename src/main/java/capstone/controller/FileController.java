@@ -118,7 +118,7 @@ public class FileController {
 		// }
 		String fileDirectory = env.getProperty("new.certificate.path");
 
-		String fileName = fileDirectory + imageName + ".png";
+		String fileName = fileDirectory + imageName;
 
 		String noImgFileName = fileDirectory + "no_image.png";
 		try {

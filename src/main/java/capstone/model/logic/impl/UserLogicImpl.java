@@ -9,7 +9,10 @@ import capstone.model.dao.UserInfoAccountDao;
 import capstone.model.dao.UserInformationDao;
 import capstone.model.dao.entity.AdminDashboardEntity;
 import capstone.model.dao.entity.ManagerDashboardEntity;
+import capstone.model.dao.entity.MonthlyHighestScoresEntity;
+import capstone.model.dao.entity.MonthlyTotalApplicationEntity;
 import capstone.model.dao.entity.OfficerDashboardEntity;
+import capstone.model.dao.entity.PerformanceMetricsEntity;
 import capstone.model.dao.entity.TbiBoardDashboardEntity;
 import capstone.model.dao.entity.UserDetailsEntity;
 import capstone.model.dao.entity.UserInfoAccountEntity;
@@ -19,36 +22,36 @@ import capstone.model.logic.UserLogic;
 
 @Service
 public class UserLogicImpl implements UserLogic {
-	
+
 	@Autowired
 	private UserInformationDao userInformationDao;
-	
+
 	@Autowired
 	private UserInfoAccountDao userInfoAccountDao;
 
 	@Override
 	public UserInformationEntity getUserByEmail(String email) {
-		
+
 		return userInformationDao.getUserByUsername(email);
 	}
 
 	@Override
 	public UserInfoAccountEntity getUserAccountByUserIdPk(int userIdPk) {
-		
+
 		return userInfoAccountDao.getUserInfoAccountByUserIdPk(userIdPk);
 	}
 
 	@Override
 	public void saveUserAccount(UserInfoAccountEntity entity) {
-		
+
 		userInfoAccountDao.save(entity);
 	}
 
 	@Override
 	public int saveUser(UserInformationEntity entity) {
-		
+
 		userInformationDao.save(entity);
-		
+
 		return entity.getIdPk();
 	}
 
@@ -60,13 +63,13 @@ public class UserLogicImpl implements UserLogic {
 
 	@Override
 	public UserInformationEntity getUserByEvaluatedToken(String token) {
-		
+
 		return userInformationDao.getUserByEvaluatedtoken(token);
 	}
 
 	@Override
 	public UserInformationEntity getUserByRejectedToken(String token) {
-		
+
 		return userInformationDao.getUserByRejectedtoken(token);
 	}
 
@@ -77,28 +80,28 @@ public class UserLogicImpl implements UserLogic {
 	}
 
 	@Override
-	public  List<UserDetailsEntity> getAllUsers() {
-		
+	public List<UserDetailsEntity> getAllUsers() {
+
 		return userInformationDao.getAllUsers();
 	}
 
 	@Override
 	public List<UserInformationEntity> getUsersByApplicantIdPks(List<Integer> applicantIdPks) {
-		
+
 		return userInformationDao.getUsersByApplicantIdPks(applicantIdPks);
 	}
 
 	@Override
 	public void deleteUser(int userIdPk) {
-		
+
 		userInformationDao.deleteUser(userIdPk);
-		
+
 	}
 
 	@Override
 	public int updateuser(String firstName, String lastName, String mobileNumber, String role,
 			Timestamp updatedDate, int userIdPk) {
-		
+
 		return userInformationDao.updateUser(firstName, lastName, mobileNumber, role, updatedDate, userIdPk);
 	}
 
@@ -110,13 +113,13 @@ public class UserLogicImpl implements UserLogic {
 
 	@Override
 	public TbiBoardDashboardEntity getDetailsForTbiBoardDashboard() {
-	
+
 		return userInformationDao.getDetailsForTbiBoardDashboard();
 	}
 
 	@Override
 	public OfficerDashboardEntity getDetailsForOfficerDashboard() {
-		
+
 		return userInformationDao.getDetailsForOfficerDashboard();
 	}
 
@@ -132,6 +135,34 @@ public class UserLogicImpl implements UserLogic {
 		return userInformationDao.countAdminUsers();
 	}
 
+	@Override
+	public List<MonthlyHighestScoresEntity> getMonthlyHighestScores() {
 
+		return userInformationDao.getMonthlyHighestScores();
+	}
+
+	@Override
+	public List<PerformanceMetricsEntity> getOfficerPerformanceMetrics() {
+
+		return userInformationDao.getOfficerPerformanceMetrics();
+	}
+
+	@Override
+	public List<PerformanceMetricsEntity> getTbiBoardPerformanceMetrics() {
+
+		return userInformationDao.getTbiBoardPerformanceMetrics();
+	}
+
+	@Override
+	public List<MonthlyTotalApplicationEntity> getMonthlyAcceptedApplication() {
+
+		return userInformationDao.getMonthlyAcceptedApplications();
+	}
+
+	@Override
+	public List<MonthlyTotalApplicationEntity> getMonthlyRejectedApplication() {
+
+		return userInformationDao.getMonthlyRejectedApplications();
+	}
 
 }

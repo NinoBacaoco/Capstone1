@@ -56,7 +56,6 @@ import capstone.model.object.ApplicantTbiFeedbackObj;
 import capstone.model.object.ManagerDashboardObj;
 import capstone.model.service.CommonService;
 import capstone.model.service.EmailService;
-import capstone.model.service.GoogleDriveService;
 import capstone.model.service.LoggedInUserService;
 import capstone.model.service.ManagerService;
 import jakarta.mail.MessagingException;
@@ -67,9 +66,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
-
-	@Autowired
-	private ResourceLoader resourceLoader;
 
 	@Autowired
 	private ApplicantLogic applicantLogic;
@@ -93,7 +89,6 @@ public class ManagerServiceImpl implements ManagerService {
 	private LoggedInUserService loggedInUserService;
 
 	@Autowired
-	private GoogleDriveService googleDriveService;
 
 	@Override
 	public ManagerInOutDto getAllApplicants() throws Exception {
@@ -1024,6 +1019,24 @@ public class ManagerServiceImpl implements ManagerService {
 		applicantDetailsObj.setMembers(members);
 
 		outDto.setApplicantDetailsObj(applicantDetailsObj);
+
+		return outDto;
+	}
+
+	@Override
+	public ManagerInOutDto getManagerAnalyticsDetails() {
+
+		ManagerInOutDto outDto = new ManagerInOutDto();
+
+		outDto.setMonthlyHighestScores(userLogic.getMonthlyHighestScores());
+
+		outDto.setOfficerPerformanceMetrics(userLogic.getOfficerPerformanceMetrics());
+
+		outDto.setTbiBoardPerformanceMetrics(userLogic.getTbiBoardPerformanceMetrics());
+
+		outDto.setMonthlyAcceptedApplications(userLogic.getMonthlyAcceptedApplication());
+
+		outDto.setMonthlyRejectedApplications(userLogic.getMonthlyRejectedApplication());
 
 		return outDto;
 	}

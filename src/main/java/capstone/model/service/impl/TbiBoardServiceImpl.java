@@ -80,6 +80,8 @@ public class TbiBoardServiceImpl implements TbiBoardService {
 
 			obj.setUniversity(app.getUniversity());
 
+			obj.setHasResubmittedOrLowEvaluation(app.getHasResubmittedOrLowEvaluation());
+
 			listOfAppObj.add(obj);
 
 		}

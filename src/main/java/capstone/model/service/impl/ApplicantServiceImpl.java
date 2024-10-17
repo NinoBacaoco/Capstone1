@@ -42,7 +42,7 @@ import capstone.model.object.ApplicantOfficerFeedbackObj;
 import capstone.model.object.ApplicantTbiFeedbackObj;
 import capstone.model.object.ErrorObj;
 import capstone.model.service.ApplicantService;
-import capstone.model.service.CommonService; 
+import capstone.model.service.CommonService;
 import capstone.model.service.LoggedInUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -70,7 +70,6 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Autowired
 	private Environment env;
- 
 
 	@Override
 	public ApplicantInOutDto validateApplication(ApplicantInOutDto inDto) {
@@ -400,7 +399,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 		int userIdPk = 0;
 
 		// If token is not null means resubmission
-		if (inDto.getToken() == null || inDto.getReApplyToken() != null) {
+		if (inDto.getToken() == null && inDto.getReApplyToken() == null) {
 
 			// First Registration - Adding account for the applicant
 			if (inDto.getReApplyToken() == null || inDto.getReApplyToken().isEmpty()) {
@@ -602,6 +601,12 @@ public class ApplicantServiceImpl implements ApplicantService {
 			int status = 0;
 
 			int applicantIdPk = 0;
+
+			if (inDto.getReApplyToken() != null) {
+
+				inDto.setToken(inDto.getReApplyToken());
+
+			}
 
 			if (inDto.getToken().charAt(0) == 'F') {
 				status = 4;

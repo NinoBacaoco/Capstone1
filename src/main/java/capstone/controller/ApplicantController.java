@@ -146,7 +146,9 @@ public class ApplicantController {
 		inDto.setReApplyToken(webDto.getReApplyToken());
 
 		inDto.setVitaeFileName(webDto.getVitaeFileName());
-			
+
+		System.out.println(webDto.getReApplyToken());
+
 		ApplicantInOutDto outDto = applicantService.validateApplication(inDto);
 
 		if (CommonConstant.INVALID.equals(outDto.getResult())) {
@@ -154,7 +156,7 @@ public class ApplicantController {
 			webDto.setError(outDto.getError());
 
 			ra.addFlashAttribute("applicantWebDto", webDto);
-			
+
 			if (!button.equals("resubmit")) {
 				if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
 					System.out.println("REAPPLY");
@@ -174,7 +176,7 @@ public class ApplicantController {
 			if (webDto.getReApplyToken() != null && !webDto.getReApplyToken().isEmpty()) {
 				ra.addFlashAttribute("success",
 						"Your reapplication was successful! We'll notify you of the outcome soon.");
-			}else {
+			} else {
 				ra.addFlashAttribute("success",
 						"You have sucessfully registered! Wait for the email that will be sent to you!");
 			}
@@ -199,6 +201,12 @@ public class ApplicantController {
 		webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
 
 		return "applicant/home";
+	}
+
+	@GetMapping("/home/feedback")
+	public String showFeedback(@ModelAttribute ApplicantWebDto webDto) {
+
+		return "applicant/viewFeedback";
 	}
 
 	/**
@@ -320,13 +328,13 @@ public class ApplicantController {
 		webDto.setCommitmentFourFlg(outDto.getCommitmentFourFlg());
 
 		webDto.setOnlyOfficer(outDto.getOnlyOfficerFeedback());
-		
+
 		webDto.setBothFeedback(outDto.getBothFeedback());
-		
+
 		webDto.setAppOffFeedbackObj(outDto.getAppOffFeedbackObj());
-		
+
 		webDto.setApplicantTbiFeedbackObj(outDto.getApplicantTbiFeedbackObj());
-		
+
 		model.addAttribute("applicantWebDto", webDto);
 
 		model.addAttribute("token", token);

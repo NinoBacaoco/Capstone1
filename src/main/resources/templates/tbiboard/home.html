@@ -144,7 +144,7 @@
               <th class="text-center rounded-top-left">Email</th>
               <th class="text-center w-3/12">Project Title</th>
               <th class="text-center w-1/5 hidden sm:table-cell">University</th>
-              <!-- <th class="text-center sm:table-cell">Status</th> -->
+              <th class="text-center sm:table-cell">Status</th>
 
               <th class="text-center rounded-top-right">Actions</th>
             </tr>
@@ -166,6 +166,10 @@
               <td
                 class="whitespace-nowrap max-w-0 truncate hidden sm:table-cell"
                 th:text="${app.university}"
+              ></td>
+              <td
+                class="whitespace-nowrap max-w-0 truncate"
+                th:text="${app.hasResubmittedOrLowEvaluation ? 'RESUBMITTED' : 'PENDING'}"
               ></td>
               <!-- <td class="whitespace-nowrap max-w-0 truncate">Pending</td> -->
               <td>
@@ -211,7 +215,7 @@
     ></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
     <script th:inline="javascript">
-      console.log(/*[[${officerWebDto}]]*/ "");
+      console.log(/*[[${tbiBoardWebDto}]]*/ "");
       $(document).ready(function () {
         new DataTable("#applicants-table", {
           order: [],
@@ -223,20 +227,6 @@
           ],
         });
       });
-    </script>
-    <script>
-      // JavaScript function to remove the flash message after a specified time
-      function hideFlashMessage() {
-        const flashMessage = document.getElementById("flash-message");
-        if (flashMessage) {
-          setTimeout(() => {
-            flashMessage.style.display = "none";
-          }, 5000); // 5000 milliseconds = 5 seconds
-        }
-      }
-
-      // Call the function on page load
-      window.onload = hideFlashMessage;
     </script>
   </body>
 </html>

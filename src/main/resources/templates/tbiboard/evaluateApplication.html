@@ -232,12 +232,12 @@
                           Guide Question
                         </th>
                         <th
-                          class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                          class="w-1/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
                         >
                           Rating (1-10)
                         </th>
                         <th
-                          class="w-2/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
+                          class="w-1/4 font-semibold border border-gray-500 px-4 py-2 text-sm"
                         >
                           Comment
                         </th>
@@ -268,29 +268,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctOneRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctOneRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -323,29 +392,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctTwoRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctTwoRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -378,29 +516,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctThreeRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctThreeRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -424,29 +631,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctFourRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctFourRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -479,29 +755,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctFiveRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctFiveRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -534,27 +879,95 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctSixRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctSixRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
@@ -581,29 +994,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctSevenRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctSevenRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -627,29 +1109,98 @@
                         </td>
                         <td class="border border-gray-500 px-2 py-2">
                           <div class="text-sm">
-                            <select
-                              required
-                              oninput="this.className = ''"
+                            <div
                               id="rating"
                               name="ctEightRating"
-                              class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
+                              class="rating-container"
+                              data-value="none"
+                              required
                             >
-                              <option value="none" disabled selected>
-                                select a rating
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select>
+                              <input
+                                type="hidden"
+                                name="ctEightRating"
+                                class="hidden-input"
+                                value="0"
+                              />
+
+                              <div class="w-full grid grid-cols-5 gap-1 mb-1">
+                                <button
+                                  type="button"
+                                  data-value="1"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  1
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="2"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  2
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="3"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  3
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="4"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  4
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="5"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  5
+                                </button>
+                              </div>
+                              <div class="w-full grid grid-cols-5 gap-1">
+                                <button
+                                  type="button"
+                                  data-value="6"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  6
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="7"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  7
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="8"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  8
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="9"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  9
+                                </button>
+                                <button
+                                  type="button"
+                                  data-value="10"
+                                  class="rating-btn shadow-sm w-8 h-8 rounded-md flex items-center justify-center text-sm text-gray-700 border border-gray-200 focus:outline-none focus:ring-0 transition-colors"
+                                >
+                                  10
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </td>
+
                         <td class="border border-gray-500 px-2 py-2">
                           <textarea
                             oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
@@ -662,14 +1213,14 @@
                       <tr>
                         <th
                           colspan="2"
-                          class="h-[100px] font-normal border border-gray-500 px-4 py-2 text-sm text-center"
+                          class="h-[100px] border border-gray-500 px-4 py-2 text-sm text-center font-semibold"
                         >
                           Total
                         </th>
 
                         <td class="border border-gray-500 px-2 py-2">
                           <div
-                            class="text-sm flex justify-center total-score font-medium"
+                            class="text-sm flex justify-center total-score font-semibold"
                           ></div>
                         </td>
                         <td class="border border-gray-500 px-2 py-2"></td>
@@ -682,19 +1233,22 @@
           </div>
           <hr class="my-4" />
 
-          <!-- additional feedback -->
+          <!-- Feedback -->
           <div class="flex flex-col">
             <!-- th:data-id="${app.applicantIdPk}" -->
             <div class="w-full h-[100px]">
+              <h2 class="text-black mb-2">
+                Feedback<span class="text-red-600"> *</span>
+              </h2>
               <textarea
                 oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
                 name="tbiFeedback"
-                placeholder="Additional feedback"
+                placeholder="Input feedback"
                 class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
               ></textarea>
             </div>
             <button
-              class="flex justify-center items-center self-end text-center mt-2 h-[50px] border-black hover:bg-green-500 bg-green-600 rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
+              class="flex justify-center items-center self-end text-center mt-5 h-[50px] border-black hover:bg-green-500 bg-green-600 rounded-lg w-w45 hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
               type="submit"
               name="accept"
             >
@@ -759,54 +1313,91 @@
       let totalScore = 0;
       let totalScoreHTML = document.querySelector(".total-score");
       let allValuesProvided = false;
+      let previousValues = {};
 
-      document.querySelectorAll("select").forEach((select, index) => {
-        let previousValue = 0;
+      // Initialize the containers with their names
+      const ratingNames = [
+        "ctOneRating",
+        "ctTwoRating",
+        "ctThreeRating",
+        "ctFourRating",
+        "ctFiveRating",
+        "ctSixRating",
+        "ctSevenRating",
+        "ctEightRating",
+      ];
 
-        select.addEventListener("change", function () {
-          // Define the multiplier based on the index of the select element
-          let multiplier = 1.0; // Default multiplier is 1
-          if (index === 2 || index === 3) {
-            multiplier = 2.0; // Fourth and fifth select elements have x2 multiplier
-          } else if (index === 4) {
-            multiplier = 3.0; // Sixth select element has x3 multiplier
-          } else if (index === 5 || index === 6 || index === 7) {
-            multiplier = 1.5; // Seventh, eighth, and ninth select elements have x1.5 multiplier
-          }
+      document
+        .querySelectorAll(".rating-container")
+        .forEach((container, index) => {
+          const containerName = container.getAttribute("name");
+          const hiddenInput = container.querySelector(".hidden-input");
+          previousValues[containerName] = 0;
 
-          // Subtract the previous value multiplied by its multiplier from the total score
-          totalScore -= previousValue * multiplier;
+          container.querySelectorAll(".rating-btn").forEach((button) => {
+            button.addEventListener("click", function () {
+              // Remove selected class from all buttons in this container
+              container.querySelectorAll(".rating-btn").forEach((btn) => {
+                btn.classList.remove(
+                  "bg-blue-500",
+                  "text-white",
+                  "hover:bg-blue-600"
+                );
+                btn.classList.add("text-gray-700", "hover:bg-gray-50");
+              });
 
-          // Get the new selected value
-          let currentValue = parseInt(this.value);
+              // Add selected styles to clicked button
+              this.classList.remove("text-gray-700", "hover:bg-gray-50");
+              this.classList.add(
+                "bg-blue-500",
+                "text-white",
+                "hover:bg-blue-600"
+              );
 
-          // Add the new value multiplied by the multiplier to the total score
-          totalScore += currentValue * multiplier;
+              // Update the container's data-value
+              const currentValue = parseInt(this.dataset.value);
+              container.dataset.value = currentValue;
 
-          // Update the previous value to the current one
-          previousValue = currentValue;
+              // Update the hidden input's value to reflect the selected rating
+              hiddenInput.value = currentValue;
 
-          // Check if all select elements have a value other than 'none'
-          allValuesProvided = Array.from(
-            document.querySelectorAll("select")
-          ).every((select) => select.value !== "none");
+              // Define multiplier based on the index
+              let multiplier = 1.0;
+              if (index === 2 || index === 3) {
+                multiplier = 2.0;
+              } else if (index === 4) {
+                multiplier = 3.0;
+              } else if (index === 5 || index === 6 || index === 7) {
+                multiplier = 1.5;
+              }
 
-          console.log(totalScore);
+              // Subtract the previous value's contribution to the total score
+              totalScore -= previousValues[containerName] * multiplier;
 
-          // Only display if all values are provided
-          if (allValuesProvided) {
-            // Divide the total score by 1.35 and round up
-            let finalScore = Math.ceil(totalScore / 1.35);
+              // Add the new value's contribution to the total score
+              totalScore += currentValue * multiplier;
 
-            // Display the final score
-            totalScoreHTML.innerHTML = finalScore;
-          } else {
-            // If not all values are provided, display a message
-            totalScoreHTML.innerHTML = "Please complete all selections.";
-          }
+              // Update the previous value for this container
+              previousValues[containerName] = currentValue;
+
+              // Check if all rating containers have a selected value
+              allValuesProvided = Array.from(
+                document.querySelectorAll(".rating-container")
+              ).every((container) => container.dataset.value !== "none");
+
+              // If all ratings are provided, display the total score
+              if (allValuesProvided) {
+                let finalScore = Math.ceil(totalScore / 1.35);
+                totalScoreHTML.innerHTML = finalScore;
+              } else {
+                // Display a message if not all ratings have been provided
+                totalScoreHTML.innerHTML = "Please complete all selections.";
+              }
+            });
+          });
         });
-      });
     </script>
+
     <script>
       // JavaScript function to remove the flash message after a specified time
       function hideFlashMessage() {

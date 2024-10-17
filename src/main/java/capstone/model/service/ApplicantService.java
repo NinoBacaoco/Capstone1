@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 
 import capstone.model.dto.ApplicantInOutDto;
+import capstone.model.dto.ManagerInOutDto;
 
 @Service
 public interface ApplicantService {
@@ -64,4 +65,7 @@ public interface ApplicantService {
      * @return ApplicantInOutDto
      */
     public ApplicantInOutDto getUserReapply(ApplicantInOutDto inDto);
+
+    public ApplicantInOutDto getApplicantDetailsWithFeedback(ApplicantInOutDto inDto) throws Exception;
+
 }

@@ -13,145 +13,146 @@ import lombok.Data;
 
 @Data
 public class ApplicantWebDto {
-	
-	//Email
+
+	// Email
 	private String email;
-	
-	//Agree 
+
+	// Agree
 	private Boolean agreeFlg;
-	
-	//Title
+
+	// Title
 	private String projectTitle;
-	
-	//Description
+
+	// Description
 	private String projectDescription;
-	
-	//Teams
-	private List<String[]> teams = List.of(new String[] {"",""}, new String[] {"",""}, new String[] {"",""}, new String[] {"",""}, new String[] {"",""});
-	
-	//Problem Statement
+
+	// Teams
+	private List<String[]> teams = List.of(new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" },
+			new String[] { "", "" }, new String[] { "", "" });
+
+	// Problem Statement
 	private String problemStatement;
-	
-	//Target Market
+
+	// Target Market
 	private String targetMarket;
-	
-	//Solution Description
+
+	// Solution Description
 	private String solutionDescription;
-	
-	//Historical Timeline
-	private List<String[]> historicalTimeline = List.of(new String[] {"",""}, new String[] {"",""}, new String[] {"",""}, new String[] {"",""}, new String[] {"",""});
-	
-	//Product Service Offering
-	private List<String> productServiceOffering = new ArrayList<>(Arrays.asList("", "", "", "")); 
-	
-	//Pricing Strategy
-	private List<String> pricingStrategy = new ArrayList<>(Arrays.asList("", "", "", "")); 
-	
-	//Intellectual Property Status
+
+	// Historical Timeline
+	private List<String[]> historicalTimeline = List.of(new String[] { "", "" }, new String[] { "", "" },
+			new String[] { "", "" }, new String[] { "", "" }, new String[] { "", "" });
+
+	// Product Service Offering
+	private List<String> productServiceOffering = new ArrayList<>(Arrays.asList("", "", "", ""));
+
+	// Pricing Strategy
+	private List<String> pricingStrategy = new ArrayList<>(Arrays.asList("", "", "", ""));
+
+	// Intellectual Property Status
 	private String intPropertyStatus;
-	
-	//Objectives
+
+	// Objectives
 	private String objectives;
-	
-	//Scope of the proposal
+
+	// Scope of the proposal
 	private String scopeProposal;
-	
-	//Methodlogy
+
+	// Methodlogy
 	private String methodology;
-	
-//	//Curriculum Vitae
+
+	// //Curriculum Vitae
 	private String vitaeFileName;
-	
-	//Support link
+
+	// Support link
 	private String supportLink;
-	
-	//Group Name
+
+	// Group Name
 	private String groupName;
-	
-	//Group Leader
+
+	// Group Leader
 	private String groupLeader;
-	
-	//Leader Mobile Numebr
+
+	// Leader Mobile Numebr
 	private String leaderNumber;
-	
-	//Leader email address
+
+	// Leader email address
 	private String leaderAddress;
-	
-	//Members;
+
+	// Members;
 	private List<String> members = new ArrayList<>(Arrays.asList("", "", "", "", ""));
-	
-	//University
+
+	// University
 	private String university;
-	
-	//Technology Answer
+
+	// Technology Answer
 	private int technologyAns;
-	
-	//Product Development
+
+	// Product Development
 	private int productDevelopmentAns;
-	
-	//Competitive Landscape
+
+	// Competitive Landscape
 	private int CompetitiveLandscapeAns;
-	
-	//Product Development/design
+
+	// Product Development/design
 	private int productDesignAns;
-	
-	//Team Answer
+
+	// Team Answer
 	private int teamAns;
-	
-	//Go-To-Market
+
+	// Go-To-Market
 	private int goToMarketAns;
-	
-	//Manufacturing 
+
+	// Manufacturing
 	private int manufacturingAns;
-	
-	//Eligibility Agreement
+
+	// Eligibility Agreement
 	private Boolean eligibilityAgreeFlg;
-	
-	//Commitment One
+
+	// Commitment One
 	private Boolean commitmentOneFlg;
-	
-	//Commitment Two
+
+	// Commitment Two
 	private Boolean commitmentTwoFlg;
-	
-	//Commitment Three
+
+	// Commitment Three
 	private Boolean commitmentThreeFlg;
-	
-	//Commitment Four
+
+	// Commitment Four
 	private Boolean commitmentFourFlg;
-	
-	//Feedback
+
+	// Feedback
 	private String feedback;
-	
-	//Token
+
+	// Token
 	private String token;
-	
-	//Re apply token
+
+	// Re apply token
 	private String reApplyToken;
-	
+
 	private Boolean onlyOfficer;
-	
+
 	private Boolean bothFeedback;
-	
-	private ApplicantOfficerFeedbackObj appOffFeedbackObj;
-	
+
+	private ApplicantDetailsObj applicantDetailsObj;
+
+	private ApplicantOfficerFeedbackObj applicantOffFeedbackObj;
+
 	private ApplicantTbiFeedbackObj applicantTbiFeedbackObj;
-	
-	
+
 	/*
 	 * Change Password
 	 */
-	
-	//Current Password
+
+	// Current Password
 	private String currentPassword;
-	
-	//New Password
+
+	// New Password
 	private String newPassword;
-	
-	//Confirm Password
+
+	// Confirm Password
 	private String confirmPassword;
-	
-	private ApplicantDetailsObj applicantDetailsObj;
-	
+
 	private ErrorObj error;
-	
+
 }

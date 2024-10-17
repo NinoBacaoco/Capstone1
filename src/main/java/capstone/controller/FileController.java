@@ -23,8 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import capstone.model.service.GoogleDriveService;
+ 
 
 @Controller
 public class FileController {
@@ -34,9 +33,7 @@ public class FileController {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
-
-	@Autowired
-	private GoogleDriveService googleDriveService;
+ 
 
 	@GetMapping(value = "/view/{fileName}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> showPDF(@PathVariable String fileName) {

@@ -42,8 +42,7 @@ import capstone.model.object.ApplicantOfficerFeedbackObj;
 import capstone.model.object.ApplicantTbiFeedbackObj;
 import capstone.model.object.ErrorObj;
 import capstone.model.service.ApplicantService;
-import capstone.model.service.CommonService;
-import capstone.model.service.GoogleDriveService;
+import capstone.model.service.CommonService; 
 import capstone.model.service.LoggedInUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -71,9 +70,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Autowired
 	private Environment env;
-
-	@Autowired
-	private GoogleDriveService googleDriveService;
+ 
 
 	@Override
 	public ApplicantInOutDto validateApplication(ApplicantInOutDto inDto) {

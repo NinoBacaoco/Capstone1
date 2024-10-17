@@ -74,7 +74,7 @@ public class MessageConstant {
 
 	public static String CONFIRM_PASSWORD_BLANK = "Confirm Password is required!";
 
-	public static String FEEDBACK_BLANK = "Please Provide Your Feedback!";
+	public static String FEEDBACK_BLANK = "Feedback is required. Please provide your input.";
 
 	public static String RESUBMIT_FLG_BLANK = "Please indicate whether the application sheet is qualified for resubmission. Your selection is required to proceed!";
 

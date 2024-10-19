@@ -158,7 +158,7 @@
       </button>
     </div>
     <div
-      class="w-[55%] bg-white p-10 pt-2"
+      class="w-[55%] p-10 pt-2 bg-white"
       th:style="*{applicantDetailsObj.status == 0 ? 'width: 100%;' : ''}"
     >
       <!-- page 2 -->
@@ -186,12 +186,12 @@
         <hr class="my-8" />
 
         <!-- capsule proposal form -->
-        <div class="flex flex-col mt-4 mb-3 mx-6 pointer-events-none">
+        <div class="flex flex-col mt-4 mb-3 mx-6">
           <p class="mb-3 font-semibold text-base">
             I. About the Startup/Project
           </p>
           <!-- project description -->
-          <div>
+          <div class="pointer-events-none">
             <h2 class="text-black">
               A. Project Description<span class="text-red-600"> *</span>
             </h2>
@@ -215,7 +215,7 @@
           <hr class="my-4" />
 
           <!-- team composition -->
-          <div>
+          <div class="pointer-events-none">
             <h2 class="text-black">B. Team Composition</h2>
             <!-- B. Team Composition<span class="text-red-600"> *</span> -->
             <div class="grid grid-cols-2 w-4/5 gap-2 mt-2">
@@ -340,7 +340,7 @@
           <hr class="my-4" />
 
           <!--  About the Product/Solution -->
-          <div>
+          <div class="pointer-events-none">
             <h2 class="text-black">C. About the Product/Solution</h2>
 
             <p class="text-sm mt-4">
@@ -398,7 +398,7 @@
           <hr class="my-4" />
 
           <!-- historical timeline -->
-          <div>
+          <div class="pointer-events-none">
             <h2 class="text-black">
               D. Historical Timeline of the Product/Project Development
             </h2>
@@ -406,7 +406,7 @@
               • Start from the most recent
             </small>
             <table class="w-full">
-              <thead>
+              <thead class="text-center">
                 <tr>
                   <th class="font-semibold border border-gray-500 px-4 py-2">
                     Month-Year
@@ -523,19 +523,39 @@
           <hr class="my-4" />
 
           <!-- competitive advantage analysis -->
-          <div class="h-[600px]">
+          <div class="overflow-auto h-[550px]">
             <h2 class="text-black">E. Competitive Advantage Analysis</h2>
             <small class="block text-gray-500">
               • Add more applicable competitive factors
             </small>
-            <table class="w-full h-4/5">
+            <table class="w-full h-4/5 pointer-events-none">
               <thead>
                 <tr>
-                  <th>Competitive Factors</th>
-                  <th>Name of Competition 1/ Alternative 1</th>
-                  <th>Name of Competition 2/ Alternative 2</th>
-                  <th>Name of Competition 3/ Alternative 3</th>
-                  <th>Your Startup/Project Name</th>
+                  <th
+                    class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                  >
+                    Competitive Factors
+                  </th>
+                  <th
+                    class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                  >
+                    Name of Competition 1/ Alternative 1
+                  </th>
+                  <th
+                    class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                  >
+                    Name of Competition 2/ Alternative 2
+                  </th>
+                  <th
+                    class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                  >
+                    Name of Competition 3/ Alternative 3
+                  </th>
+                  <th
+                    class="font-semibold border border-gray-500 px-4 py-2 text-sm"
+                  >
+                    Your Startup/Project Name
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -623,7 +643,7 @@
           <hr class="my-4" />
 
           <!-- intellectual property status -->
-          <div>
+          <div class="pointer-events-none">
             <h2 class="text-black">
               F. Intellectual Property Status (If applicable)
             </h2>

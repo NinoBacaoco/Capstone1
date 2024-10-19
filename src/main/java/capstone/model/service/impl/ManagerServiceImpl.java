@@ -887,7 +887,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 		obj.setAcceptedApplicationsCount(entity.getAcceptedApplicationsCount());
 
-		obj.setEvalutedApplicaitonsCount(entity.getEvalutedApplicaitonsCount());
+		obj.setEvalutedApplicationsCount(entity.getEvalutedApplicaitonsCount());
 
 		obj.setAcceptanceRate(entity.getAcceptanceRate());
 

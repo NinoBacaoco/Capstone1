@@ -33,8 +33,9 @@ public class EmailServiceImpl implements EmailService {
 		helper.setTo(email);
 		helper.setSubject("Application Denied");
 
-		String htmlText = "<h1>Feedback:</h1>" +
-				"<p>" + "Reapplication: " + (resubmitFlg ? "Yes" : "No") + "</p>";
+		String htmlText = "<h1>Feedback:</h1>" ;
+		// +
+		// 		"<p>" + "Reapplication: " + (resubmitFlg ? "Yes" : "No") + "</p>";
 
 		if (resubmitFlg) {
 			htmlText += "<div>Please review the feedback and consider resubmitting a revised application.</div>"

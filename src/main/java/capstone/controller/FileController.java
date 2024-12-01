@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
- 
 
 @Controller
 public class FileController {
@@ -33,7 +33,6 @@ public class FileController {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
- 
 
 	@GetMapping(value = "/view/{fileName}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> showPDF(@PathVariable String fileName) {
@@ -115,7 +114,7 @@ public class FileController {
 		// }
 		String fileDirectory = env.getProperty("new.certificate.path");
 
-		String fileName = fileDirectory + imageName;
+		String fileName = fileDirectory + imageName + ".png";
 
 		String noImgFileName = fileDirectory + "no_image.png";
 		try {
@@ -131,4 +130,41 @@ public class FileController {
 			return new byte[0];
 		}
 	}
+
+	@GetMapping(value = "/download/certificate/{imageName}")
+	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
+		String fileDirectory = env.getProperty("new.certificate.path"); // Path to the directory
+		Path filePath = Paths.get(fileDirectory, imageName);
+
+		// Validate file existence and readability
+		if (!Files.exists(filePath) || !Files.isRegularFile(filePath) || !Files.isReadable(filePath)) {
+			return ResponseEntity.notFound().build();
+		}
+
+		try {
+			// Read the image content as bytes
+			byte[] imageContent = Files.readAllBytes(filePath);
+
+			// Determine the content type based on the file extension
+			String contentType = Files.probeContentType(filePath);
+
+			if (contentType == null || !contentType.startsWith("image/")) {
+				return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
+			}
+
+			// Set headers to force download
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // Set as generic binary content
+			headers.setContentLength(imageContent.length);
+			headers.setContentDisposition(ContentDisposition.builder("attachment")
+					.filename(imageName)
+					.build());
+
+			return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 }

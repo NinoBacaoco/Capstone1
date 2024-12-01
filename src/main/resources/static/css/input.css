@@ -290,6 +290,18 @@ body.modal-open {
   overflow: auto !important;
   padding-right: 0 !important;
 }
+.btn-resubmission {
+  background-color: rgb(249, 115, 22) !important;
+}
+.btn-resubmission:hover {
+  background-color: rgb(249, 70, 22) !important;
+}
+.btn-reject {
+  background-color: rgb(239, 68, 68) !important;
+}
+.btn-reject:hover {
+  background-color: rgb(239, 13, 68) !important;
+}
 
 /* header back */
 
@@ -400,4 +412,3 @@ body.modal-open {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
 }
- 

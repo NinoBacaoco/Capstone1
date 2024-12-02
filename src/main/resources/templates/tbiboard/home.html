@@ -197,7 +197,20 @@
         </form>
       </div>
     </div>
+    <script>
+      // JavaScript function to remove the flash message after a specified time
+      function hideFlashMessage() {
+        const flashMessage = document.getElementById("flash-message");
+        if (flashMessage) {
+          setTimeout(() => {
+            flashMessage.style.display = "none";
+          }, 5000); // 5000 milliseconds = 5 seconds
+        }
+      }
 
+      // Call the function on page load
+      window.onload = hideFlashMessage;
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

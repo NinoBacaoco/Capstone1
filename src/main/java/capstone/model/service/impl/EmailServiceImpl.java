@@ -158,7 +158,7 @@ public class EmailServiceImpl implements EmailService {
 		helper.setSubject("Application Evaluated");
 
 		String htmlText = "<div>Your application has been evaluated! Please <a href='" + siteURL
-				+ "/login'>login</a> to see the result.</div>";
+				+ "/login'>login</a> to see the result. We will keep you posted on the next steps. Thank you for your patience!</div>";
 		helper.setText(htmlText, true);
 
 		emailSender.send(message);

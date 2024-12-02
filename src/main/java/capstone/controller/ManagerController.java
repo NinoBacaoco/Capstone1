@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import capstone.common.constant.CommonConstant;
+import capstone.controller.webdto.ApplicantWebDto;
 import capstone.controller.webdto.ManagerWebDto;
 import capstone.controller.webdto.OfficerWebDto;
 import capstone.controller.webdto.TbiBoardWebDto;
 import capstone.model.dto.AdminInOutDto;
+import capstone.model.dto.ApplicantInOutDto;
 import capstone.model.dto.ManagerInOutDto;
 import capstone.model.dto.OfficerInOutDto;
 import capstone.model.dto.TbiBoardInOutDto;
@@ -371,6 +373,37 @@ public class ManagerController {
 		webDto.setProjectIdPks(outDto.getProjectIdPks());
 
 		return ResponseEntity.ok(webDto);
+	}
+
+	@GetMapping("/qualify-application")
+	public String showFeedback(@ModelAttribute ManagerWebDto webDto,
+			@RequestParam("id") String id) throws Exception {
+
+		if (id.isEmpty()) {
+			return "redirect:/manager/home";
+		}
+
+		ManagerInOutDto inDto = new ManagerInOutDto();
+
+		inDto.setApplicantIdPk(Integer.valueOf(commonService.decrypt(id)));
+
+		ManagerInOutDto outDto = managerService.getApplicantDetailsWithFeedback(inDto);
+
+		webDto.setApplicantDetailsObj(outDto.getApplicantDetailsObj());
+
+		webDto.setApplicantOffFeedbackObj(outDto.getApplicantOffFeedbackObj());
+
+		webDto.setApplicantTbiFeedbackObj(outDto.getApplicantTbiFeedbackObj());
+
+		webDto.setEncryptedApplicantIdPk(id);
+
+		webDto.setRejectedCount(outDto.getRejectedCount());
+
+		webDto.setProjectIdPks(outDto.getProjectIdPks());
+
+		webDto.setForQualification(true);
+
+		return "manager/applicationDetails";
 	}
 
 }

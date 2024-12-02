@@ -171,15 +171,16 @@
                     </button>
                     <!-- <form th:action="@{/manager/}" method="GET"> -->
 
-                    <button
+                    <a
                       class="btn-row border-black hover:bg-[#FEE902] bg-black rounded-lg w-full hover:text-black text-gray-50 font-secondary text-sm sm:p-1"
                       type="button"
                       th:data-id="${app.encryptedApplicantIdPk}"
                       name="feedback"
                       th:if="${app.totalRating < 60 AND app.status == 5}"
+                      th:href="@{/manager/qualify-application?id=} + ${app.encryptedApplicantIdPk}"
                     >
                       View Feedback
-                    </button>
+                    </a>
                     <!-- </form> -->
                   </td>
                 </tr>
@@ -230,7 +231,7 @@
         </div>
       </div>
 
-      <div class="modal" tabindex="-1" role="dialog" id="feedback-modal">
+      <!-- <div class="modal" tabindex="-1" role="dialog" id="feedback-modal">
         <div class="modal-dialog feedback-modal-dialog" role="document">
           <div class="modal-content feedback-modal-content">
             <div class="p-2">
@@ -270,7 +271,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <script
@@ -309,7 +310,6 @@
           lengthChange: false,
         });
 
-        let rows = document.getElementsByClassName("row-btn");
         let btnRows = document.getElementsByClassName("btn-row");
 
         var rowBtnClicked = false;
@@ -318,73 +318,14 @@
           btn.addEventListener("click", function () {
             rowBtnClicked = true;
             let encryptedId = this.getAttribute("data-id");
-            if (this.name === "feedback") {
-              let totalRating = document.getElementById("totalRating");
-              let feedback = document.getElementById("feedback");
 
-              if (webDto.listOfApplicants.length != 0) {
-                webDto.listOfApplicants.forEach((applicant, index) => {
-                  if (applicant.encryptedApplicantIdPk == encryptedId) {
-                    totalRating.innerHTML = applicant.totalRating;
-                    feedback.innerHTML = applicant.feedback;
+            document.querySelectorAll(".row-btn").forEach((row) => {
+              row.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                window.location.href = `/manager/qualify-application?id=${id}`;
+              });
+            });
 
-                    if (applicant.status == 6) {
-                      document.querySelector(".is-qualified").innerHTML =
-                        " Yes";
-                      document.querySelector(".is-qualified").style.color =
-                        "green";
-                      document.querySelector(".qualified-btns").style.display =
-                        "none";
-                    } else if (applicant.status == 7) {
-                      document.querySelector(".is-qualified").innerHTML = " No";
-                      document.querySelector(".is-qualified").style.color =
-                        "red";
-                      document.querySelector(".qualified-btns").style.display =
-                        "none";
-                    } else {
-                      document.querySelector(".is-qualified").innerHTML = "";
-                      document.querySelector(".qualified-btns").style.display =
-                        "flex";
-                    }
-                  }
-                });
-              }
-
-              $("#feedback-modal").modal("show");
-
-              let qualifiedBtns = document.querySelectorAll(".qualified-btn");
-              for (let btn of qualifiedBtns) {
-                btn.addEventListener("click", function () {
-                  let form = document.createElement("form");
-                  form.method = "POST";
-                  form.action = "/manager/qualified?" + this.name;
-
-                  let inputId = document.createElement("input");
-                  inputId.type = "hidden";
-                  inputId.name = "encryptedApplicantIdPk";
-                  inputId.value = encryptedId;
-
-                  form.appendChild(inputId);
-
-                  var csrfToken = document
-                    .querySelector('meta[name="_csrf"]')
-                    .getAttribute("content");
-                  var csrfHeader = document
-                    .querySelector('meta[name="_csrf_header"]')
-                    .getAttribute("content");
-
-                  var csrfInput = document.createElement("input");
-                  csrfInput.type = "hidden";
-                  csrfInput.name = "_csrf";
-                  csrfInput.value = csrfToken;
-
-                  form.appendChild(csrfInput);
-                  document.body.appendChild(form);
-                  form.submit();
-                });
-              }
-            }
-            console.log(this);
             if (this.name === "issue") {
               let form = document.querySelector("#issue-modal");
               console.log(form);

@@ -149,6 +149,8 @@ public class AdminServiceImpl implements AdminService {
 
 			obj.setEvaluatedBy(app.getEvaluatedBy());
 
+			obj.setRejectedBy(app.getRejectedBy());
+
 			applicantsObj.add(obj);
 
 		}

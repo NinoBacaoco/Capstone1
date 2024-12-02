@@ -3,39 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Application Details</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+    <title>Pre-screening Checklist</title>
     <link rel="stylesheet" href="/css/output.css" />
     <link rel="stylesheet" href="/css/input.css" />
 
     <style>
-      /* body,
-      html {
-        height: 100%;
-        margin: 0;
-        font-family: Arial, sans-serif;
-        overflow-x: hidden;
-      } */
-      * {
-        box-sizing: border-box;
-      }
-      .checklist {
-        background-color: #f1f1f1;
-        min-width: 300px;
-        padding: 40px;
-        position: fixed;
-        right: 0;
-        top: 0;
-        height: 100%;
-        overflow-y: auto;
-        padding-top: 80px;
-      }
-
       input {
         border: none;
         height: 32px;
@@ -58,120 +30,11 @@
         margin-right: 8px;
         margin-left: 4px;
       }
-
-      .modal {
-        padding: 50px !important;
-      }
-
-      .rejected-modal-dialog {
-        max-width: 100% !important;
-        margin: 0 !important;
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-      }
-
-      .application-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .application-list-tab {
-        max-width: 400px;
-        height: 100%;
-        display: flex;
-      }
-
-      .application-details-tab {
-        height: 900px;
-        overflow: auto;
-      }
-
-      .modal {
-        padding: 50px !important;
-      }
-
-      .rejected-modal-dialog {
-        max-width: 100% !important;
-        margin: 0 !important;
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-      }
-
-      .application-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .application-list-tab {
-        max-width: 400px;
-        height: 100%;
-        display: flex;
-      }
-
-      .application-details-tab {
-        height: 900px;
-        overflow: auto;
-        border-radius: 20px;
-      }
-      .modal-content {
-        max-height: 90vh; /* Adjust to fit your design */
-        overflow: hidden; /* Ensure that scroll is contained within modal */
-      }
-
-      .modal-body {
-        max-height: 85vh; /* Adjust to your desired content height */
-        overflow-y: auto; /* Allow vertical scrolling */
-      }
-
-      .application-details-tab {
-        height: auto; /* Adjust height dynamically */
-        overflow: auto; /* Ensure the tab content is scrollable if needed */
-      }
     </style>
   </head>
-  <body class="font-secondary" th:object="${managerWebDto}">
-    <script th:inline="javascript">
-      console.log(/*[[${managerWebDto}]]*/ "");
-    </script>
-
+  <body th:fragment="applicationDetails" class="font-secondary">
     <!-- left side -->
-    <div class="h-20 sticky top-0 z-10 bg-opacity-5 backdrop-blur-[3px]">
-      <div
-        class="flex items-center justify-end h-full p-10 font-primary text-4xl text-center"
-      >
-        Application Details
-      </div>
-      <a
-        th:if="*{!forQualification}"
-        th:href="@{/manager/home}"
-        class="ad-back-button"
-        >Back</a
-      >
-      <a
-        th:if="*{forQualification}"
-        th:href="@{/manager/evaluated-result}"
-        class="ad-back-button"
-        >Back</a
-      >
-      <button
-        class="history"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
-        th:if="*{!#lists.isEmpty(projectIdPks)}"
-      >
-        History
-      </button>
-    </div>
-    <div
-      class="w-[55%] p-10 pt-2 bg-white"
-      th:style="*{applicantDetailsObj.status == 0 ? 'width: 100%;' : ''}"
-    >
+    <div class="p-10 pt-2">
       <!-- page 2 -->
       <div class="tab">
         <h1
@@ -410,19 +273,23 @@
 
           <!-- historical timeline -->
           <div class="pointer-events-none">
-            <h2 class="text-black">
+            <h2 class="text-black pointer-events-none">
               D. Historical Timeline of the Product/Project Development
             </h2>
             <small class="block text-gray-500">
               • Start from the most recent
             </small>
             <table class="w-full">
-              <thead class="text-center">
+              <thead>
                 <tr>
-                  <th class="font-semibold border border-gray-500 px-4 py-2">
+                  <th
+                    class="text-center font-semibold border border-gray-500 px-4 py-2"
+                  >
                     Month-Year
                   </th>
-                  <th class="font-semibold border border-gray-500 px-4 py-2">
+                  <th
+                    class="text-center font-semibold border border-gray-500 px-4 py-2"
+                  >
                     Key Activities or Milestones
                   </th>
                 </tr>
@@ -435,7 +302,7 @@
                       name="historicalTimeline[0][0]"
                       th:value="*{applicantDetailsObj.historicalTimeline[0].length != 0 ? applicantDetailsObj.historicalTimeline[0][0] : 'NA'}"
                       placeholder="mm/yyyy"
-                      class="w-full h-12"
+                      class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                     />
                   </td>
                   <td class="border border-gray-500 px-4 py-2">
@@ -444,7 +311,7 @@
                       name="historicalTimeline[0][1]"
                       th:text="*{applicantDetailsObj.historicalTimeline[0].length != 0 ? applicantDetailsObj.historicalTimeline[0][1] : 'NA'}"
                       placeholder="Enter key activities or milestones here"
-                      class="resize-none w-full h-20 py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-20 rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -455,7 +322,7 @@
                       name="historicalTimeline[1][0]"
                       th:value="*{applicantDetailsObj.historicalTimeline[1].length != 0 ? applicantDetailsObj.historicalTimeline[1][0] : 'NA'}"
                       placeholder="mm/yyyy"
-                      class="w-full h-12"
+                      class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                     />
                   </td>
                   <td class="border border-gray-500 px-4 py-2">
@@ -464,7 +331,7 @@
                       name="historicalTimeline[1][1]"
                       th:text="*{applicantDetailsObj.historicalTimeline[1].length != 0 ? applicantDetailsObj.historicalTimeline[1][1] : 'NA'}"
                       placeholder="Enter key activities or milestones here"
-                      class="resize-none w-full h-20 py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-20 rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -475,7 +342,7 @@
                       name="historicalTimeline[2][0]"
                       th:value="*{applicantDetailsObj.historicalTimeline[2].length != 0 ? applicantDetailsObj.historicalTimeline[2][0] : 'NA'}"
                       placeholder="mm/yyyy"
-                      class="w-full h-12"
+                      class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                     />
                   </td>
                   <td class="border border-gray-500 px-4 py-2">
@@ -484,7 +351,7 @@
                       name="historicalTimeline[2][1]"
                       th:text="*{applicantDetailsObj.historicalTimeline[2].length != 0 ? applicantDetailsObj.historicalTimeline[2][1] : 'NA'}"
                       placeholder="Enter key activities or milestones here"
-                      class="resize-none w-full h-20 py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-20 rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -495,7 +362,7 @@
                       name="historicalTimeline[3][0]"
                       th:value="*{applicantDetailsObj.historicalTimeline[3].length != 0 ? applicantDetailsObj.historicalTimeline[3][0] : 'NA'}"
                       placeholder="mm/yyyy"
-                      class="w-full h-12"
+                      class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                     />
                   </td>
                   <td class="border border-gray-500 px-4 py-2">
@@ -504,7 +371,7 @@
                       name="historicalTimeline[3][1]"
                       th:text="*{applicantDetailsObj.historicalTimeline[3].length != 0 ? applicantDetailsObj.historicalTimeline[3][1] : 'NA'}"
                       placeholder="Enter key activities or milestones here"
-                      class="resize-none w-full h-20 py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-20 rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -515,7 +382,7 @@
                       name="historicalTimeline[4][0]"
                       th:value="*{applicantDetailsObj.historicalTimeline[4].length != 0 ? applicantDetailsObj.historicalTimeline[4][0] : 'NA'}"
                       placeholder="mm/yyyy"
-                      class="w-full h-12"
+                      class="w-full h-12 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
                     />
                   </td>
                   <td class="border border-gray-500 px-4 py-2">
@@ -524,7 +391,7 @@
                       name="historicalTimeline[4][1]"
                       th:text="*{applicantDetailsObj.historicalTimeline[4].length != 0 ? applicantDetailsObj.historicalTimeline[4][1] : 'NA'}"
                       placeholder="Enter key activities or milestones here"
-                      class="resize-none w-full h-20 py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-20 rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -581,7 +448,7 @@
                       name="productServiceOffering[0]"
                       th:text="*{applicantDetailsObj.productServiceOffering[0] != '' ? applicantDetailsObj.productServiceOffering[0] : 'NA'}"
                       placeholder="Enter product/service offering"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -589,7 +456,7 @@
                       name="productServiceOffering[1]"
                       th:text="*{applicantDetailsObj.productServiceOffering[1] != '' ? applicantDetailsObj.productServiceOffering[0] : 'NA'}"
                       placeholder="Enter product/service offering"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -597,7 +464,7 @@
                       name="productServiceOffering[2]"
                       th:text="*{applicantDetailsObj.productServiceOffering[2] != '' ? applicantDetailsObj.productServiceOffering[0] : 'NA'}"
                       placeholder="Enter product/service offering"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -605,7 +472,7 @@
                       name="productServiceOffering[3]"
                       th:text="*{applicantDetailsObj.productServiceOffering[3] != '' ? applicantDetailsObj.productServiceOffering[0] : 'NA'}"
                       placeholder="Enter product/service offering"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -620,7 +487,7 @@
                       name="pricingStrategy[0]"
                       th:text="*{applicantDetailsObj.pricingStrategy[0] != '' ? applicantDetailsObj.pricingStrategy[0] : 'NA'}"
                       placeholder="Enter pricing strategy"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -628,7 +495,7 @@
                       name="pricingStrategy[1]"
                       th:text="*{applicantDetailsObj.pricingStrategy[1] != '' ? applicantDetailsObj.pricingStrategy[0] : 'NA'}"
                       placeholder="Enter pricing strategy"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -636,7 +503,7 @@
                       name="pricingStrategy[2]"
                       th:text="*{applicantDetailsObj.pricingStrategy[2] != '' ? applicantDetailsObj.pricingStrategy[0] : 'NA'}"
                       placeholder="Enter pricing strategy"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                   <td class="border border-gray-500 px-2 py-2">
@@ -644,7 +511,7 @@
                       name="pricingStrategy[3]"
                       th:text="*{applicantDetailsObj.pricingStrategy[3] != '' ? applicantDetailsObj.pricingStrategy[0] : 'NA'}"
                       placeholder="Enter pricing strategy"
-                      class="resize-none w-full h-full py-2 pl-3 sm:text-sm"
+                      class="resize-none w-full h-full rounded-md py-2 pl-3 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
                     ></textarea>
                   </td>
                 </tr>
@@ -664,7 +531,7 @@
               placeholder="Type something here..."
               name="intPropertyStatus"
               th:text="*{applicantDetailsObj.intPropertyStatus}"
-              class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm sm:text-sm"
+              class="resize-none w-full h-20 border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
             ></textarea>
           </div>
         </div>
@@ -737,7 +604,7 @@
         <hr class="my-8" />
 
         <!-- Curriculum Vitae of the Project Leader
- -->
+-->
         <div id="cvProjectLeader" class="flex flex-col mt-4 mb-3 mx-6">
           <p class="mb-3 font-semibold text-base">
             III. Curriculum Vitae of the Project Leader
@@ -749,14 +616,16 @@
             >
           </h2>
           <!-- <div class="mt-3 w-2/6">
-                <input type="file" name="vitaeFile" class="w-full" />
-                <span class="text-xs"
-                  >Submit your file in
-                  <span class="font-bold"> PDF </span> format.</span
-                >
-              </div> -->
-          <!-- th:href="@{/view/} + *{applicantDetailsObj.vitaeFile}" -->
-          <a id="vitaeFile" target="_blank" class="w-2/6 mt-3 vitaeFile"
+            <input type="file" name="vitaeFile" class="w-full" />
+            <span class="text-xs"
+              >Submit your file in
+              <span class="font-bold"> PDF </span> format.</span
+            >
+          </div> -->
+          <a
+            target="_blank"
+            class="w-2/6 mt-3 vitaeFile"
+            th:href="@{/view/} + *{applicantDetailsObj.vitaeFile}"
             ><p class="hover:underline text-blue-700 hover:cursor-pointer">
               View File
             </p></a
@@ -992,19 +861,20 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="technologyAns"
                   value="1"
                   th:checked="*{applicantDetailsObj.technologyAns==1}"
                 />
+
                 Project work is beyond basic research and technology concept has
-                been defined</label
-              >
+                been defined
+              </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="technologyAns"
@@ -1016,7 +886,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="technologyAns"
@@ -1029,7 +899,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="technologyAns"
@@ -1041,7 +911,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="technologyAns"
@@ -1063,7 +933,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDevelopmentAns"
@@ -1074,7 +944,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDevelopmentAns"
@@ -1086,7 +956,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDevelopmentAns"
@@ -1098,7 +968,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDevelopmentAns"
@@ -1111,7 +981,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDevelopmentAns"
@@ -1133,7 +1003,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="competitiveLandscapeAns"
@@ -1146,7 +1016,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="competitiveLandscapeAns"
@@ -1159,7 +1029,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="competitiveLandscapeAns"
@@ -1173,7 +1043,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="competitiveLandscapeAns"
@@ -1186,7 +1056,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="competitiveLandscapeAns"
@@ -1210,7 +1080,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDesignAns"
@@ -1221,7 +1091,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDesignAns"
@@ -1233,7 +1103,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDesignAns"
@@ -1246,7 +1116,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDesignAns"
@@ -1259,7 +1129,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="productDesignAns"
@@ -1282,7 +1152,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="teamAns"
@@ -1294,7 +1164,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="teamAns"
@@ -1306,7 +1176,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="teamAns"
@@ -1319,7 +1189,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="teamAns"
@@ -1332,7 +1202,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="teamAns"
@@ -1355,7 +1225,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="goToMarketAns"
@@ -1367,7 +1237,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="goToMarketAns"
@@ -1380,7 +1250,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="goToMarketAns"
@@ -1394,7 +1264,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="goToMarketAns"
@@ -1407,7 +1277,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="goToMarketAns"
@@ -1430,7 +1300,7 @@
             </div>
 
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="manufacturingAns"
@@ -1442,7 +1312,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="manufacturingAns"
@@ -1456,7 +1326,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="manufacturingAns"
@@ -1468,7 +1338,7 @@
               >
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="manufacturingAns"
@@ -1480,7 +1350,7 @@
               </label>
             </div>
             <div class="flex flex-row items-center">
-              <label class="cursor-pointer flex items-center">
+              <label class="cursor-pointer flex items-center gap-2">
                 <input
                   type="radio"
                   name="manufacturingAns"
@@ -1507,7 +1377,7 @@
             Previous
           </button>
           <button
-            class="bg-tanglow text-black hover:bg-black hover:text-white font-secondary font-medium right-0 rounded btn-neutral border-b-2 border-black border-solid border-opacity-100 w-36 h-12"
+            class="bg-tanglow hover:bg-black hover:text-white font-secondary font-medium right-0 rounded btn-neutral border-b-2 border-black border-solid border-opacity-100 w-36 h-12"
             type="button"
             id="nextBtn"
             onclick="nextPrev(1)"
@@ -1523,1144 +1393,13 @@
         <span class="step"></span>
       </div>
     </div>
-
-    <!-- right side -->
-    <div th:if="*{applicantDetailsObj.status != 0}">
-      <!-- <input type="hidden" name="encryptedApplicantIdPk" /> -->
-
-      <div class="checklist w-[45%] text-sm">
-        <!-- prescreen -->
-        <h1
-          class="font-semibold text-lg"
-          th:if="*{applicantDetailsObj.status != 0}"
-        >
-          Pre-screening Checklist
-        </h1>
-        <div th:if="*{applicantDetailsObj.status != 0}">
-          <div
-            class="pt-3 flex flex-col w-full relative border-gray-200 bg-transparent focus-within:border-blue-600"
-          >
-            <h2 class="text-black">
-              Instruction: Please review each item and indicate compliance by
-              marking 'Yes' or 'No' in the provided checkboxes. This assessment
-              should be based on the information provided by the applicants in
-              their submission materials. Ensure all sections are completed to
-              maintain the integrity of the screening process.
-              <br /><br />
-              Compliance with all items is mandatory for the application to
-              advance to the next stage, which involves evaluation by the
-              [program name] board.
-            </h2>
-          </div>
-        </div>
-        <hr class="my-4" th:if="*{applicantDetailsObj.status != 0}" />
-        <!-- pre-screening checklist -->
-        <!--  Documentary Requirements-->
-        <div th:if="*{applicantDetailsObj.status != 0}">
-          <div class="w-full overflow-x-auto">
-            <!-- <div class="overflow-auto w-[700px] h-[550px]"> -->
-            <div class="min-w-[1000px]">
-              <h2 class="text-black">I. Documentary Requirements</h2>
-
-              <table class="w-full h-full">
-                <thead>
-                  <tr>
-                    <th
-                      class="w-1/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Category
-                    </th>
-                    <th
-                      class="w-1/4 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Guide Question
-                    </th>
-                    <th
-                      class="font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Compliant (Yes/No)
-                    </th>
-                    <th
-                      class="w-2/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Comment
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="pointer-events-none">
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      [program name] Capsule Proposal
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Has the applicant provided a detailed [program name]
-                        capsule proposal including all required information?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctOneFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctOneFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctOneFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctOneFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctOneComments != null && !applicantOffFeedbackObj.ctOneComments.isEmpty() ? applicantOffFeedbackObj.ctOneComments : 'NA'}"
-                        placeholder="Enter comment"
-                        name="ctOneComments"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Work Plan/Gantt Chart
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Has the applicant created a detailed Work Plan or Gantt
-                        Chart for their project?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctTwoFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctTwoFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctTwoFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctTwoFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctTwoComments != null && !applicantOffFeedbackObj.ctTwoComments.isEmpty() ? applicantOffFeedbackObj.ctTwoComments : 'NA'}"
-                        name="ctTwoComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Curriculum Vitae
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Is the Curriculum Vitae of the Project Leader complete
-                        and up-to-date?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctThreeFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctThreeFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctThreeFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctThreeFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctThreeComments != null && !applicantOffFeedbackObj.ctThreeComments.isEmpty() ? applicantOffFeedbackObj.ctThreeComments : 'NA'}"
-                        name="ctThreeComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Proof of Concept Documentation
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Has the applicant provided documentation or evidence for
-                        their prototype or proof of concept?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctFourFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctFourFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctFourFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctFourFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctFourComments != null && !applicantOffFeedbackObj.ctFourComments.isEmpty() ? applicantOffFeedbackObj.ctFourComments : 'NA'}"
-                        name="ctFourComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <hr class="my-4" th:if="*{applicantDetailsObj.status != 0}" />
-
-        <div th:if="*{applicantDetailsObj.status != 0}">
-          <div class="w-full overflow-x-auto">
-            <!-- <div class="overflow-auto w-[700px] h-[550px]"> -->
-            <div class="min-w-[1000px]">
-              <h2 class="text-black">II. Pre-Screening Criteria</h2>
-
-              <table class="w-full h-full">
-                <thead>
-                  <tr>
-                    <th
-                      class="w-1/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Category
-                    </th>
-                    <th
-                      class="w-1/4 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Guide Question
-                    </th>
-                    <th
-                      class="font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Compliant (Yes/No)
-                    </th>
-                    <th
-                      class="w-2/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Comment
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="pointer-events-none">
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Alignment with Theme
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Does the startup's proposal align with the current cycle
-                        themes or priority areas of DASIG partners?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctFiveFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctFiveFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctFiveFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctFiveFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctFiveComments != null && !applicantOffFeedbackObj.ctFiveComments.isEmpty() ? applicantOffFeedbackObj.ctFiveComments : 'NA'}"
-                        name="ctFiveComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Project Uniqueness
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Is the project unique and not a duplication of ongoing
-                        projects under DASIG?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctSixFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctSixFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctSixFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctSixFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctSixComments != null && !applicantOffFeedbackObj.ctSixComments.isEmpty() ? applicantOffFeedbackObj.ctSixComments : 'NA'}"
-                        name="ctSixComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Prototype/Proof of Concept
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Does the applicant have an early-stage prototype or
-                        proof of concept for their product/service?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctSevenFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctSevenFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctSevenFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctSevenFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctSevenComments != null && !applicantOffFeedbackObj.ctSevenComments.isEmpty() ? applicantOffFeedbackObj.ctSevenComments : 'NA'}"
-                        name="ctSevenComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Residency and Affiliation
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Is the project leader or founder a resident of Central
-                        Visayas or affiliated with regional institutions?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctEightFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctEightFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctEightFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctEightFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctEightComments != null && !applicantOffFeedbackObj.ctEightComments.isEmpty() ? applicantOffFeedbackObj.ctEightComments : 'NA'}"
-                        name="ctEightComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                    >
-                      Intellectual Property Rights
-                    </th>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <p class="resize-none w-full sm:text-sm">
-                        Are there any intellectual property conflicts with the
-                        presented technology or solution?
-                      </p>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <div class="text-sm">
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctNineFlg"
-                              value="true"
-                              th:checked="*{applicantOffFeedbackObj.ctNineFlg}"
-                            />
-                            Yes</label
-                          >
-                        </div>
-                        <div class="flex flex-row mb-2 items-center">
-                          <label class="cursor-pointer flex items-center">
-                            <input
-                              type="radio"
-                              name="ctNineFlg"
-                              value="false"
-                              th:checked="*{!applicantOffFeedbackObj.ctNineFlg}"
-                            />
-                            No</label
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-gray-500 px-2 py-2">
-                      <textarea
-                        th:text="*{applicantOffFeedbackObj.ctNineComments != null && !applicantOffFeedbackObj.ctNineComments.isEmpty() ? applicantOffFeedbackObj.ctNineComments : 'NA'}"
-                        name="ctNineComments"
-                        placeholder="Enter comment"
-                        class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                      ></textarea>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <hr class="my-4" th:if="*{applicantDetailsObj.status != 0}" />
-        <div
-          class="w-full h-[100px] pointer-events-none"
-          th:if="*{applicantDetailsObj.status != 0}"
-        >
-          Recommendation
-          <textarea
-            th:text="*{applicantOffFeedbackObj.recommendation}"
-            name="recommendation"
-            placeholder="Recommendations ni officer"
-            class="mt-2 resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-          ></textarea>
-        </div>
-
-        <!-- evaluation  -->
-        <div class="mt-2" th:if="*{applicantDetailsObj.status >= 5}">
-          <hr class="my-10" />
-
-          <h1 class="font-semibold text-lg">Evaluation Form</h1>
-          <div
-            class="pt-3 flex flex-col w-full relative border-gray-200 bg-transparent focus-within:border-blue-600"
-          >
-            <div class="text-black">
-              Please use the Likert scale to express your level of agreement
-              with each statement, where 1 is the lowest (strongly disagree) and
-              10 is the highest (strongly agree). This comprehensive evaluation
-              will assess the technical, social, commercial, scalability, and
-              management aspects of the proposed projects.
-              <br /><br />
-              Rating:<br />
-              <div class="p-4">
-                <ol style="list-style-type: decimal" class="border-red-500">
-                  <li>
-                    <strong>Strongly Disagree:</strong> Completely disagree with
-                    the statement; the proposal does not meet the criterion at
-                    all.
-                  </li>
-                  <li>
-                    <strong>Disagree Significantly:</strong> Major issues exist,
-                    showing significant disagreement with the statement.
-                  </li>
-                  <li>
-                    <strong>Disagree Considerably:</strong> Clear disagreement,
-                    though not as severe as the lower levels.
-                  </li>
-                  <li>
-                    <strong>Somewhat Disagree:</strong> Some aspects are
-                    disagreeable, but not entirely.
-                  </li>
-                  <li>
-                    <strong>Slightly Disagree:</strong> Mild disagreement, with
-                    some elements still aligning with the statement.
-                  </li>
-                  <li>
-                    <strong>Slightly Agree:</strong> Mild agreement, but with
-                    noticeable areas of improvement needed.
-                  </li>
-                  <li>
-                    <strong>Somewhat Agree:</strong> Generally agree, but with
-                    some reservations or minor issues.
-                  </li>
-                  <li>
-                    <strong>Agree Considerably:</strong> Strong agreement,
-                    though not perfect, with most criteria met.
-                  </li>
-                  <li>
-                    <strong>Agree Significantly:</strong> Almost complete
-                    agreement, with very minor issues if any.
-                  </li>
-                  <li>
-                    <strong>Strongly Agree:</strong> Full agreement, indicating
-                    that the proposal excellently meets the criterion.
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr class="my-4" th:if="*{applicantDetailsObj.status >= 5}" />
-
-        <div th:if="*{applicantDetailsObj.status >= 5}">
-          <div class="w-full overflow-x-auto max-h-[550px]">
-            <div class="min-w-[1000px]">
-              <div>
-                <table class="w-full h-full">
-                  <thead>
-                    <tr>
-                      <th
-                        class="w-1/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Criteria
-                      </th>
-                      <th
-                        class="w-1/4 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Guide Question
-                      </th>
-                      <th
-                        class="font-semibold border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Rating (1-10)
-                      </th>
-                      <th
-                        class="w-2/5 font-semibold border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Comment
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="pointer-events-none">
-                    <tr>
-                      <th
-                        colspan="4"
-                        class="text-left font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Technical Viability (10%)
-                      </th>
-                    </tr>
-
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Maturity for Implementation
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <!-- oninput="this.className = ''" -->
-                        <p class="resize-none w-full sm:text-sm">
-                          To what extent do you agree that the technology is
-                          mature and ready for acceleration?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctOneRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctOneRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctOneComments != null && !applicantTbiFeedbackObj.ctOneComments.isEmpty() ? applicantTbiFeedbackObj.ctOneComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctOneComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        colspan="4"
-                        class="text-left font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Social and Environmental Impact (10%)
-                      </th>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Environmental and Health Safety
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          How strongly do you agree that the technology poses no
-                          immediate or long-term hazards to the environment,
-                          health, or safety?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctTwoRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctTwoRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctTwoComments != null && !applicantTbiFeedbackObj.ctTwoComments.isEmpty() ? applicantTbiFeedbackObj.ctTwoComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctTwoComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        colspan="4"
-                        class="text-left font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Commercial Viability (20%)
-                      </th>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Market Competitiveness
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          To what extent do you agree that the technology is
-                          competitive over existing market products or
-                          processes?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctThreeRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctThreeRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctThreeComments != null && !applicantTbiFeedbackObj.ctThreeComments.isEmpty() ? applicantTbiFeedbackObj.ctThreeComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctThreeComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Market Potential
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          How strongly do you agree that the technology has a
-                          strong market potential?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctFourRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctFourRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctFourComments != null && !applicantTbiFeedbackObj.ctFourComments.isEmpty() ? applicantTbiFeedbackObj.ctFourComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctFourComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        colspan="4"
-                        class="text-left font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Scalability (30%)
-                      </th>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Potential for Scale-up
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          To what extent do you agree that the technology can be
-                          scaled up efficiently and effectively to meet growing
-                          demand?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctFiveRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctFiveRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctFiveComments != null && !applicantTbiFeedbackObj.ctFiveComments.isEmpty() ? applicantTbiFeedbackObj.ctFiveComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctFiveComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        colspan="4"
-                        class="text-left font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Management Capability (15%)
-                      </th>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Leadership Competence
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          How strongly do you agree that the project leader
-                          demonstrates necessary technical and managerial
-                          competence?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctSixRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctSixRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctSixComments != null && !applicantTbiFeedbackObj.ctSixComments.isEmpty() ? applicantTbiFeedbackObj.ctSixComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctSixComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Workforce and Facilities
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          To what extent do you agree that there is a competent
-                          and reliable workforce and facilities available for
-                          the project?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctSevenRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctSevenRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctSevenComments != null && !applicantTbiFeedbackObj.ctSevenComments.isEmpty() ? applicantTbiFeedbackObj.ctSevenComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctSevenComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr class="h-[150px]">
-                      <th
-                        class="font-normal border border-gray-500 px-4 py-2 text-sm"
-                      >
-                        Realistic Project Timeline (15%)
-                      </th>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <p class="resize-none w-full sm:text-sm">
-                          How strongly do you agree that the project timeline is
-                          manageable and realistic?
-                        </p>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div class="text-sm text-center">
-                          <div
-                            th:text="*{applicantTbiFeedbackObj.ctEightRating  }"
-                            required
-                            oninput="this.className = ''"
-                            id="rating"
-                            name="ctEightRating"
-                            class="text-black border-none p-0 focus:outline-none focus:ring-0 sm:text-sm"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2">
-                        <textarea
-                          th:text="*{applicantTbiFeedbackObj.ctEightComments != null && !applicantTbiFeedbackObj.ctEightComments.isEmpty() ? applicantTbiFeedbackObj.ctEightComments : 'NA'}"
-                          oninput="this.className = 'w-full h-32 max-h-32 px-2 py-1 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'"
-                          name="ctEightComments"
-                          placeholder="Enter comment"
-                          class="resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th
-                        colspan="2"
-                        class="h-[100px] font-normal border border-gray-500 px-4 py-2 text-sm text-center"
-                      >
-                        Total
-                      </th>
-
-                      <td class="border border-gray-500 px-2 py-2">
-                        <div
-                          class="text-sm text-center flex justify-center total-score font-semibold"
-                          th:text="*{applicantTbiFeedbackObj.totalRating}"
-                        ></div>
-                      </td>
-                      <td class="border border-gray-500 px-2 py-2"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr class="my-4" th:if="*{applicantDetailsObj.status >= 5}" />
-
-        <!-- additional feedback -->
-        <div
-          class="flex flex-col pointer-events-none"
-          th:if="*{applicantDetailsObj.status >= 5}"
-        >
-          <div class="w-full h-[100px]">
-            Feedback
-
-            <textarea
-              th:text="*{applicantTbiFeedbackObj.tbiFeedback}"
-              oninput="this.className = 'resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm'"
-              name="tbiFeedback"
-              placeholder="Additional feedback ni tbiboard"
-              class="mt-2 mb-16 resize-none w-full h-full border border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1 sm:text-sm"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="modal fade"
-      id="exampleModalCenter"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal-dialog-centered rejected-modal-dialog"
-        role="document"
-      >
-        <div class="modal-content application-list-tab">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
-
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body application-list">
-            <div>
-              <div>Rejected Count</div>
-              <div th:text="*{rejectedCount}" style="text-align: center"></div>
-            </div>
-            <button
-              class="application-list rejected-applications view-btn"
-              th:each="id, iStat : *{projectIdPks}"
-              th:text="'Rejected Application #' + ${iStat.count}"
-              th:value="${id}"
-            ></button>
-          </div>
-        </div>
-        <div class="modal-content rounded-md">
-          <div class="modal-body application-details-tab">
-            <div
-              th:replace="~{fragments/applicationDetailsRejected :: applicationDetailsRejected}"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div th:if="*{forQualification}" class="qualification-container">
-      <button
-        class="qualification-btn"
-        data-toggle="modal"
-        data-target="#feedback-modal"
-      >
-        Qualify
-      </button>
-    </div>
-
-    <div class="modal" tabindex="-1" role="dialog" id="feedback-modal">
-      <div class="modal-dialog feedback-modal-dialog" role="document">
-        <div class="modal-content feedback-modal-content">
-          <div class="p-2">
-            <div>
-              <div class="modal-header">
-                <h5 class="qualified modal-title font-bold">
-                  Qualified for reapplication?
-                  <span class="is-qualified" style="font-weight: bold"></span>
-                </h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <!-- <p class="mb-4 qualified">
-                Qualified for reapplication?
-                <span class="is-qualified" style="font-weight: bold"></span>
-              </p> -->
-              <div
-                class="modal-footer w-full justify-between flex qualified-btns"
-              >
-                <form
-                  th:action="@{/manager/qualified}"
-                  method="POST"
-                  class="w-full flex gap-2"
-                >
-                  <input
-                    type="hidden"
-                    name="encryptedApplicantIdPk"
-                    th:value="*{encryptedApplicantIdPk}"
-                  />
-                  <button
-                    name="no"
-                    class="flex-1 qualified-btn p-2 border-black hover:bg-red-500 bg-red-600 rounded-lg hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
-                  >
-                    No
-                  </button>
-                  <button
-                    name="yes"
-                    class="flex-1 qualified-btn p-2 border-black hover:bg-green-500 bg-green-600 rounded-lg hover:text-black text-gray-50 font-secondary sm:text-sm text-xs sm:p-1"
-                  >
-                    Yes
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
     <script>
       // Set this to true for development mode, false for production
       const DEVELOPMENT_MODE = true;
 
       var currentTab = 0;
       showTab(currentTab);
+      var scrollableContainer = document.querySelector(".scroll-here");
 
       function showTab(n) {
         var x = document.getElementsByClassName("tab");
@@ -2677,8 +1416,13 @@
           n === x.length - 1 ? "none" : "inline";
         fixStepIndicator(n);
 
-        // Scroll to the top of the page
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        // Scroll to the top of the container
+        if (scrollableContainer) {
+          scrollableContainer.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          // Fallback to scroll the entire window
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
 
       function nextPrev(n) {
@@ -2700,208 +1444,6 @@
           x[i].className = x[i].className.replace(" active", "");
         }
         x[n].className += " active";
-      }
-    </script>
-    <script th:inline="javascript">
-      const webDto = /*[[${managerWebDto}]]*/ "";
-
-      document.querySelectorAll(".view-btn").forEach((btn) =>
-        btn.addEventListener("click", function () {
-          console.log("HELLO");
-          retrieveApplicantDetails(webDto.encryptedApplicantIdPk, this.value);
-        })
-      );
-
-      async function retrieveApplicantDetails(applicantIdPk, projectIdPk) {
-        const url = `/manager/retrieve/details?applicantIdPk=${applicantIdPk}&projectIdPk=${projectIdPk}`;
-        const response = await fetch(url, { method: "GET" });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`Server Error: ${errorData.message || "Unknown"}`);
-        }
-
-        const data = await response.json();
-
-        document.querySelector("#projectTitle").value =
-          data.applicantDetailsObj.projectTitle;
-        document.querySelector("#projectDescription").value =
-          data.applicantDetailsObj.projectDescription;
-
-        document.querySelectorAll("#teams[0][0]").value =
-          data.applicantDetailsObj.teams[0][0];
-
-        document.querySelectorAll("#teams[0][1]").value =
-          data.applicantDetailsObj.teams[0][1];
-
-        document.querySelectorAll("#teams[1][0]").value =
-          data.applicantDetailsObj.teams[1][0];
-
-        document.querySelectorAll("#teams[1][1]").value =
-          data.applicantDetailsObj.teams[1][1];
-
-        document.querySelectorAll("#teams[2][0]").value =
-          data.applicantDetailsObj.teams[2][0];
-
-        document.querySelectorAll("#teams[2][1]").value =
-          data.applicantDetailsObj.teams[2][1];
-
-        document.querySelectorAll("#teams[3][0]").value =
-          data.applicantDetailsObj.teams[3][0];
-
-        document.querySelectorAll("#teams[3][1]").value =
-          data.applicantDetailsObj.teams[3][1];
-
-        document.querySelectorAll("#teams[4][0]").value =
-          data.applicantDetailsObj.teams[4][0];
-
-        document.querySelectorAll("#teams[4][1]").value =
-          data.applicantDetailsObj.teams[4][1];
-
-        document.querySelector("#problemStatement").value =
-          data.applicantDetailsObj.problemStatement;
-
-        document.querySelector("#targetMarket").value =
-          data.applicantDetailsObj.targetMarket;
-
-        document.querySelector("#solutionDescription").value =
-          data.applicantDetailsObj.solutionDescription;
-
-        for (let i = 0; i < 5; i++) {
-          for (let j = 0; j < 2; j++) {
-            const selector = `#historicalTimeline${i}${j}`;
-            const value =
-              data.applicantDetailsObj.historicalTimeline[i] &&
-              data.applicantDetailsObj.historicalTimeline[i][j]
-                ? data.applicantDetailsObj.historicalTimeline[i][j]
-                : "NA";
-            document.querySelector(selector).value = value;
-          }
-        }
-
-        for (let i = 0; i < 4; i++) {
-          const selector = `#productServiceOffering${i}`;
-          const value =
-            data.applicantDetailsObj.productServiceOffering[i] !== undefined &&
-            data.applicantDetailsObj.productServiceOffering[i].trim() !== ""
-              ? data.applicantDetailsObj.productServiceOffering[i]
-              : "NA";
-          document.querySelector(selector).value = value;
-        }
-
-        for (let i = 0; i < 4; i++) {
-          const selector = `#pricingStrategy${i}`;
-          const value =
-            data.applicantDetailsObj.pricingStrategy[i] !== undefined &&
-            data.applicantDetailsObj.pricingStrategy[i].trim() !== ""
-              ? data.applicantDetailsObj.pricingStrategy[i]
-              : "NA";
-          document.querySelector(selector).value = value;
-        }
-
-        if (
-          data.applicantDetailsObj.intPropertyStatus !== undefined &&
-          data.applicantDetailsObj.intPropertyStatus.trim() !== ""
-        ) {
-          document.querySelector("#intPropertyStatus").value =
-            data.applicantDetailsObj.intPropertyStatus;
-        } else {
-          document.querySelector("#intPropertyStatus").value = "NA";
-        }
-
-        document.querySelector("#objectives").value =
-          data.applicantDetailsObj.objectives;
-
-        document.querySelector("#scopeProposal").value =
-          data.applicantDetailsObj.scopeProposal;
-
-        document.querySelector("#methodology").value =
-          data.applicantDetailsObj.methodology;
-
-        // document.querySelector("#vitaeFile").href =
-        //   "/view/" + data.applicantDetailsObj.vitaeFile;
-
-        if (
-          data.applicantDetailsObj.supportLink !== undefined &&
-          data.applicantDetailsObj.supportLink.trim() !== ""
-        ) {
-          document.querySelector("#supportLink").innerHTML =
-            data.applicantDetailsObj.supportLink;
-          document.querySelector("#supportLink").href =
-            data.applicantDetailsObj.supportLink;
-        } else {
-          document.querySelector("#supportLink").innerHTML = "NA";
-        }
-
-        document.querySelector("#groupName").value =
-          data.applicantDetailsObj.groupName;
-
-        document.querySelector("#groupLeader").value =
-          data.applicantDetailsObj.leaderLastName +
-          ", " +
-          applicantDetailsObj.leaderFirstName;
-
-        document.querySelector("#leaderNumber").value =
-          data.applicantDetailsObj.mobileNumber;
-
-        document.querySelector("#leaderAddress").value =
-          data.applicantDetailsObj.address;
-
-        if (
-          data.applicantDetailsObj.members[0] !== undefined &&
-          !data.applicantDetailsObj.members[0].includes("null")
-        ) {
-          document.querySelector("#members[0]").value =
-            data.applicantDetailsObj.members[0];
-        } else {
-          document.querySelector("#members[0]").value = "NA";
-        }
-        if (
-          data.applicantDetailsObj.members[1] !== undefined &&
-          !data.applicantDetailsObj.members[1].includes("null")
-        ) {
-          document.querySelector("#members[1]").value =
-            data.applicantDetailsObj.members[1];
-        } else {
-          document.querySelector("#members[1]").value = "NA";
-        }
-        if (
-          data.applicantDetailsObj.members[2] !== undefined &&
-          !data.applicantDetailsObj.members[2].includes("null")
-        ) {
-          document.querySelector("#members[2]").value =
-            data.applicantDetailsObj.members[2];
-        } else {
-          document.querySelector("#members[2]").value = "NA";
-        }
-        if (
-          data.applicantDetailsObj.members[3] !== undefined &&
-          !data.applicantDetailsObj.members[3].includes("null")
-        ) {
-          document.querySelector("#members[3]").value =
-            data.applicantDetailsObj.members[3];
-        } else {
-          document.querySelector("#members[3]").value = "NA";
-        }
-
-        // document.querySelector("#members[1]").value=
-        // data.applicantDetailsObj.members[1];
-
-        // document.querySelector("#members[2]").value=
-        // data.applicantDetailsObj.members[2];
-
-        // document.querySelector("#members[3]").value=
-        // data.applicantDetailsObj.members[3];
-
-        if (
-          data.applicantDetailsObj.university !== undefined &&
-          data.applicantDetailsObj.university.trim() !== ""
-        ) {
-          document.querySelector("#university").value =
-            data.applicantDetailsObj.university;
-        } else {
-          document.querySelector("#university").value = "NA";
-        }
       }
     </script>
   </body>

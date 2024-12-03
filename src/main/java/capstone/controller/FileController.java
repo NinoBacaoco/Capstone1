@@ -86,51 +86,25 @@ public class FileController {
 	}
 
 	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) throws GeneralSecurityException {
-		// Resource noImgResource =
-		// resourceLoader.getResource("classpath:static/images/no_image.png");
-		//
-		// System.out.println(imageName);
-		//
-		// // Attempt to get the image from Google Drive
-		// InputStream inputStream = null;
-		// try {
-		// // Use the getFileContentByName method to retrieve the image from Google
-		// Drive
-		// InputStream googleDriveImageStream =
-		// googleDriveService.getFileContentByName(imageName, false);
-		//
-		// if (googleDriveImageStream != null) {
-		// return IOUtils.toByteArray(googleDriveImageStream); // Return the image from
-		// Google Drive
-		// } else {
-		// // If not found in Google Drive, return the no_image.png
-		// return Files.readAllBytes(noImgResource.getFile().toPath());
-		// }
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// return new byte[0]; // Return an empty byte array on error
-		// }
-		// }
-		String fileDirectory = env.getProperty("new.certificate.path");
-
-		String fileName = fileDirectory + imageName + ".png";
-
-		String noImgFileName = fileDirectory + "no_image.png";
+	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
+		// Use classpath resource loading instead of direct file system access
+		Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+		// String fileDirectory = env.getProperty("new.certificate.path");
+	
 		try {
-			if (imageName == null || !Files.exists(Paths.get(fileName))) {
-				return Files.readAllBytes(Paths.get(noImgFileName));
-			} else {
-				return Files.readAllBytes(Paths.get(fileName));
+			// First try loading from classpath resources
+			Resource imageResource = resourceLoader.getResource("classpath:certs/" + imageName + ".png");
+			if (imageResource.exists()) {
+				return IOUtils.toByteArray(imageResource.getInputStream());
 			}
+		
+			// Fallback to no_image if target image not found
+			return IOUtils.toByteArray(noImgResource.getInputStream());
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 			return new byte[0];
 		}
 	}
-
 	@GetMapping(value = "/download/certificate/{imageName}")
 	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
 		String fileDirectory = env.getProperty("new.certificate.path"); // Path to the directory

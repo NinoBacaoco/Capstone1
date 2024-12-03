@@ -653,7 +653,7 @@ public ManagerInOutDto issuedCertificate(ManagerInOutDto inDto) throws Messaging
 
             // Generate certificate
             Graphics g = image.getGraphics();
-            g.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 130));
+            g.setFont(new Font("Arial", Font.BOLD, 130));
             g.setColor(new Color(253, 204, 1));
             String fullName = userCertificate.getFirstName() + " " + userCertificate.getLastName();
             g.drawString(fullName, 132, 760);

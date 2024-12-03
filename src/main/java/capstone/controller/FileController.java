@@ -86,23 +86,50 @@ public class FileController {
 	}
 
 	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-public @ResponseBody byte[] responseImagePng(@PathVariable String imageName) throws GeneralSecurityException {
-    String fileDirectory = env.getProperty("new.certificate.path", "./certs/");
-    String fileName = fileDirectory + imageName + ".png";
-    String noImgFileName = fileDirectory + "no_image.png";
+	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) throws GeneralSecurityException {
+		// Resource noImgResource =
+		// resourceLoader.getResource("classpath:static/images/no_image.png");
+		//
+		// System.out.println(imageName);
+		//
+		// // Attempt to get the image from Google Drive
+		// InputStream inputStream = null;
+		// try {
+		// // Use the getFileContentByName method to retrieve the image from Google
+		// Drive
+		// InputStream googleDriveImageStream =
+		// googleDriveService.getFileContentByName(imageName, false);
+		//
+		// if (googleDriveImageStream != null) {
+		// return IOUtils.toByteArray(googleDriveImageStream); // Return the image from
+		// Google Drive
+		// } else {
+		// // If not found in Google Drive, return the no_image.png
+		// return Files.readAllBytes(noImgResource.getFile().toPath());
+		// }
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// return new byte[0]; // Return an empty byte array on error
+		// }
+		// }
+		String fileDirectory = env.getProperty("new.certificate.path", "./certs/");
 
-    try {
-        Path path = Paths.get(fileName);
-        if (imageName == null || !Files.exists(path)) {
-            return Files.readAllBytes(Paths.get(noImgFileName));
-        }
-        return Files.readAllBytes(path);
-    } catch (IOException e) {
-        e.printStackTrace();
-        return new byte[0];
-    }
-}
+		String fileName = fileDirectory + imageName + ".png";
 
+		String noImgFileName = fileDirectory + "no_image.png";
+		try {
+			if (imageName == null || !Files.exists(Paths.get(fileName))) {
+				return Files.readAllBytes(Paths.get(noImgFileName));
+			} else {
+				return Files.readAllBytes(Paths.get(fileName));
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+			return new byte[0];
+		}
+	}
 
 	@GetMapping(value = "/download/certificate/{imageName}")
 	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {

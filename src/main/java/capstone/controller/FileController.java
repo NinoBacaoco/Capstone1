@@ -112,7 +112,7 @@ public class FileController {
 		// return new byte[0]; // Return an empty byte array on error
 		// }
 		// }
-		String fileDirectory = env.getProperty("new.certificate.path", "./certs/");
+		String fileDirectory = env.getProperty("new.certificate.path");
 
 		String fileName = fileDirectory + imageName + ".png";
 

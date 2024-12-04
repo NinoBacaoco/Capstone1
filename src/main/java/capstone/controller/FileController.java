@@ -93,7 +93,7 @@ public class FileController {
 	
 		try {
 			// First try loading from classpath resources
-			Resource imageResource = resourceLoader.getResource("classpath:certs/" + imageName + ".png");
+			Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
 			if (imageResource.exists()) {
 				return IOUtils.toByteArray(imageResource.getInputStream());
 			}

@@ -85,26 +85,52 @@ public class FileController {
 
 	}
 
-	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
-		// Use classpath resource loading instead of direct file system access
-		Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
-		// String fileDirectory = env.getProperty("new.certificate.path");
+	// @GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
+	// public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
+	// 	// Use classpath resource loading instead of direct file system access
+	// 	Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+	// 	// String fileDirectory = env.getProperty("new.certificate.path");
 	
-		try {
-			// First try loading from classpath resources
-			Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
-			if (imageResource.exists()) {
-				return IOUtils.toByteArray(imageResource.getInputStream());
-			}
+	// 	try {
+	// 		// First try loading from classpath resources
+	// 		Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
+	// 		if (imageResource.exists()) {
+	// 			return IOUtils.toByteArray(imageResource.getInputStream());
+	// 		}
 		
-			// Fallback to no_image if target image not found
-			return IOUtils.toByteArray(noImgResource.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return new byte[0];
-		}
-	}
+	// 		// Fallback to no_image if target image not found
+	// 		return IOUtils.toByteArray(noImgResource.getInputStream());
+	// 	} catch (IOException e) {
+	// 		e.printStackTrace();
+	// 		return new byte[0];
+	// 	}
+	// }
+	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
+public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
+    String fileDirectory = env.getProperty("new.certificate.path");
+    Path imagePath = Paths.get(fileDirectory, imageName + ".png");
+    Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+
+    try {
+        // Check persistent directory first
+        if (Files.exists(imagePath)) {
+            return Files.readAllBytes(imagePath);
+        }
+        
+        // Fallback to classpath resources
+        Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
+        if (imageResource.exists()) {
+            return IOUtils.toByteArray(imageResource.getInputStream());
+        }
+        
+        // Default to no_image
+        return IOUtils.toByteArray(noImgResource.getInputStream());
+    } catch (IOException e) {
+        e.printStackTrace();
+        return new byte[0];
+    }
+}
+
 	@GetMapping(value = "/download/certificate/{imageName}")
 	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
 		String fileDirectory = env.getProperty("new.certificate.path"); // Path to the directory

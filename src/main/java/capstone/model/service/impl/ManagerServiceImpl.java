@@ -636,45 +636,83 @@ public class ManagerServiceImpl implements ManagerService {
 		return outDto;
 	}
 
+	// @Override
+	// public ManagerInOutDto issuedCertificate(ManagerInOutDto inDto) throws MessagingException {
+	// 	ManagerInOutDto outDto = new ManagerInOutDto();
+	// 	UserCertificateEntity userCertificate = applicantLogic.getUserInformationForCeritificate(inDto.getApplicantIdPk());
+	
+	// 	if (userCertificate.getTotalRating() >= 60) {
+	// 		try {
+	// 			// Generate unique certificate name
+	// 			String fileName = "certificate_" + userCertificate.getUserIdPk() + "_" + System.currentTimeMillis();
+				
+	// 			// Load base certificate from static/images
+	// 			Resource baseResource = resourceLoader.getResource("classpath:static/images/base_certificate.png");
+	// 			BufferedImage image = ImageIO.read(baseResource.getInputStream());
+				
+	// 			// Add text to certificate
+	// 			Graphics g = image.getGraphics();
+	// 			g.setFont(new Font("Arial", Font.BOLD, 130));
+	// 			g.setColor(new Color(253, 204, 1));
+	// 			String fullName = userCertificate.getFirstName() + " " + userCertificate.getLastName();
+	// 			g.drawString(fullName, 132, 760);
+	// 			g.dispose();
+	
+	// 			// Save to static/images directory
+	// 			Resource outputResource = resourceLoader.getResource("classpath:static/images/");
+	// 			Path outputPath = Paths.get(outputResource.getURI()).resolve(fileName + ".png");
+	// 			ImageIO.write(image, "png", outputPath.toFile());
+	
+	// 			// Update database with certificate name
+	// 			applicantLogic.updateApplicantCeritificate(fileName, inDto.getApplicantIdPk());
+	// 			emailService.sendIssuedCertificate(userCertificate.getEmail(), fileName);
+	
+	// 			outDto.setResult(CommonConstant.VALID);
+	// 		} catch (IOException e) {
+	// 			outDto.setResult(CommonConstant.INVALID);
+	// 		}
+	// 	}
+	// 	return outDto;
+	// }
 	@Override
-	public ManagerInOutDto issuedCertificate(ManagerInOutDto inDto) throws MessagingException {
-		ManagerInOutDto outDto = new ManagerInOutDto();
-		UserCertificateEntity userCertificate = applicantLogic.getUserInformationForCeritificate(inDto.getApplicantIdPk());
-	
-		if (userCertificate.getTotalRating() >= 60) {
-			try {
-				// Generate unique certificate name
-				String fileName = "certificate_" + userCertificate.getUserIdPk() + "_" + System.currentTimeMillis();
-				
-				// Load base certificate from static/images
-				Resource baseResource = resourceLoader.getResource("classpath:static/images/base_certificate.png");
-				BufferedImage image = ImageIO.read(baseResource.getInputStream());
-				
-				// Add text to certificate
-				Graphics g = image.getGraphics();
-				g.setFont(new Font("Arial", Font.BOLD, 130));
-				g.setColor(new Color(253, 204, 1));
-				String fullName = userCertificate.getFirstName() + " " + userCertificate.getLastName();
-				g.drawString(fullName, 132, 760);
-				g.dispose();
-	
-				// Save to static/images directory
-				Resource outputResource = resourceLoader.getResource("classpath:static/images/");
-				Path outputPath = Paths.get(outputResource.getURI()).resolve(fileName + ".png");
-				ImageIO.write(image, "png", outputPath.toFile());
-	
-				// Update database with certificate name
-				applicantLogic.updateApplicantCeritificate(fileName, inDto.getApplicantIdPk());
-				emailService.sendIssuedCertificate(userCertificate.getEmail(), fileName);
-	
-				outDto.setResult(CommonConstant.VALID);
-			} catch (IOException e) {
-				outDto.setResult(CommonConstant.INVALID);
-			}
-		}
-		return outDto;
-	}
-	
+public ManagerInOutDto issuedCertificate(ManagerInOutDto inDto) throws MessagingException {
+    ManagerInOutDto outDto = new ManagerInOutDto();
+    UserCertificateEntity userCertificate = applicantLogic.getUserInformationForCeritificate(inDto.getApplicantIdPk());
+
+    if (userCertificate.getTotalRating() >= 60) {
+        try {
+            String fileName = "certificate_" + userCertificate.getUserIdPk() + "_" + System.currentTimeMillis();
+            String folderPath = env.getProperty("new.certificate.path");
+            
+            // Create directory if it doesn't exist
+            Files.createDirectories(Paths.get(folderPath));
+
+            // Generate certificate
+            Resource baseResource = resourceLoader.getResource("classpath:static/images/base_certificate.png");
+            BufferedImage image = ImageIO.read(baseResource.getInputStream());
+            
+            Graphics g = image.getGraphics();
+            g.setFont(new Font("Arial", Font.BOLD, 130));
+            g.setColor(new Color(253, 204, 1));
+            String fullName = userCertificate.getFirstName() + " " + userCertificate.getLastName();
+            g.drawString(fullName, 132, 760);
+            g.dispose();
+
+            // Save to persistent directory
+            Path outputPath = Paths.get(folderPath, fileName + ".png");
+            ImageIO.write(image, "png", outputPath.toFile());
+
+            applicantLogic.updateApplicantCeritificate(fileName, inDto.getApplicantIdPk());
+            emailService.sendIssuedCertificate(userCertificate.getEmail(), fileName);
+
+            outDto.setResult(CommonConstant.VALID);
+        } catch (IOException e) {
+            outDto.setResult(CommonConstant.INVALID);
+        }
+    }
+    return outDto;
+}
+
 	@Override
 	public ManagerInOutDto evaluateApplicant(ManagerInOutDto inDto) throws MessagingException {
 

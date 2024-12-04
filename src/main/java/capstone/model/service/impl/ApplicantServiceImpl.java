@@ -72,6 +72,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 
 	@Autowired
 	private Environment env;
+	boolean allFieldsFilled = true;
 
 	@Override
 	public ApplicantInOutDto validateApplication(ApplicantInOutDto inDto) {
@@ -223,13 +224,49 @@ public class ApplicantServiceImpl implements ApplicantService {
 			hasError = true;
 		}
 
-		for (String member : inDto.getMembers()) {
-			if (member.split(",").length != 2 && !CommonConstant.BLANK.equals(member)) {
-				membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
-				hasError = true;
-				break;
-			}
-		}
+	// // Inside validateApplication method
+	// for (String member : inDto.getMembers()) {
+	// 	if (!CommonConstant.BLANK.equals(member)) {
+	// 		// Check if member name follows firstname, lastname format
+	// 		if (member.split(",").length != 2) {
+	// 			membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
+	// 			hasError = true;
+	// 			break;
+	// 		}
+			
+	// 		// Check if both firstname and lastname are filled
+	// 		String[] memberNames = member.split(",");
+	// 		if (memberNames[0].trim().isEmpty() || memberNames[1].trim().isEmpty()) {
+	// 			membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
+	// 			hasError = true;
+	// 			break;
+	// 		}
+	// 	}
+	// }
+// Inside validateApplication method
+
+for (String member : inDto.getMembers()) {
+    // Check if any field is empty
+    if (member == null || member.trim().isEmpty()) {
+        allFieldsFilled = false;
+        membersError.add(MessageConstant.ALL_MEMBERS_REQUIRED);
+        hasError = true;
+        break;
+    }
+
+    // Validate format for filled fields
+    member = member.replaceAll("\\s*,\\s*", ", ");
+    String[] memberNames = member.split(",");
+    
+    if (memberNames.length != 2 || 
+        memberNames[0].trim().isEmpty() || 
+        memberNames[1].trim().isEmpty()) {
+        membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
+        hasError = true;
+        break;
+    }
+}
+
 
 		if (inDto.getAgreeFlg() == null) {
 			agreeFlgError = MessageConstant.AGREE_FLG_ERROR;

@@ -268,9 +268,9 @@
                   <circle class="fill"></circle>
                   <!-- <circle class="progress"></circle> -->
                 </svg>
-                <div class="orb_value count">
-                  <!-- th:text="*{adminDashboardObj.reapplicationRejectedCount}" -->
-                  123
+                <div class="orb_value count"
+                	th:text="*{adminDashboardObj.applicationRejectedCount}">
+                   
                 </div>
               </div>
               <div class="orb_label text-sm">Rejected<br />Application</div>
@@ -296,10 +296,9 @@
                   <circle class="fill"></circle>
                   <!-- <circle class="progress"></circle> -->
                 </svg>
-                <div class="orb_value count">
-                  <!-- th:text="*{adminDashboardObj.reapplicationFailedCount}" -->
-                  123
-                </div>
+                <div class="orb_value count"
+			     th:text="*{adminDashboardObj.reapplicationFailedCount + adminDashboardObj.reapplicationRejectedCount}">
+			</div>
               </div>
               <div class="orb_label text-sm">Resubmission</div>
             </div>
@@ -491,9 +490,6 @@
             );
         });
       });
-    </script>
-    <!-- tbiboard -->
-    <script></script>
-    <script></script>
+    </script> 
   </body>
 </html>

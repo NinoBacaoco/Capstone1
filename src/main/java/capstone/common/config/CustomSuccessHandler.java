@@ -26,8 +26,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
 		// Retrieve user information
 		UserInformationEntity user = loggedInUserService.getUserInformation();
-		System.out.println("This is user");
-		System.out.println(user);
+		 
 		if (user.getBlockFlg()) {
 			// If the user is blocked, redirect to login with an error message
 			SecurityContextHolder.clearContext();

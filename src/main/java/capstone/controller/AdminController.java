@@ -62,58 +62,58 @@ public class AdminController {
 
     @GetMapping("/admin/users/edit-user")
     public String showEditUser(@RequestParam("id") int id, @ModelAttribute AdminWebDto webDto) {
-    	
-    	AdminInOutDto inDto = new AdminInOutDto();
-    	
-    	inDto.setUserIdPk(id);
-    	
-    	AdminInOutDto outDto = adminService.getUserDetails(inDto);
-    
-    	webDto.setUser(outDto.getUser());
+
+        AdminInOutDto inDto = new AdminInOutDto();
+
+        inDto.setUserIdPk(id);
+
+        AdminInOutDto outDto = adminService.getUserDetails(inDto);
+
+        webDto.setUser(outDto.getUser());
 
         return "admin/editUser";
     }
-    
+
     @PostMapping("/admin/users/edit-user")
     public String postEditUser(@ModelAttribute AdminWebDto webDto, RedirectAttributes ra) {
-    	
-    	AdminInOutDto inDto = new AdminInOutDto();
-    	
-    	inDto.setUserIdPk(webDto.getUserIdPk());
-    	
-    	inDto.setEmail(webDto.getEmail());
-    	
-    	inDto.setFirstName(webDto.getFirstName());
-    	
-    	inDto.setLastName(webDto.getLastName());
-    	
-    	inDto.setMobileNumber(webDto.getMobileNumber());
-    	
-    	inDto.setRole(webDto.getRole());
-    	
-    	inDto.setPassword(webDto.getPassword());
-    	
-    	inDto.setConfirmPassword(webDto.getConfirmPassword());
-    	
-    	String errorResult = adminService.validateInputs(inDto).getResult();
-    	
-    	if(CommonConstant.INVALID.equals(errorResult)) {
-    		
-    		ra.addFlashAttribute("errors", errorResult);
-    		
-    		return "redirect:/admin/users/edit-user?id=" + webDto.getUserIdPk();
-    	}
-    	
-    	String updateResult = adminService.updateUser(inDto).getResult();
-    	
-    	if(CommonConstant.INVALID.equals(updateResult)) {
-    		
-    		ra.addFlashAttribute("errorMsg",  "No changes were made. Please verify the details and try again.");
- 
-    	}
-    	
-    	ra.addFlashAttribute("succMsg",  "User details updated successfully!");
-    	
+
+        AdminInOutDto inDto = new AdminInOutDto();
+
+        inDto.setUserIdPk(webDto.getUserIdPk());
+
+        inDto.setEmail(webDto.getEmail());
+
+        inDto.setFirstName(webDto.getFirstName());
+
+        inDto.setLastName(webDto.getLastName());
+
+        inDto.setMobileNumber(webDto.getMobileNumber());
+
+        inDto.setRole(webDto.getRole());
+
+        inDto.setPassword(webDto.getPassword());
+
+        inDto.setConfirmPassword(webDto.getConfirmPassword());
+
+        String errorResult = adminService.validateInputs(inDto).getResult();
+
+        if (CommonConstant.INVALID.equals(errorResult)) {
+
+            ra.addFlashAttribute("errors", errorResult);
+
+            return "redirect:/admin/users/edit-user?id=" + webDto.getUserIdPk();
+        }
+
+        String updateResult = adminService.updateUser(inDto).getResult();
+
+        if (CommonConstant.INVALID.equals(updateResult)) {
+
+            ra.addFlashAttribute("errorMsg", "No changes were made. Please verify the details and try again.");
+
+        }
+
+        ra.addFlashAttribute("succMsg", "User details updated successfully!");
+
         return "redirect:/admin/users";
     }
 
@@ -129,9 +129,7 @@ public class AdminController {
         inDto.setFirstName(webDto.getFirstName());
 
         inDto.setLastName(webDto.getLastName());
-        
-        
-        
+
         inDto.setRole(webDto.getRole());
 
         inDto.setPassword(webDto.getPassword());
@@ -154,18 +152,62 @@ public class AdminController {
         // This will return the name of the HTML file (without the .html extension)
         return "redirect:/admin/users";
     }
-    
+
     @PostMapping("/admin/users/delete")
     public String postUserDelete(@ModelAttribute AdminWebDto webDto, RedirectAttributes ra) {
-    	
-    	AdminInOutDto inDto = new AdminInOutDto();
-    	
-    	inDto.setUserIdPk(webDto.getUserIdPk());
-    	
-    	adminService.deleteUser(inDto);
-    	
-    	ra.addFlashAttribute("succMsg", MessageConstant.ACCOUNT_DELETED);
-    	
-    	return "redirect:/admin/users";
+
+        AdminInOutDto inDto = new AdminInOutDto();
+
+        inDto.setUserIdPk(webDto.getUserIdPk());
+
+        adminService.deleteUser(inDto);
+
+        ra.addFlashAttribute("succMsg", MessageConstant.ACCOUNT_DELETED);
+
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/admin/users/block-user")
+    public String postBlockUser(@ModelAttribute AdminWebDto webDto, RedirectAttributes ra) {
+
+        AdminInOutDto inDto = new AdminInOutDto();
+
+        inDto.setUserIdPk(webDto.getUserIdPk());
+
+        inDto.setStatus(true);
+
+        String updateResult = adminService.updaterUserBlockStatus(inDto).getResult();
+
+        if (CommonConstant.INVALID.equals(updateResult)) {
+
+            ra.addFlashAttribute("errorMsg", "No changes were made. Please verify the details and try again.");
+
+        }
+
+        ra.addFlashAttribute("succMsg", "User has been blocked successfully!!");
+
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/admin/users/unblock-user")
+    public String postUnblockUser(@ModelAttribute AdminWebDto webDto, RedirectAttributes ra) {
+
+        AdminInOutDto inDto = new AdminInOutDto();
+
+        inDto.setUserIdPk(webDto.getUserIdPk());
+
+        inDto.setStatus(false);
+
+        String updateResult = adminService.updaterUserBlockStatus(inDto).getResult();
+
+        if (CommonConstant.INVALID.equals(updateResult)) {
+
+            ra.addFlashAttribute("errorMsg", "No changes were made. Please verify the details and try again.");
+
+        }
+
+        ra.addFlashAttribute("succMsg", "User has been unblocked successfully!!");
+
+        return "redirect:/admin/users";
     }
 }

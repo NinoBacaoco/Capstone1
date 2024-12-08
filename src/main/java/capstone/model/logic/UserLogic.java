@@ -159,4 +159,6 @@ public interface UserLogic {
 
 	public List<MonthlyTotalApplicationEntity> getMonthlyRejectedApplication();
 
+	public int updateUserBlockStatus(int userIdPk, boolean status);
+
 }

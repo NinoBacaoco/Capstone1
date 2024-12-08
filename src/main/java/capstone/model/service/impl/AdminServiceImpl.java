@@ -300,6 +300,8 @@ public class AdminServiceImpl implements AdminService {
 		newUser.setUpdatedDate(timeNow);
 
 		newUser.setDeleteFlg(false);
+		
+		newUser.setBlockFlg(false);
 
 		int idPk = userLogic.saveUser(newUser);
 

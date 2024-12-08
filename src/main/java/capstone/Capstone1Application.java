@@ -61,6 +61,7 @@ public class Capstone1Application {
 			userAcc.setPassword(encoder.encode(password));
 			userAcc.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 			userAcc.setDeleteFlg(false);
+			user.setBlockFlg(false);
 			userLogic.saveUserAccount(userAcc);
 		}
     }

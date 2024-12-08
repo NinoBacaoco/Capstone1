@@ -223,45 +223,42 @@ public class ApplicantServiceImpl implements ApplicantService {
 			hasError = true;
 		}
 
-// Members validation
-// if (inDto.getMembers() != null) {
-//     for (String member : inDto.getMembers()) {
-//         if (member != null && !member.trim().isEmpty()) {
-//             String[] nameParts = member.split(",");
-//             if (nameParts.length != 2 || nameParts[0].trim().isEmpty() || nameParts[1].trim().isEmpty()) {
-//                 membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
-//                 hasError = true;
-//                 break;
-//             }
-//         }
-//     }
-// }
+		// Members validation
+		// if (inDto.getMembers() != null) {
+		// for (String member : inDto.getMembers()) {
+		// if (member != null && !member.trim().isEmpty()) {
+		// String[] nameParts = member.split(",");
+		// if (nameParts.length != 2 || nameParts[0].trim().isEmpty() ||
+		// nameParts[1].trim().isEmpty()) {
+		// membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
+		// hasError = true;
+		// break;
+		// }
+		// }
+		// }
+		// }
 
-// Members validation
-if (inDto.getMembers() == null || inDto.getMembers().size() < 4) {
-    membersError.add(MessageConstant.ALL_MEMBERS_REQUIRED);
-    hasError = true;
-} else {
-    // Check if all 4 required members are filled and properly formatted
-    for (int i = 0; i < 4; i++) {
-        String member = inDto.getMembers().get(i);
-        if (member == null || member.trim().isEmpty()) {
-            membersError.add(MessageConstant.ALL_MEMBERS_REQUIRED);
-            hasError = true;
-            break;
-        }
-        // Validate format (Last Name, First Name)
-        if (member.split(",").length != 2) {
-            membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
-            hasError = true;
-            break;
-        }
-    }
-}
-
-
-
-
+		// Members validation
+		if (inDto.getMembers() == null || inDto.getMembers().size() < 4) {
+			membersError.add(MessageConstant.ALL_MEMBERS_REQUIRED);
+			hasError = true;
+		} else {
+			// Check if all 4 required members are filled and properly formatted
+			for (int i = 0; i < 4; i++) {
+				String member = inDto.getMembers().get(i);
+				if (member == null || member.trim().isEmpty()) {
+					membersError.add(MessageConstant.ALL_MEMBERS_REQUIRED);
+					hasError = true;
+					break;
+				}
+				// Validate format (Last Name, First Name)
+				if (member.split(",").length != 2) {
+					membersError.add(MessageConstant.NAME_INCORRECT_FORMAT);
+					hasError = true;
+					break;
+				}
+			}
+		}
 
 		if (inDto.getAgreeFlg() == null) {
 			agreeFlgError = MessageConstant.AGREE_FLG_ERROR;
@@ -457,7 +454,7 @@ if (inDto.getMembers() == null || inDto.getMembers().size() < 4) {
 				newUser.setDeleteFlg(false);
 
 				newUser.setUpdatedDate(currentDateTime);
-				
+
 				newUser.setBlockFlg(false);
 
 				userIdPk = userLogic.saveUser(newUser);
@@ -1183,6 +1180,8 @@ if (inDto.getMembers() == null || inDto.getMembers().size() < 4) {
 			appTbiFeedbackObj.setCtEightComments(evaluationDetails.getCtEightComments());
 
 			appTbiFeedbackObj.setTbiFeedback(evaluationDetails.getTbiFeedback());
+
+			appTbiFeedbackObj.setTotalRating(evaluationDetails.getTotal());
 
 			AcceptedApplicantEntity acceptedApplicant = applicantLogic
 					.getAcceptedApplicantByApplicantIdPk(applicantIdPk);

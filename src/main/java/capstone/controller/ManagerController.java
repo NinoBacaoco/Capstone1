@@ -182,20 +182,19 @@ public class ManagerController {
 	}
 
 	@PostMapping("/rank-startups/evaluate")
-	public String epostApplicantForRanking(@ModelAttribute ManagerWebDto webDto, RedirectAttributes ra)
-			throws Exception {
-
-		if (CommonConstant.BLANK.equals(webDto.getManagerFeedback())) {
-
+	public String epostApplicantForRanking(@ModelAttribute ManagerWebDto webDto, RedirectAttributes ra) throws Exception {
+		
+		if(CommonConstant.BLANK.equals(webDto.getManagerFeedback())) {
+			
 			ra.addFlashAttribute("error", MessageConstant.FEEDBACK_BLANK);
-
+			
 			ra.addFlashAttribute("managerWebDto", webDto);
-
+			
 			return "redirect:/manager/rank-startups/evaluate?id=" + webDto.getEncryptedApplicantIdPk();
-
+			
 		}
-
-		if (webDto.getCtOneRating() == 0 ||
+		
+		if(webDto.getCtOneRating() == 0 ||
 				webDto.getCtTwoRating() == 0 ||
 				webDto.getCtThreeRating() == 0 ||
 				webDto.getCtFourRating() == 0 ||
@@ -203,13 +202,13 @@ public class ManagerController {
 				webDto.getCtSixRating() == 0 ||
 				webDto.getCtSevenRating() == 0 ||
 				webDto.getCtEightRating() == 0) {
-
+			
 			ra.addFlashAttribute("error", MessageConstant.RATING_BLANK);
-
+			
 			ra.addFlashAttribute("managerWebDto", webDto);
-
+			
 			return "redirect:/manager/rank-startups/evaluate?id=" + webDto.getEncryptedApplicantIdPk();
-
+			
 		}
 
 		ManagerInOutDto inDto = new ManagerInOutDto();
@@ -296,6 +295,8 @@ public class ManagerController {
 		inDto.setTransferring(true);
 
 		managerService.updateApplicantStatus(inDto);
+		
+		managerService.updateSubmissionCount(inDto);
 
 		ra.addFlashAttribute("succMsg", "The application/s has been sent to the TbiBoard!");
 
@@ -329,7 +330,7 @@ public class ManagerController {
 	public String qualifiedResubmissionYes(@ModelAttribute ManagerWebDto webDto)
 			throws NumberFormatException, Exception {
 
-		ManagerInOutDto inDto = new ManagerInOutDto();
+		ManagerInOutDto inDto = new ManagerInOutDto(); 
 
 		inDto.setApplicantIdPk(Integer.valueOf(commonService.decrypt(webDto.getEncryptedApplicantIdPk())));
 
@@ -405,12 +406,12 @@ public class ManagerController {
 	}
 
 	@GetMapping("/qualify-application")
-	public String showFeedback(@ModelAttribute ManagerWebDto webDto,
+	public String showFeedback(@ModelAttribute ManagerWebDto webDto, 
 			@RequestParam("id") String id) throws Exception {
 
 		if (id.isEmpty()) {
 			return "redirect:/manager/home";
-		}
+		} 
 
 		ManagerInOutDto inDto = new ManagerInOutDto();
 
@@ -429,9 +430,9 @@ public class ManagerController {
 		webDto.setRejectedCount(outDto.getRejectedCount());
 
 		webDto.setProjectIdPks(outDto.getProjectIdPks());
-
+		
 		webDto.setForQualification(true);
-
+		
 		return "manager/applicationDetails";
 	}
 

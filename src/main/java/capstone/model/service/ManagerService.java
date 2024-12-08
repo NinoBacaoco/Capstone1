@@ -134,4 +134,6 @@ public interface ManagerService {
 	 */
 	public ManagerInOutDto getManagerAnalyticsDetails();
 
+	public void updateSubmissionCount(ManagerInOutDto inDto);
+
 }

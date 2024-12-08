@@ -145,7 +145,7 @@ public class AdminServiceImpl implements AdminService {
 			obj.setStatus(app.getStatus());
 
 			obj.setTotalRating(app.getTotalRating());
-			;
+			
 
 			obj.setUniversity(app.getUniversity());
 
@@ -300,7 +300,7 @@ public class AdminServiceImpl implements AdminService {
 		newUser.setUpdatedDate(timeNow);
 
 		newUser.setDeleteFlg(false);
-		
+
 		newUser.setBlockFlg(false);
 
 		int idPk = userLogic.saveUser(newUser);

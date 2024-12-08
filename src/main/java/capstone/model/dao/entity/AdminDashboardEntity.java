@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Scope("prototype")
 public class AdminDashboardEntity {
-	
+
 	public AdminDashboardEntity(Object[] objects) {
 		this(
 				(Integer) objects[0],
@@ -26,38 +26,40 @@ public class AdminDashboardEntity {
 				(Integer) objects[11],
 				(Integer) objects[12],
 				(Integer) objects[13],
-				(Integer) objects[14]
-				);
-		
+				(Integer) objects[14],
+				(Integer) objects[15]);
+
 	}
-	
+
 	private int applicationPassedCount;
-	
+
 	private int applicationFailedCount;
-	
+
 	private int applicationAcceptedCount;
-	
+
 	private int applicationRejectedCount;
-	
+
 	private int inOfficerCount;
-	
+
 	private int inTbiBoardCount;
-	
+
 	private int inManagerCount;
-	
+
 	private int applicantCount;
-	
+
 	private int officerCount;
-	
+
 	private int tbiboardCount;
-	
+
 	private int managerCount;
-	
+
 	private int activatedAccountCount;
-	
+
 	private int reapplicationRejectedCount;
-	
+
 	private int reapplicationFailedCount;
-	
+
 	private int issuedCertificateCount;
+
+	private int submissionCount;
 }

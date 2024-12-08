@@ -76,6 +76,8 @@ public class AdminServiceImpl implements AdminService {
 
 		obj.setIssuedCertificateCount(entity.getIssuedCertificateCount());
 
+		obj.setManagerToTbiCount(entity.getSubmissionCount());
+
 		outDto.setAdminDashboardObj(obj);
 
 		return outDto;
@@ -101,6 +103,8 @@ public class AdminServiceImpl implements AdminService {
 			obj.setNumber(user.getMobileNumber());
 
 			obj.setRole(user.getRole());
+
+			obj.setBlockFlg(user.getBlockFlg());
 
 			obj.setCreatedDate(user.getCreatedDate());
 
@@ -362,6 +366,22 @@ public class AdminServiceImpl implements AdminService {
 
 		int result = userLogic.updateuser(inDto.getFirstName(), inDto.getLastName(), inDto.getMobileNumber(),
 				inDto.getRole(), timeNow, inDto.getUserIdPk());
+
+		if (result == 0) {
+			outDto.setResult(CommonConstant.INVALID);
+		}
+
+		return outDto;
+	}
+
+	@Override
+	public AdminInOutDto updaterUserBlockStatus(AdminInOutDto inDto) {
+
+		AdminInOutDto outDto = new AdminInOutDto();
+
+		outDto.setResult(CommonConstant.VALID);
+
+		int result = userLogic.updateUserBlockStatus(inDto.getUserIdPk(), inDto.getStatus());
 
 		if (result == 0) {
 			outDto.setResult(CommonConstant.INVALID);

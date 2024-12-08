@@ -215,7 +215,12 @@
             Manager to Tbi-board
             <div class="flex flex-row">
               <p class="text-gray-500">TOTAL:</p>
-              <div class="h-10 text-4xl ml-4 count">123</div>
+              <div
+                class="h-10 text-4xl ml-4 count"
+                th:text="*{adminDashboardObj.managerToTbiCount}"
+              >
+                123
+              </div>
             </div>
           </div>
         </div>
@@ -268,9 +273,11 @@
                   <circle class="fill"></circle>
                   <!-- <circle class="progress"></circle> -->
                 </svg>
-                <div class="orb_value count"
-                	th:text="*{adminDashboardObj.applicationRejectedCount}">
-                   
+                <div
+                  class="orb_value count"
+                  th:text="*{adminDashboardObj.applicationRejectedCount}"
+                >
+                  123
                 </div>
               </div>
               <div class="orb_label text-sm">Rejected<br />Application</div>
@@ -296,9 +303,10 @@
                   <circle class="fill"></circle>
                   <!-- <circle class="progress"></circle> -->
                 </svg>
-                <div class="orb_value count"
-			     th:text="*{adminDashboardObj.reapplicationFailedCount + adminDashboardObj.reapplicationRejectedCount}">
-			</div>
+                <div
+                  class="orb_value count"
+                  th:text="*{adminDashboardObj.reapplicationFailedCount + adminDashboardObj.reapplicationRejectedCount}"
+                ></div>
               </div>
               <div class="orb_label text-sm">Resubmission</div>
             </div>
@@ -490,6 +498,6 @@
             );
         });
       });
-    </script> 
+    </script>
   </body>
 </html>

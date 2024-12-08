@@ -12,64 +12,64 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="m_applicant")
+@Table(name = "m_applicant")
 public class ApplicantEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idPk;
-	
+
 	@Column(columnDefinition = "varchar(255)")
 	private String email;
-	
+
 	@Column(nullable = false)
 	private Boolean agreeFlg;
-	
+
 	@Column(nullable = false)
 	private int technologyAns;
-	
+
 	@Column(nullable = false)
 	private int productDevelopmentAns;
-	
+
 	@Column(nullable = false)
 	private int competitiveLandscapeAns;
-	
+
 	@Column(nullable = false)
 	private int productDesignAns;
-	
+
 	@Column(nullable = false)
 	private int teamAns;
-	
+
 	@Column(nullable = false)
 	private int goToMarketAns;
-	
+
 	@Column(nullable = false)
 	private int manufacturingAns;
-	
+
 	@Column(nullable = false)
 	private Boolean eligibilityAgreeFlg;
-	
+
 	@Column(nullable = false)
 	private Boolean commitmentOneFlg;
-	
+
 	@Column(nullable = false)
 	private Boolean commitmentTwoFlg;
-	
+
 	@Column(nullable = false)
 	private Boolean commitmentThreeFlg;
-	
+
 	@Column(nullable = false)
 	private Boolean commitmentFourFlg;
-	
+
 	@Column(nullable = false)
 	private Timestamp createdDate;
-	
+
 	@Column(nullable = false)
 	private Boolean deleteFlg;
-	
+
 	/*
 	 * 0 - Pending
-	 *  00 - Resubmission - Officer
+	 * 00 - Resubmission - Officer
 	 * 1 - Accept By Officer
 	 * 2 - Reject By Officer
 	 * 3 - createdApplicantAccount
@@ -83,9 +83,12 @@ public class ApplicantEntity {
 	 */
 	@Column(nullable = false)
 	private int status;
-	
+
 	@Column(nullable = false)
 	private int createdBy;
-	
+
 	private String certificateName;
+
+	@Column(nullable = false, columnDefinition = "int default 0")
+	private int submissionCount;
 }

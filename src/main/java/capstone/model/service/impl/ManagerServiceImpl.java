@@ -636,21 +636,23 @@ public class ManagerServiceImpl implements ManagerService {
 		return outDto;
 	}
 
+	@Value("${certificate.output.path}")
+	private String certificateOutputPath;
+	
 	@Override
 	public ManagerInOutDto issuedCertificate(ManagerInOutDto inDto) throws MessagingException {
 		ManagerInOutDto outDto = new ManagerInOutDto();
-		UserCertificateEntity userCertificate = applicantLogic
-				.getUserInformationForCeritificate(inDto.getApplicantIdPk());
-
+		UserCertificateEntity userCertificate = applicantLogic.getUserInformationForCeritificate(inDto.getApplicantIdPk());
+	
 		if (userCertificate.getTotalRating() >= 60) {
 			try {
 				// Generate unique certificate name
 				String fileName = "certificate_" + userCertificate.getUserIdPk() + "_" + System.currentTimeMillis();
-
-				// Load base certificate from static/images
+	
+				// Load base certificate template
 				Resource baseResource = resourceLoader.getResource("classpath:static/images/base_certificate.png");
 				BufferedImage image = ImageIO.read(baseResource.getInputStream());
-
+	
 				// Add text to certificate
 				Graphics g = image.getGraphics();
 				g.setFont(new Font("Arial", Font.BOLD, 130));
@@ -658,24 +660,27 @@ public class ManagerServiceImpl implements ManagerService {
 				String fullName = userCertificate.getFirstName() + " " + userCertificate.getLastName();
 				g.drawString(fullName, 132, 760);
 				g.dispose();
-
-				// Save to static/images directory
-				Resource outputResource = resourceLoader.getResource("classpath:static/images/");
-				Path outputPath = Paths.get(outputResource.getURI()).resolve(fileName + ".png");
+	
+				// Create output directory if it doesn't exist
+				Files.createDirectories(Paths.get(certificateOutputPath));
+				
+				// Save certificate
+				Path outputPath = Paths.get(certificateOutputPath, fileName + ".png");
 				ImageIO.write(image, "png", outputPath.toFile());
-
-				// Update database with certificate name
+	
+				// Update database and send email
 				applicantLogic.updateApplicantCeritificate(fileName, inDto.getApplicantIdPk());
 				emailService.sendIssuedCertificate(userCertificate.getEmail(), fileName);
-
+	
 				outDto.setResult(CommonConstant.VALID);
 			} catch (IOException e) {
+				e.printStackTrace();
 				outDto.setResult(CommonConstant.INVALID);
 			}
 		}
 		return outDto;
 	}
-
+	
 	@Override
 	public ManagerInOutDto evaluateApplicant(ManagerInOutDto inDto) throws MessagingException {
 

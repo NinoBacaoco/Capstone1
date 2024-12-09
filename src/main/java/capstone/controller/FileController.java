@@ -85,79 +85,84 @@ public class FileController {
 
 	}
 
-	// @GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-	// public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
-	// 	// Use classpath resource loading instead of direct file system access
-	// 	Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
-	// 	// String fileDirectory = env.getProperty("new.certificate.path");
-	
-	// 	try {
-	// 		// First try loading from classpath resources
-	// 		Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
-	// 		if (imageResource.exists()) {
-	// 			return IOUtils.toByteArray(imageResource.getInputStream());
-	// 		}
-		
-	// 		// Fallback to no_image if target image not found
-	// 		return IOUtils.toByteArray(noImgResource.getInputStream());
-	// 	} catch (IOException e) {
-	// 		e.printStackTrace();
-	// 		return new byte[0];
-	// 	}
+	// @GetMapping(value = "/view/image/{imageName}", produces =
+	// MediaType.IMAGE_PNG_VALUE)
+	// public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName)
+	// {
+	// // Use classpath resource loading instead of direct file system access
+	// Resource noImgResource =
+	// resourceLoader.getResource("classpath:static/images/no_image.png");
+	// // String fileDirectory = env.getProperty("new.certificate.path");
+
+	// try {
+	// // First try loading from classpath resources
+	// Resource imageResource =
+	// resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
+	// if (imageResource.exists()) {
+	// return IOUtils.toByteArray(imageResource.getInputStream());
 	// }
+
+	// // Fallback to no_image if target image not found
+	// return IOUtils.toByteArray(noImgResource.getInputStream());
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// return new byte[0];
+	// }
+	// }
+
 	@GetMapping(value = "/view/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
-    String fileDirectory = env.getProperty("new.certificate.path");
-    Path imagePath = Paths.get(fileDirectory, imageName + ".png");
-    Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+	public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
+		String fileDirectory = env.getProperty("certificate.output.path");
+		Path imagePath = Paths.get(fileDirectory, imageName + ".png");
+		Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
 
-    try {
-        // Check persistent directory first
-        if (Files.exists(imagePath)) {
-            return Files.readAllBytes(imagePath);
-        }
-        
-        // Fallback to classpath resources
-        Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
-        if (imageResource.exists()) {
-            return IOUtils.toByteArray(imageResource.getInputStream());
-        }
-        
-        // Default to no_image
-        return IOUtils.toByteArray(noImgResource.getInputStream());
-    } catch (IOException e) {
-        e.printStackTrace();
-        return new byte[0];
-    }
-}
+		try {
+			// Check persistent directory first
+			if (Files.exists(imagePath)) {
+				return Files.readAllBytes(imagePath);
+			}
 
-@GetMapping(value = "/download/certificate/{imageName}")
-public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
-    String fileDirectory = env.getProperty("certificate.output.path"); // Match the path used in ManagerServiceImpl
-    Path imagePath = Paths.get(fileDirectory, imageName);
+			// Fallback to classpath resources
+			Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName + ".png");
+			if (imageResource.exists()) {
+				return IOUtils.toByteArray(imageResource.getInputStream());
+			}
 
-    // Validate file existence and readability
-    if (!Files.exists(imagePath) || !Files.isRegularFile(imagePath) || !Files.isReadable(imagePath)) {
-        return ResponseEntity.notFound().build();
-    }
+			// Default to no_image
+			return IOUtils.toByteArray(noImgResource.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new byte[0];
+		}
+	}
 
-    try {
-        // Read the certificate content as bytes
-        byte[] imageContent = Files.readAllBytes(imagePath);
+	@GetMapping(value = "/download/certificate/{imageName}")
+	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
+		String fileDirectory = env.getProperty("certificate.output.path"); // Match the path used in ManagerServiceImpl
+		Path imagePath = Paths.get(fileDirectory, imageName);
 
-        // Set headers to force download
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentLength(imageContent.length);
-        headers.setContentDisposition(ContentDisposition.builder("attachment")
-                .filename(imageName)
-                .build());
+		// Validate file existence and readability
+		if (!Files.exists(imagePath) || !Files.isRegularFile(imagePath) || !Files.isReadable(imagePath)) {
+			return ResponseEntity.notFound().build();
+		}
 
-        return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
-    } catch (IOException e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-}
+		try {
+			// Read the certificate content as bytes
+			byte[] imageContent = Files.readAllBytes(imagePath);
+
+			// Set headers to force download
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.setContentLength(imageContent.length);
+			headers.setContentDisposition(ContentDisposition.builder("attachment")
+					.filename(imageName)
+					.build());
+
+			return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 
 }

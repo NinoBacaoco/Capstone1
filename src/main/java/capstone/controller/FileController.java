@@ -131,40 +131,46 @@ public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
     }
 }
 
-	@GetMapping(value = "/download/certificate/{imageName}")
-	public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
-		String fileDirectory = env.getProperty("new.certificate.path"); // Path to the directory
-		Path filePath = Paths.get(fileDirectory, imageName);
+@GetMapping(value = "/download/certificate/{imageName}")
+public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
+    Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
+    
+    try {
+        // First try loading from configured certificate path
+        String fileDirectory = env.getProperty("new.certificate.path");
+        Path imagePath = Paths.get(fileDirectory, imageName);
+        
+        byte[] imageContent;
+        String contentType;
+        
+        if (Files.exists(imagePath)) {
+            imageContent = Files.readAllBytes(imagePath);
+            contentType = Files.probeContentType(imagePath);
+        } else {
+            // Fallback to classpath resources
+            Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName);
+            if (imageResource.exists()) {
+                imageContent = IOUtils.toByteArray(imageResource.getInputStream());
+                contentType = "image/png";
+            } else {
+                // Default to no_image if not found
+                imageContent = IOUtils.toByteArray(noImgResource.getInputStream());
+                contentType = "image/png";
+            }
+        }
 
-		// Validate file existence and readability
-		if (!Files.exists(filePath) || !Files.isRegularFile(filePath) || !Files.isReadable(filePath)) {
-			return ResponseEntity.notFound().build();
-		}
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentLength(imageContent.length);
+        headers.setContentDisposition(ContentDisposition.builder("attachment")
+                .filename(imageName)
+                .build());
 
-		try {
-			// Read the image content as bytes
-			byte[] imageContent = Files.readAllBytes(filePath);
-
-			// Determine the content type based on the file extension
-			String contentType = Files.probeContentType(filePath);
-
-			if (contentType == null || !contentType.startsWith("image/")) {
-				return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
-			}
-
-			// Set headers to force download
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); // Set as generic binary content
-			headers.setContentLength(imageContent.length);
-			headers.setContentDisposition(ContentDisposition.builder("attachment")
-					.filename(imageName)
-					.build());
-
-			return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+        return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
+    } catch (IOException e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
 
 }

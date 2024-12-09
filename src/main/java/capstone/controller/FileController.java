@@ -133,32 +133,19 @@ public @ResponseBody byte[] responseImageJpg(@PathVariable String imageName) {
 
 @GetMapping(value = "/download/certificate/{imageName}")
 public ResponseEntity<byte[]> downloadImage(@PathVariable String imageName) {
-    Resource noImgResource = resourceLoader.getResource("classpath:static/images/no_image.png");
-    
-    try {
-        // First try loading from configured certificate path
-        String fileDirectory = env.getProperty("new.certificate.path");
-        Path imagePath = Paths.get(fileDirectory, imageName);
-        
-        byte[] imageContent;
-        String contentType;
-        
-        if (Files.exists(imagePath)) {
-            imageContent = Files.readAllBytes(imagePath);
-            contentType = Files.probeContentType(imagePath);
-        } else {
-            // Fallback to classpath resources
-            Resource imageResource = resourceLoader.getResource("classpath:static/images/" + imageName);
-            if (imageResource.exists()) {
-                imageContent = IOUtils.toByteArray(imageResource.getInputStream());
-                contentType = "image/png";
-            } else {
-                // Default to no_image if not found
-                imageContent = IOUtils.toByteArray(noImgResource.getInputStream());
-                contentType = "image/png";
-            }
-        }
+    String fileDirectory = env.getProperty("certificate.output.path"); // Match the path used in ManagerServiceImpl
+    Path imagePath = Paths.get(fileDirectory, imageName);
 
+    // Validate file existence and readability
+    if (!Files.exists(imagePath) || !Files.isRegularFile(imagePath) || !Files.isReadable(imagePath)) {
+        return ResponseEntity.notFound().build();
+    }
+
+    try {
+        // Read the certificate content as bytes
+        byte[] imageContent = Files.readAllBytes(imagePath);
+
+        // Set headers to force download
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentLength(imageContent.length);

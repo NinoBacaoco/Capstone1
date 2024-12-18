@@ -52,4 +52,4 @@ This project aims to develop a comprehensive web application to facilitate the a
 5. Configure database connection in application.properties
 6. mvn clean install
 7. mvn spring-boot:run
-8. once running, access the application through a web browser at http://localhost:8080
+8. Once running, access the application through a web browser at http://localhost:8080

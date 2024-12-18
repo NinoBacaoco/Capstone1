@@ -44,15 +44,12 @@ This project aims to develop a comprehensive web application to facilitate the a
 
 ## Installation
 1. Install Java 17 JDK
-2. Install PostgreSQL 15.3
+2. Install PostgreSQL
 
-3. **Clone the Repository**:
-   git clone https://github.com/NinoBacaoco/Capstone1
+3. Clone the Repository: git clone https://github.com/NinoBacaoco/Capstone1
 
-4. **Install Dependencies**:
-   npm install or npm i
+4. Install Dependencies: npm install or npm i
 5. Configure database connection in application.properties
 6. mvn clean install
 7. mvn spring-boot:run
-
-Access the application through a web browser at http://localhost:8080
+8. once running, access the application through a web browser at http://localhost:8080
